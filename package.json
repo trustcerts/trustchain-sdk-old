@@ -20,10 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.com:trustcerts/ssi2.git"
-  },
-  "publishConfig": {
-    "@trustcerts:registry": "https://gitlab.com/api/v4/projects/29966464/packages/npm/"
+    "url": "git@github.com:trustcerts/sdk.git"
   },
   "devDependencies": {
     "husky": "^7.0.2",
