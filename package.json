@@ -1,0 +1,40 @@
+{
+  "name": "root",
+  "private": true,
+  "scripts": {
+    "install:clean": "npx lerna clean -y && rm -rf node_modules && npm i",
+    "install:ci": "npm install --ignore-scripts && lerna link && lerna bootstrap --since origin/main --include-dependencies",
+    "bootstrap": "lerna bootstrap",
+    "lint": "lerna run lint --stream",
+    "test": "lerna run test --stream",
+    "build": "lerna run build --stream",
+    "postinstall": "npm run bootstrap",
+    "publish:stable:major": "lerna publish major",
+    "publish:stable:minor": "lerna publish minor",
+    "publish:stable:patch": "lerna publish patch",
+    "publish:unstable": "lerna publish prerelease --preid unstable --yes --registry https://gitlab.com/api/v4/projects/29966464/packages/npm/",
+    "release": "lerna publish",
+    "release:canary": "lerna publish --canary",
+    "install:pages": "lerna bootstrap --scope smoke-test-react --include-dependencies",
+    "build:pages": "rm -rf ./docs/smoke-test-react && lerna run build:smoke-test-react"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.com:trustcerts/ssi2.git"
+  },
+  "publishConfig": {
+    "@trustcerts:registry": "https://gitlab.com/api/v4/projects/29966464/packages/npm/"
+  },
+  "devDependencies": {
+    "husky": "^7.0.2",
+    "lerna": "^4.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
+  "dependencies": {
+    "tsdx": "^0.14.1"
+  }
+}

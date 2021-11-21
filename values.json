@@ -1,0 +1,16 @@
+{
+  "configValues": {
+    "invite": {
+      "id": "did:trust:tc:dev:id:XLzBJd69tqEgq7oqqdEsHW",
+      "secret": "client",
+      "endpoint": "https://api.gateway1.dev.trustcerts.de"
+    },
+    "name": "client",
+    "keyPairs": []
+  },
+  "filePath": "../../tmp/testFile.json",
+  "network": {
+    "gateways": ["https://api.gateway1.dev.trustcerts.de"],
+    "observers": ["https://api.observer1.dev.trustcerts.de"]
+  }
+}
