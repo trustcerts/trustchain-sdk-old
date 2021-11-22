@@ -1,5 +1,5 @@
 {
-  "version": "0.0.6-unstable.16",
+  "version": "0.0.6",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -52,7 +52,7 @@
     "typescript": "^3.9.10"
   },
   "dependencies": {
-    "@trustcerts/core": "^0.0.6-unstable.16"
+    "@trustcerts/core": "^0.0.6"
   },
   "gitHead": "9cc3c3d078fe46729a72961bc6bd241667d43309"
 }
