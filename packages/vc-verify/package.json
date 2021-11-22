@@ -1,5 +1,5 @@
 {
-  "version": "0.0.6-unstable.16",
+  "version": "0.0.6",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -86,11 +86,11 @@
   },
   "dependencies": {
     "@mattrglobal/jsonld-signatures-bbs": "^0.11.0",
-    "@trustcerts/config-local": "^0.0.6-unstable.16",
-    "@trustcerts/core": "^0.0.6-unstable.16",
-    "@trustcerts/vc-create": "^0.0.6-unstable.16",
-    "@trustcerts/vc-revocation": "^0.0.6-unstable.16",
-    "@trustcerts/wallet": "^0.0.6-unstable.16",
+    "@trustcerts/config-local": "^0.0.6",
+    "@trustcerts/core": "^0.0.6",
+    "@trustcerts/vc-create": "^0.0.6",
+    "@trustcerts/vc-revocation": "^0.0.6",
+    "@trustcerts/wallet": "^0.0.6",
     "base64url": "^3.0.1",
     "jose": "^4.3.7"
   },

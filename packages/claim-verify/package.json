@@ -1,5 +1,5 @@
 {
-  "version": "0.0.6-unstable.16",
+  "version": "0.0.6",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -77,10 +77,10 @@
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^6.0.4",
-    "@trustcerts/claim-create": "^0.0.6-unstable.16",
-    "@trustcerts/config-local": "^0.0.6-unstable.16",
-    "@trustcerts/signature-create": "^0.0.6-unstable.16",
-    "@trustcerts/wallet": "^0.0.6-unstable.16",
+    "@trustcerts/claim-create": "^0.0.6",
+    "@trustcerts/config-local": "^0.0.6",
+    "@trustcerts/signature-create": "^0.0.6",
+    "@trustcerts/wallet": "^0.0.6",
     "@types/mustache": "^4.1.2",
     "@types/node": "^16.11.7",
     "@types/protobufjs": "^6.0.0",
@@ -92,10 +92,10 @@
     "typescript": "^3.9.10"
   },
   "dependencies": {
-    "@trustcerts/core": "^0.0.6-unstable.16",
-    "@trustcerts/signature-verify": "^0.0.6-unstable.16",
-    "@trustcerts/template-create": "^0.0.6-unstable.16",
-    "@trustcerts/template-verify": "^0.0.6-unstable.16",
+    "@trustcerts/core": "^0.0.6",
+    "@trustcerts/signature-verify": "^0.0.6",
+    "@trustcerts/template-create": "^0.0.6",
+    "@trustcerts/template-verify": "^0.0.6",
     "mustache": "^4.2.0",
     "protobufjs": "^6.11.2",
     "qrcode": "^1.4.4"
