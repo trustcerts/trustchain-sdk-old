@@ -30,9 +30,6 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "publishConfig": {
-    "@trustcerts:registry": "https://gitlab.com/api/v4/projects/29966464/packages/npm/"
-  },
   "name": "@trustcerts/did-id-create",
   "author": "Mirko Mollik",
   "module": "dist/did-id-create.esm.js",

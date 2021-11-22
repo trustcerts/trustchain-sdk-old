@@ -8,7 +8,7 @@
     "src"
   ],
   "engines": {
-    "node": ">=10"
+    "node": ">=15"
   },
   "scripts": {
     "start": "tsdx watch",
@@ -30,16 +30,16 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "@trustcerts/claim-create",
+  "name": "@trustcerts/wallet",
   "author": "Mirko Mollik",
-  "module": "dist/claim-create.esm.js",
+  "module": "dist/wallet.esm.js",
   "size-limit": [
     {
-      "path": "dist/claim-create.cjs.production.min.js",
+      "path": "dist/wallet.cjs.production.min.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/claim-create.esm.js",
+      "path": "dist/wallet.esm.js",
       "limit": "10 KB"
     }
   ],
@@ -73,22 +73,17 @@
     ]
   },
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^6.0.4",
+    "@size-limit/preset-small-lib": "^6.0.3",
     "@trustcerts/config-local": "^0.0.6-unstable.16",
-    "@trustcerts/signature-verify": "^0.0.6-unstable.16",
-    "@trustcerts/template-create": "^0.0.6-unstable.16",
-    "@trustcerts/template-verify": "^0.0.6-unstable.16",
-    "@trustcerts/wallet": "^0.0.6-unstable.16",
     "husky": "^7.0.4",
-    "size-limit": "^6.0.4",
+    "size-limit": "^6.0.3",
     "tsdx": "^0.14.1",
     "tslib": "^2.3.1",
     "typescript": "^3.9.10"
   },
   "dependencies": {
-    "@trustcerts/claim-verify": "^0.0.6-unstable.16",
     "@trustcerts/core": "^0.0.6-unstable.16",
-    "@trustcerts/signature-create": "^0.0.6-unstable.16"
+    "@trustcerts/did-id-create": "^0.0.6-unstable.16"
   },
   "gitHead": "9cc3c3d078fe46729a72961bc6bd241667d43309"
 }

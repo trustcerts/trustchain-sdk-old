@@ -12,7 +12,7 @@
     "publish:stable:major": "lerna publish major",
     "publish:stable:minor": "lerna publish minor",
     "publish:stable:patch": "lerna publish patch",
-    "publish:unstable": "lerna publish prerelease --preid unstable --yes --registry https://gitlab.com/api/v4/projects/29966464/packages/npm/",
+    "publish:unstable": "lerna publish prerelease --preid unstable --yes",
     "release": "lerna publish",
     "release:canary": "lerna publish --canary",
     "install:pages": "lerna bootstrap --scope smoke-test-react --include-dependencies",

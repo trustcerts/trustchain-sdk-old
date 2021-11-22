@@ -30,9 +30,6 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "publishConfig": {
-    "@trustcerts:registry": "https://gitlab.com/api/v4/projects/29966464/packages/npm/"
-  },
   "name": "@trustcerts/vc-verify",
   "author": "Mirko Mollik",
   "module": "dist/vc-verify.esm.js",
