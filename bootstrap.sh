@@ -14,14 +14,12 @@ done
 
 count=1
 
-for package in "${build_order[@]}"; do
-    cd $package
-    if ! npm run build; then
-        echo "Aborting build process after $package [$count/${#build_order[*]}]"
+for package in "${build_order[@]}"; do    
+    if ! lerna bootstrap --scope=@trustcerts/$package; then
+        echo "Aborting bootstrap process after $package [$count/${#build_order[*]}]"
         break
     fi
-    cd ..
 
-    echo "Built $package [$count/${#build_order[*]}]"
+    echo "Bootstrapped $package [$count/${#build_order[*]}]"
     ((count++))
 done
