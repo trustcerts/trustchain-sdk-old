@@ -19,6 +19,7 @@ for package in "${build_order[@]}"; do
         echo "Aborting bootstrap process after $package [$count/${#build_order[*]}]"
         break
     fi
+    ls -al $package
 
     echo "Bootstrapped $package [$count/${#build_order[*]}]"
     ((count++))
