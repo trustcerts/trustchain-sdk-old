@@ -8,7 +8,7 @@
     "lint": "lerna run lint --stream",
     "test": "lerna run test --stream",
     "build": "./build.sh",
-    "postinstall": "npm run bootstrap",
+    "postinstall": "./bootstrap.sh",
     "publish:stable:major": "lerna publish major",
     "publish:stable:minor": "lerna publish minor",
     "publish:stable:patch": "lerna publish patch",
