@@ -15,6 +15,7 @@ done
 count=1
 
 for package in "${build_order[@]}"; do
+    echo "Start to build $package [$count/${#build_order[*]}]"
     cd $package
     if ! npm run build; then
         echo "Aborting build process after $package [$count/${#build_order[*]}]"

@@ -10,6 +10,15 @@
   "engines": {
     "node": ">=15"
   },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --coverage",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "tsdx lint"
