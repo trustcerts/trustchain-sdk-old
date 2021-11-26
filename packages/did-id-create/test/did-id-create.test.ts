@@ -29,7 +29,7 @@ describe('test local config service', () => {
 
     const wallet = new WalletService(config);
     await wallet.init();
-
+    console.log('get key');
     cryptoService = new CryptoService();
     let key = (
       await wallet.findOrCreate(

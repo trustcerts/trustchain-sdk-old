@@ -27,13 +27,16 @@ export class WalletService {
     this.did = await DidIdResolver.load(
       this.configService.config.invite.id
     ).catch(async () => {
+      console.log('found no id, create by invite');
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       return DidIdRegister.createByInvite(
         this.configService.config.invite!
       ).then(async values => {
+        console.log('got new signed keypair');
         // save the key that way used.
         this.configService.config.keyPairs.push(values.keyPair);
         await this.configService.saveKeys();
+        console.log('keys saved');
         return values.did;
       });
     });
