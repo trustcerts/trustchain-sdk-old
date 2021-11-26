@@ -100,6 +100,7 @@ describe('claim', () => {
       name: 'Max Mustermann',
     };
     const claim = await createClaim(value);
+    console.log(claim);
     const verifier = new SignatureVerifierService(testValues.network.observers);
     const service = new ClaimVerifierService(
       new TemplateVerifierService(testValues.network.observers),

@@ -1,6 +1,6 @@
 // import { sum } from '../src';
 
-describe('blah', () => {
+describe('revocation', () => {
   it('works', () => {
     expect(true);
   });
