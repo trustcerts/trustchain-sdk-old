@@ -61,11 +61,13 @@ describe('test local config service', () => {
     );
 
     await DidIdRegister.save(did, client);
+    await setTimeout(() => Promise.resolve(), 2000);
     const did1 = await DidIdResolver.load(did.id);
     expect(did1).toBeDefined();
   }, 7000);
 
   it('update did', async () => {
+    console.log('update');
     const client = new DidIdIssuerService(
       testValues.network.gateways,
       cryptoService
@@ -87,9 +89,11 @@ describe('test local config service', () => {
     expect(
       did.getDocument().service.find(service => service.id.includes('service1'))
     ).toBeUndefined();
+    console.log('update end');
   }, 7000);
 
   it('revoke did', async () => {
+    console.log('revoke');
     const client = new DidIdIssuerService(
       testValues.network.gateways,
       cryptoService
@@ -115,6 +119,7 @@ describe('test local config service', () => {
     );
     await DidIdRegister.save(did, client);
     // did.print()
+    console.log('revoke end');
     return true;
   }, 7000);
 });

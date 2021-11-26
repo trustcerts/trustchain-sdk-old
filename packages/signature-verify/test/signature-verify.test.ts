@@ -54,7 +54,7 @@ describe('test signature service', () => {
     write(testFile, getRandomValues(new Uint8Array(200)).toString());
     await issuer.signFile(testFile).catch(err => logger.error(err));
     // wait some time since the observer has to be synced.
-    await wait(500);
+    await setTimeout(() => Promise.resolve(), 2000);
     const transaction1 = await verifier.verifyFile(testFile);
     expect(transaction1).toBeDefined();
   }, 5000);
@@ -67,7 +67,7 @@ describe('test signature service', () => {
     const signature = base58Encode(getRandomValues(new Uint8Array(20)));
     await client.signString(signature).catch(err => logger.error(err));
     // wait some time since the observer has to be synced.
-    await wait(500);
+    await setTimeout(() => Promise.resolve(), 2000);
     const verifier = new SignatureVerifierService(testValues.network.observers);
     const transaction = await verifier.verifyString(signature);
     expect(transaction).toBeDefined();
@@ -89,6 +89,7 @@ describe('test signature service', () => {
     expect(transaction.revokedAt).toBeUndefined();
 
     await issuerService.revokeString(value);
+    await setTimeout(() => Promise.resolve(), 2000);
     transaction = await verifierService.verifyString(value);
     expect(transaction.revokedAt).toBeDefined();
     expect(transaction.revokedAt! > transaction.createdAt).toBeTruthy();
@@ -99,10 +100,4 @@ describe('test signature service', () => {
       rmSync(testFile);
     }
   });
-
-  function wait(time: number) {
-    return new Promise(resolve => {
-      setTimeout(resolve, time);
-    });
-  }
 });

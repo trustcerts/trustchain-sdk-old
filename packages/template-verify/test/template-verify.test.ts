@@ -66,6 +66,7 @@ describe('test template service', () => {
     };
     const transaction = await client.create(value);
     const verifier = new TemplateVerifierService(testValues.network.observers);
+    await setTimeout(() => Promise.resolve(), 2000);
     const transaction1 = await verifier.get(
       transaction.transaction.body.value.id
     );

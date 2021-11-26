@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1637951195184" clover="3.2.0">
-  <project timestamp="1637951195184" name="All files">
+<coverage generated="1637953534763" clover="3.2.0">
+  <project timestamp="1637953534763" name="All files">
     <metrics statements="23" coveredstatements="17" conditionals="11" coveredconditionals="7" methods="6" coveredmethods="4" elements="40" coveredelements="28" complexity="0" loc="23" ncloc="23" packages="1" files="1" classes="1"/>
     <file name="index.ts" path="/root/ssi/packages/template-verify/src/index.ts">
       <metrics statements="23" coveredstatements="17" conditionals="11" coveredconditionals="7" methods="6" coveredmethods="4"/>

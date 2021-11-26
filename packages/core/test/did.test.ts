@@ -54,7 +54,7 @@ describe('test local config serviceze', () => {
       cryptoService
     );
     await DidIdRegister.save(did, client);
-    console.log(did.id);
+    await setTimeout(() => Promise.resolve(), 2000);
     const did1 = await DidIdResolver.load(did.id);
     expect(did.getDocument()).toEqual(did1.getDocument());
   }, 7000);
