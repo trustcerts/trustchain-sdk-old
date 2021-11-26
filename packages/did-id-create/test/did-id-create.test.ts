@@ -37,6 +37,8 @@ describe('test local config service', () => {
         Platform.SignatureType.Rsa
       )
     )[0];
+    console.log('keys');
+    console.log(key);
     await cryptoService.init(key);
   });
 
