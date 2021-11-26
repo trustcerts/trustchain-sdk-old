@@ -13,7 +13,7 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "tsdx test --coverage --detectOpenHandles",
+    "test": "tsdx test --coverage --runInBand --detectOpenHandles",
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "size": "size-limit",

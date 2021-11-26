@@ -1,6 +1,6 @@
 {
     "id": "did:trust:tc:dev:id:TestRevocationListabcd",
     "url": "https://example.com/trustcerts/credentials/status/3",
-    "nextIndex": 301,
+    "nextIndex": 331,
     "length": 100000
 }
