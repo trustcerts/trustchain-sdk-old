@@ -49,7 +49,7 @@ describe('test template service', () => {
       )
     )[0];
     await cryptoService.init(key);
-  });
+  }, 10000);
 
   it('verify', async () => {
     const client = new TemplateIssuerService(
@@ -70,7 +70,6 @@ describe('test template service', () => {
     const transaction1 = await verifier.get(
       transaction.transaction.body.value.id
     );
-    console.log(transaction1.template);
     expect(transaction1.template).toEqual(value.template);
     expect(transaction1.compression).toEqual(value.compression);
     expect(transaction1.schema).toEqual(value.schema);

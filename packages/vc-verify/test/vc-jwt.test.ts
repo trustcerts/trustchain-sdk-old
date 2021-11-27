@@ -59,7 +59,7 @@ describe('vc', () => {
     if (rsaKey !== undefined) {
       await cryptoServiceRSA.init(rsaKey);
     }
-  });
+  }, 10000);
 
   async function createVc(): Promise<string> {
     const vcIssuerService = new VerifiableCredentialIssuerService();

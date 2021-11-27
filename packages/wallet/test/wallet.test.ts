@@ -52,7 +52,7 @@ describe('wallet', () => {
       // Verify that the key is removed
       expect(walletService.findKeyByID(key.identifier)).toBeUndefined();
     }
-  }, 15000);
+  }, 10000);
 
   it('tidy up', async () => {
     const walletService = new WalletService(config);

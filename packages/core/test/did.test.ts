@@ -42,7 +42,7 @@ describe('test local config serviceze', () => {
     } catch (e) {
       console.log(e);
     }
-  });
+  }, 10000);
 
   it('read did', async () => {
     const did = DidIdRegister.create({

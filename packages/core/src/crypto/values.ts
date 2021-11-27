@@ -21,9 +21,6 @@ if (!isBrowser()) {
     return random(array);
   };
 } else {
-  console.log('Halloooooooooooooooooooooooooooooooooooooooooo');
-  console.log(window);
-  console.log('Halloooooooooooooooooooooooooooooooooooooooooo');
   subtle = window.crypto.subtle;
   getRandomValues = (array: Uint8Array = new Uint8Array(32)): Uint8Array => {
     return window.crypto.getRandomValues(array);

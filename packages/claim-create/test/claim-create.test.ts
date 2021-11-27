@@ -65,7 +65,7 @@ describe('claim', () => {
     )[0];
     // init crypto service for assertion
     await cryptoService.init(key);
-  });
+  }, 10000);
 
   async function createClaim(val: ClaimValues): Promise<Claim> {
     const host = 'localhost';

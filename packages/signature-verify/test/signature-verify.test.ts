@@ -43,7 +43,7 @@ describe('test signature service', () => {
       )
     )[0];
     await cryptoService.init(key);
-  });
+  }, 10000);
 
   it('verify file', async () => {
     const issuer = new SignatureIssuerService(
