@@ -48,7 +48,7 @@ describe('test template service', () => {
       )
     )[0];
     await cryptoService.init(key);
-  });
+  }, 10000);
 
   it('create', async () => {
     const client = new TemplateIssuerService(

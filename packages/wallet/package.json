@@ -1,5 +1,5 @@
 {
-  "version": "0.0.6",
+  "version": "0.0.6-unstable.16",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -29,9 +29,6 @@
     "semi": true,
     "singleQuote": true,
     "trailingComma": "es5"
-  },
-  "publishConfig": {
-    "@trustcerts:registry": "https://gitlab.com/api/v4/projects/29966464/packages/npm/"
   },
   "name": "@trustcerts/wallet",
   "author": "Mirko Mollik",

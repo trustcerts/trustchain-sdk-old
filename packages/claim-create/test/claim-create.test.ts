@@ -51,13 +51,9 @@ describe('claim', () => {
     config = new LocalConfigService(testValues.filePath);
     await config.init(testValues.configValues);
 
-    logger.info('AAAAAAAAAAAA');
-
     const wallet = new WalletService(config);
-    logger.info('A2A2A2A2A2A2A2A2A2A2A2A2A2');
     await wallet.init();
 
-    logger.info('BBBBBBBBBBBBB');
     cryptoService = new CryptoService();
     // TODO put this in an extra function
     // get a key for assertion and a specific type
@@ -67,11 +63,9 @@ describe('claim', () => {
         Platform.SignatureType.Rsa
       )
     )[0];
-    logger.info('CCCCCCCCCCCCCCCCCCC');
     // init crypto service for assertion
     await cryptoService.init(key);
-    logger.info('DDDDDDDDDDDDDDDDDd');
-  });
+  }, 10000);
 
   async function createClaim(val: ClaimValues): Promise<Claim> {
     const host = 'localhost';

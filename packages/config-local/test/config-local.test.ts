@@ -1,6 +1,6 @@
 // import { sum } from '../src';
 
-describe('blah', () => {
+describe('config-local', () => {
   it('works', () => {
     expect(true);
   });

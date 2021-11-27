@@ -29,7 +29,6 @@ describe('test local config service', () => {
 
     const wallet = new WalletService(config);
     await wallet.init();
-
     cryptoService = new CryptoService();
     let key = (
       await wallet.findOrCreate(
@@ -38,7 +37,7 @@ describe('test local config service', () => {
       )
     )[0];
     await cryptoService.init(key);
-  });
+  }, 10000);
 
   it('add did', async () => {
     // init the did
@@ -61,6 +60,7 @@ describe('test local config service', () => {
     );
 
     await DidIdRegister.save(did, client);
+    await setTimeout(() => Promise.resolve(), 2000);
     const did1 = await DidIdResolver.load(did.id);
     expect(did1).toBeDefined();
   }, 7000);

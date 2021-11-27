@@ -37,7 +37,6 @@ export class DidResolver {
           .catch(() => {
             throw new Error(`${did.id} not found`);
           });
-        console.log(config.transactions);
         did.parseTransaction(config.transactions);
       }
     }
