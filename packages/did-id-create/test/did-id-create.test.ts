@@ -40,7 +40,7 @@ describe('test local config service', () => {
     console.log('keys');
     console.log(key);
     await cryptoService.init(key);
-  }, 10000);
+  });
 
   it('add did', async () => {
     console.log('add', new Date().getTime());
