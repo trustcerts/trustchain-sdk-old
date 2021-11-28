@@ -7,6 +7,14 @@ import {
 } from '@trustcerts/claim-verify';
 import Ajv from 'ajv';
 export class ClaimIssuerService {
+  /**
+   * creates a new claim.
+   * @param template
+   * @param values
+   * @param host
+   * @param signatureIssuer
+   * @returns
+   */
   async create(
     template: Observer.Template,
     values: ClaimValues,
@@ -22,6 +30,11 @@ export class ClaimIssuerService {
     return new Claim(values, template, host);
   }
 
+  /**
+   * revokes a claim
+   * @param claim
+   * @param signatureIssuer
+   */
   async revoke(
     claim: Claim,
     signatureIssuer: SignatureIssuerService
