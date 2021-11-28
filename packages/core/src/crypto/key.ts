@@ -65,6 +65,12 @@ export function generateCryptoKeyPair(
   >;
 }
 
+/**
+ * generates a new key pair
+ * @param id
+ * @param signatureType
+ * @returns
+ */
 export async function generateKeyPair(
   id: string,
   signatureType: Platform.SignatureType = Platform.SignatureType.Rsa
