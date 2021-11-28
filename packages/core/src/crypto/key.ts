@@ -66,7 +66,7 @@ export function generateCryptoKeyPair(
 }
 
 /**
- * generates a new key pair
+ * generates a new key pair.
  * @param id
  * @param signatureType
  * @returns
