@@ -1,5 +1,5 @@
 {
-  "version": "0.0.12",
+  "version": "0.0.13",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -53,7 +53,7 @@
   },
   "dependencies": {
     "@transmute/vc-status-rl-2020": "^0.7.0-unstable.12",
-    "@trustcerts/core": "^0.0.12"
+    "@trustcerts/core": "^0.0.13"
   },
   "gitHead": "ea64e524503eeea2229c2b549ad3e1a53aa34345"
 }
