@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.9](https://github.com/trustcerts/trustchain-sdk/compare/v0.0.8...v0.0.9) (2021-11-28)
+
+
+### Bug Fixes
+
+* add short description ([2085ed2](https://github.com/trustcerts/trustchain-sdk/commit/2085ed2ec90c58cffbf2521985fc68666ba42c04))
+
+
+
+
+
 ## [0.0.8](https://github.com/trustcerts/trustchain-sdk/compare/v0.0.8-beta.0...v0.0.8) (2021-11-28)
 
 **Note:** Version bump only for package @trustcerts/core
