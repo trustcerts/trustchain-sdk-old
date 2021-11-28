@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.11](https://github.com/trustcerts/trustchain-sdk/compare/v0.0.10...v0.0.11) (2021-11-28)
+
+
+### Bug Fixes
+
+* ci ([137b4b9](https://github.com/trustcerts/trustchain-sdk/commit/137b4b9f16d09ebe7d807beb66efcd00395418ad))
+
+
+
+
+
 ## [0.0.10](https://github.com/trustcerts/trustchain-sdk/compare/v0.0.8...v0.0.10) (2021-11-28)
 
 **Note:** Version bump only for package @trustcerts/template-create
