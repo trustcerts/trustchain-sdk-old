@@ -85,5 +85,5 @@
     "@trustcerts/core": "^0.0.10",
     "@trustcerts/did-id-create": "^0.0.10"
   },
-  "gitHead": "9cc3c3d078fe46729a72961bc6bd241667d43309"
+  "gitHead": "e01737dc89b7a68f46483ed5c9884dfa9e998a02"
 }
