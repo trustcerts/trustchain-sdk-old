@@ -1,5 +1,5 @@
 {
-  "version": "0.0.11",
+  "version": "0.0.12",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -52,7 +52,7 @@
     "typescript": "^3.9.10"
   },
   "dependencies": {
-    "@trustcerts/core": "^0.0.11"
+    "@trustcerts/core": "^0.0.12"
   },
   "gitHead": "e01737dc89b7a68f46483ed5c9884dfa9e998a02"
 }

@@ -1,5 +1,5 @@
 {
-  "version": "0.0.11",
+  "version": "0.0.12",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -74,8 +74,8 @@
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^6.0.4",
-    "@trustcerts/config-local": "^0.0.11",
-    "@trustcerts/template-create": "^0.0.11",
+    "@trustcerts/config-local": "^0.0.12",
+    "@trustcerts/template-create": "^0.0.12",
     "@trustcerts/wallet": "^0.0.6",
     "husky": "^7.0.4",
     "size-limit": "^6.0.4",
@@ -84,7 +84,7 @@
     "typescript": "^3.9.10"
   },
   "dependencies": {
-    "@trustcerts/core": "^0.0.11"
+    "@trustcerts/core": "^0.0.12"
   },
   "gitHead": "e01737dc89b7a68f46483ed5c9884dfa9e998a02"
 }
