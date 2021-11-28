@@ -87,5 +87,5 @@
     "@trustcerts/core": "^0.0.13",
     "axios": "^0.24.0"
   },
-  "gitHead": "ea64e524503eeea2229c2b549ad3e1a53aa34345"
+  "gitHead": "300c9dabe1e720082d960f0b3c67c1b4ce7f76b8"
 }
