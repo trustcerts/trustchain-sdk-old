@@ -17,7 +17,8 @@
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "size": "size-limit",
-    "analyze": "size-limit --why"
+    "analyze": "size-limit --why",
+    "api:platform": "openapi-generator-cli generate -g typescript-axios -i https://platform.dev.trustcerts.de/api-json -o src/platform --api-name-suffix=PlatformApi --additional-properties=supportsES6=true"
   },
   "husky": {
     "hooks": {
@@ -31,7 +32,7 @@
     "trailingComma": "es5"
   },
   "name": "@trustcerts/config-cloud",
-  "author": "Mirko Mollik",
+  "author": "trustcerts",
   "module": "dist/config-cloud.esm.js",
   "size-limit": [
     {
@@ -79,7 +80,8 @@
     "size-limit": "^6.0.4",
     "tsdx": "^0.14.1",
     "tslib": "^2.3.1",
-    "typescript": "^3.9.10"
+    "typescript": "^3.9.10",
+    "@openapitools/openapi-generator-cli": "^2.4.7"
   },
   "dependencies": {
     "@trustcerts/core": "^0.1.6",

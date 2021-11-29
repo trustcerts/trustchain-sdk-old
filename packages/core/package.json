@@ -19,8 +19,7 @@
     "size": "size-limit",
     "analyze": "size-limit --why",
     "api:gateway": "openapi-generator-cli generate -g typescript-axios -i https://api.gateway1.dev.trustcerts.de/api-json -o src/bc/gateway --api-name-suffix=GatewayApi --additional-properties=supportsES6=true",
-    "api:observer": "openapi-generator-cli generate -g typescript-axios -i https://api.observer1.dev.trustcerts.de/api-json -o src/bc/observer --api-name-suffix=ObserverApi --additional-properties=supportsES6=true",
-    "api:platform": "openapi-generator-cli generate -g typescript-axios -i https://platform.dev.trustcerts.de/api-json -o src/platform --api-name-suffix=PlatformApi --additional-properties=supportsES6=true"
+    "api:observer": "openapi-generator-cli generate -g typescript-axios -i https://api.observer1.dev.trustcerts.de/api-json -o src/bc/observer --api-name-suffix=ObserverApi --additional-properties=supportsES6=true"
   },
   "husky": {
     "hooks": {
@@ -34,7 +33,7 @@
     "trailingComma": "es5"
   },
   "name": "@trustcerts/core",
-  "author": "Mirko Mollik",
+  "author": "trustcerts",
   "module": "dist/common.esm.js",
   "size-limit": [
     {

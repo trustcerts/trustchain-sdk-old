@@ -10,9 +10,9 @@ import {
   DidNetworks,
   DocumentLoader,
   Identifier,
-  Platform,
   VerifiableCredentialBBS,
   logger,
+  SignatureType,
 } from '@trustcerts/core';
 import { BbsVerifiableCredentialIssuerService } from '@trustcerts/vc-create';
 import { BbsVerifiableCredentialVerifierService } from '../src/bbs';
@@ -76,13 +76,13 @@ describe('vc', () => {
     bbsAssertionKey = (
       await walletService.findOrCreate(
         VerificationRelationshipType.assertionMethod,
-        Platform.SignatureType.Bbs
+        SignatureType.Bbs
       )
     )[0];
     bbsAuthenticationKey = (
       await walletService.findOrCreate(
         VerificationRelationshipType.authentication,
-        Platform.SignatureType.Bbs
+        SignatureType.Bbs
       )
     )[0];
 
@@ -91,7 +91,7 @@ describe('vc', () => {
     const rsaKey = (
       await walletService.findOrCreate(
         VerificationRelationshipType.assertionMethod,
-        Platform.SignatureType.Rsa
+        SignatureType.Rsa
       )
     )[0];
     if (rsaKey !== undefined) {

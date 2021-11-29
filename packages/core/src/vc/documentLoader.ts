@@ -70,7 +70,7 @@ export class DocumentLoader {
         // TODO: check if TC did key id
         logger.debug('Resolving DID ' + url);
 
-        if (url == 'did:trust:tc:dev:REVOCATION_LIST_WITH_1234_REVOKED') {
+        if (url === 'did:trust:tc:dev:REVOCATION_LIST_WITH_1234_REVOKED') {
           return {
             contextUrl: null,
             document: this.revocationListWith1234Revoked,

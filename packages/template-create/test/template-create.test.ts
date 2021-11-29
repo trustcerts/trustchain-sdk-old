@@ -4,8 +4,8 @@ import {
   CryptoService,
   DidNetworks,
   Identifier,
-  Platform,
   VerificationRelationshipType,
+  SignatureType,
 } from '@trustcerts/core';
 import { LocalConfigService } from '@trustcerts/config-local';
 import { TemplateIssuerService } from '../src';
@@ -44,7 +44,7 @@ describe('test template service', () => {
     let key = (
       await wallet.findOrCreate(
         VerificationRelationshipType.assertionMethod,
-        Platform.SignatureType.Rsa
+        SignatureType.Rsa
       )
     )[0];
     await cryptoService.init(key);

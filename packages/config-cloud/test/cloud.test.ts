@@ -1,14 +1,13 @@
 import { CloudService, CloudConfigService } from '../src';
-import { Platform, logger } from '@trustcerts/core';
+import { logger } from '@trustcerts/core';
+import { AuthorizePlatformApi, Configuration } from '../src/platform';
 
 describe('test cloud functions', () => {
-  const url = 'https://platform.dev.trustcerts.de';
+  const url = 'https://dev.trustcerts.de';
   const username = 'root';
   const password = 'foo';
   it('register user', async () => {
-    const api = new Platform.AuthorizePlatformApi(
-      new Platform.Configuration({ basePath: url })
-    );
+    const api = new AuthorizePlatformApi(new Configuration({ basePath: url }));
     const res = await api
       .authControllerRegister({ username })
       .catch(err => logger.error(err.response.data));

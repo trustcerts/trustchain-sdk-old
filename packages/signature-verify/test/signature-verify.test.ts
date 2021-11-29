@@ -7,9 +7,9 @@ import {
   DidNetworks,
   base58Encode,
   Identifier,
-  Platform,
   logger,
   write,
+  SignatureType,
 } from '@trustcerts/core';
 import { LocalConfigService } from '@trustcerts/config-local';
 import { WalletService } from '@trustcerts/wallet';
@@ -39,7 +39,7 @@ describe('test signature service', () => {
     let key = (
       await wallet.findOrCreate(
         VerificationRelationshipType.assertionMethod,
-        Platform.SignatureType.Rsa
+        SignatureType.Rsa
       )
     )[0];
     await cryptoService.init(key);

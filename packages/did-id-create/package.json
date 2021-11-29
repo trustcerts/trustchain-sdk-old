@@ -31,7 +31,7 @@
     "trailingComma": "es5"
   },
   "name": "@trustcerts/did-id-create",
-  "author": "Mirko Mollik",
+  "author": "trustcerts",
   "module": "dist/did-id-create.esm.js",
   "size-limit": [
     {
