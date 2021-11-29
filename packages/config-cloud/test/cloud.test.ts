@@ -3,7 +3,7 @@ import { logger } from '@trustcerts/core';
 import { AuthorizePlatformApi, Configuration } from '../src/platform';
 
 describe('test cloud functions', () => {
-  const url = 'https://dev.trustcerts.de';
+  const url = 'https://platform.dev.trustcerts.de';
   const username = 'root';
   const password = 'foo';
   it('register user', async () => {
