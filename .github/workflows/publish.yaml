@@ -36,9 +36,9 @@ jobs:
           git config user.name "trustcerts"
           git config user.email "dev@trustcerts.de"          
           if [ ${{ github.base_ref }} = development ]; then
-            npx lerna version --conventional-commits --conventional-prerelease --preid beta --yes
+            npm run version:dev
           else
-            npx lerna version --conventional-commits --conventional-graduate --yes
+            npm run version
           fi
 
-          npx lerna publish from-git --yes --no-verify-access
+          npm run release
