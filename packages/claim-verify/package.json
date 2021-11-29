@@ -1,5 +1,5 @@
 {
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -74,7 +74,7 @@
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^6.0.4",
-    "@trustcerts/claim-create": "^0.1.1",
+    "@trustcerts/claim-create": "^0.1.2",
     "@trustcerts/config-local": "^0.1.0",
     "@trustcerts/signature-create": "^0.1.0",
     "@trustcerts/wallet": "^0.0.6",

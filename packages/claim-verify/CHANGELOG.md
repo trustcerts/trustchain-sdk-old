@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.2](https://github.com/trustcerts/trustchain-sdk/compare/v0.1.1...v0.1.2) (2021-11-29)
+
+
+### Bug Fixes
+
+* ci ([03dc442](https://github.com/trustcerts/trustchain-sdk/commit/03dc442e8cfe757c26d3171f15bceaa7c962784c))
+
+
+
+
+
 ## [0.1.1](https://github.com/trustcerts/trustchain-sdk/compare/v0.1.0...v0.1.1) (2021-11-29)
 
 **Note:** Version bump only for package @trustcerts/claim-verify
