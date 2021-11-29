@@ -4,7 +4,7 @@ import {
   ConfigService,
   DidNetworks,
   Identifier,
-  Platform,
+  SignatureType,
 } from '@trustcerts/core';
 import { WalletService } from '../src';
 import { LocalConfigService } from '@trustcerts/config-local';
@@ -31,7 +31,7 @@ describe('wallet', () => {
     await walletService.init();
 
     // Add a key for each SignatureType
-    for (const signatureType of Object.values(Platform.SignatureType)) {
+    for (const signatureType of Object.values(SignatureType)) {
       // Add a key for each verification relationship
       const key = await walletService.addKey(
         Object.values(VerificationRelationshipType),
@@ -61,7 +61,7 @@ describe('wallet', () => {
     // Push new key to local configService of wallet, but don't add it to the DID document
     const invalidKey = await generateKeyPair(
       walletService.did.id,
-      Platform.SignatureType.Bbs
+      SignatureType.Bbs
     );
     walletService.configService.config.keyPairs.push(invalidKey);
 

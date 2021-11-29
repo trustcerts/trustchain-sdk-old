@@ -1,13 +1,18 @@
 import {
   Config,
   DecryptedKeyPair,
-  Platform,
   exists,
   read,
   write,
 } from '@trustcerts/core';
 import { AxiosError, AxiosPromise } from 'axios';
 import { CloudEncryption } from './cloud-encryption';
+import {
+  AuthorizePlatformApi,
+  Configuration,
+  KeyPair,
+  SettingsPlatformApi,
+} from './platform';
 
 interface Credentials {
   accessToken: string;
@@ -20,13 +25,13 @@ interface Credentials {
  */
 export class CloudService {
   private accessToken!: string;
-  private authApi!: Platform.AuthorizePlatformApi;
-  private settingsApi!: Platform.SettingsPlatformApi;
+  private authApi!: AuthorizePlatformApi;
+  private settingsApi!: SettingsPlatformApi;
   private cloudEncryption: CloudEncryption;
 
   constructor(private url: string, private persistName = 'login') {
-    const configuration = new Platform.Configuration({ basePath: url });
-    this.authApi = new Platform.AuthorizePlatformApi(configuration);
+    const configuration = new Configuration({ basePath: url });
+    this.authApi = new AuthorizePlatformApi(configuration);
     this.cloudEncryption = new CloudEncryption();
   }
 
@@ -156,11 +161,11 @@ export class CloudService {
       this.cloudEncryption.exportRandomValue(),
       newPassword
     );
-    const configuration = new Platform.Configuration({
+    const configuration = new Configuration({
       basePath: this.url,
       accessToken: this.accessToken,
     });
-    const authApi = new Platform.AuthorizePlatformApi(configuration);
+    const authApi = new AuthorizePlatformApi(configuration);
     // update password and encryption key
     await authApi
       .authControllerChangePassword({
@@ -177,11 +182,11 @@ export class CloudService {
    * Requests the encrypted values from the server and decrypts them.
    */
   public async getConfig(): Promise<Config> {
-    const configuration = new Platform.Configuration({
+    const configuration = new Configuration({
       basePath: this.url,
       accessToken: this.accessToken,
     });
-    this.settingsApi = new Platform.SettingsPlatformApi(configuration);
+    this.settingsApi = new SettingsPlatformApi(configuration);
     const configResponse = await this.settingsApi
       .settingsControllerGetWallet()
       .catch((err: AxiosError) => {
@@ -199,9 +204,7 @@ export class CloudService {
     };
   }
 
-  private async decryptWallet(
-    wallet: Platform.KeyPair[]
-  ): Promise<DecryptedKeyPair[]> {
+  private async decryptWallet(wallet: KeyPair[]): Promise<DecryptedKeyPair[]> {
     const keys: DecryptedKeyPair[] = [];
     for (const keypair of wallet) {
       const key: JsonWebKey = JSON.parse(
@@ -222,8 +225,8 @@ export class CloudService {
    * @param config
    */
   async saveConfig(config: Config): Promise<void> {
-    const wallet: Platform.KeyPair[] = await Promise.all(
-      config.keyPairs.map(async keypair => {
+    const wallet: KeyPair[] = await Promise.all(
+      config.keyPairs.map(async (keypair: any) => {
         return {
           identifier: keypair.identifier,
           publicKey: keypair.publicKey,
@@ -231,7 +234,7 @@ export class CloudService {
             JSON.stringify(keypair.privateKey)
           ),
           // TODO remove
-          signatureType: (keypair.signatureType as unknown) as Platform.SignatureType,
+          signatureType: keypair.signatureType,
         };
       })
     );

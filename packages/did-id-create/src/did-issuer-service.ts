@@ -7,7 +7,6 @@ import {
   sortKeys,
   generateKeyPair,
   Identifier,
-  Platform,
   SignatureContent,
   IssuerService,
   Gateway,
@@ -15,6 +14,7 @@ import {
   DidIdResolver,
   DidCreation,
   DidId,
+  SignatureType,
 } from '@trustcerts/core';
 export class DidIdIssuerService extends IssuerService {
   protected api: Gateway.DidGatewayApi;
@@ -87,7 +87,7 @@ export class DidIdIssuerService extends IssuerService {
 }
 
 export class DidIdRegister {
-  private static defaultSignatureType = Platform.SignatureType.Rsa;
+  private static defaultSignatureType = SignatureType.Rsa;
 
   /**
    * creates a fresh did with a unique identifier. Add controller when they are passed.

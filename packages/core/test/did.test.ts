@@ -5,9 +5,9 @@ import {
   DidNetworks,
   Identifier,
   VerificationRelationshipType,
-  Platform,
   logger,
   Observer,
+  SignatureType,
 } from '..';
 import { LocalConfigService } from '@trustcerts/config-local';
 import { DidIdIssuerService, DidIdRegister } from '@trustcerts/did-id-create';
@@ -35,7 +35,7 @@ describe('test local config serviceze', () => {
       let key = (
         await wallet.findOrCreate(
           VerificationRelationshipType.assertionMethod,
-          Platform.SignatureType.Rsa
+          SignatureType.Rsa
         )
       )[0];
       await cryptoService.init(key);

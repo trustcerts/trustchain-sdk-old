@@ -4,7 +4,6 @@ export * from './logger';
 export * from './config';
 export * as Observer from './bc/observer';
 export * as Gateway from './bc/gateway';
-export * as Platform from './platform';
 
 export * from './did/did-verifier-service';
 export * from './did/did-resolver';

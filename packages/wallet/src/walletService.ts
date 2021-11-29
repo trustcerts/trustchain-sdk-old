@@ -6,9 +6,9 @@ import {
   DidIdResolver,
   DidNetworks,
   logger,
-  Platform,
   ConfigService,
   DecryptedKeyPair,
+  SignatureType,
 } from '@trustcerts/core';
 import { DidIdIssuerService, DidIdRegister } from '@trustcerts/did-id-create';
 export class WalletService {
@@ -77,7 +77,7 @@ export class WalletService {
 
   find(
     verificationRelationshipType: VerificationRelationshipType,
-    signatureType: Platform.SignatureType
+    signatureType: SignatureType
   ): DecryptedKeyPair[] {
     const allowedIds = this.did.findByVerificationRelationship(
       verificationRelationshipType
@@ -93,7 +93,7 @@ export class WalletService {
 
   async findOrCreate(
     verificationRelationshipType: VerificationRelationshipType,
-    signatureType: Platform.SignatureType
+    signatureType: SignatureType
   ): Promise<DecryptedKeyPair[]> {
     const allowedIds = this.did.findByVerificationRelationship(
       verificationRelationshipType
@@ -143,20 +143,20 @@ export class WalletService {
    * This method add as new key via addKey and persists it in the DID document by using or creating a modificaton key.
    *
    * @param {VerificationRelationshipType} verificationRelationshipType The verification relationships it shall be added to
-   * @param {Platform.SignatureType} signatureType The signature type of the key
+   * @param {SignatureType} signatureType The signature type of the key
    * @returns {Promise<DecryptedKeyPair>} The newly created key pair
    * @memberof WalletService
    */
   async createAndPersistKey(
     verificationRelationshipType: VerificationRelationshipType,
-    signatureType: Platform.SignatureType
+    signatureType: SignatureType
   ): Promise<DecryptedKeyPair> {
     // get key to update the did
     const cryptoDid = new CryptoService();
     const modificationKey = (
       await this.findOrCreate(
         VerificationRelationshipType.modification,
-        Platform.SignatureType.Rsa
+        SignatureType.Rsa
       )
     )[0];
     // init crypto key
@@ -184,7 +184,7 @@ export class WalletService {
    */
   async addKey(
     verificationRelationships: VerificationRelationshipType[] = [],
-    signatureType: Platform.SignatureType
+    signatureType: SignatureType
   ): Promise<DecryptedKeyPair> {
     const newKey = await generateKeyPair(this.did.id, signatureType);
     // persist in config

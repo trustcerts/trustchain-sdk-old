@@ -1,14 +1,14 @@
+import { SignatureType } from './signature-type';
 import { defaultAlgorithm } from './sign';
 import { hashAlgorithm, subtle } from './values';
 import { Bls12381G2KeyPair } from '@mattrglobal/jsonld-signatures-bbs';
 import { DecryptedKeyPair } from '../config/config.dto';
 import { base58Encode } from '../helpers';
-import { Platform } from '..';
 
 /**
  * Type of a key.
  */
-export enum KeyType {
+export const enum KeyType {
   RSA = 'RSA',
   EC = 'EC',
 }
@@ -73,9 +73,9 @@ export function generateCryptoKeyPair(
  */
 export async function generateKeyPair(
   id: string,
-  signatureType: Platform.SignatureType = Platform.SignatureType.Rsa
+  signatureType: SignatureType = SignatureType.Rsa
 ): Promise<DecryptedKeyPair> {
-  if (signatureType == Platform.SignatureType.Rsa) {
+  if (signatureType === SignatureType.Rsa) {
     const keys = await generateCryptoKeyPair(defaultAlgorithm);
     if (keys.privateKey && keys.publicKey) {
       return {
@@ -87,7 +87,7 @@ export async function generateKeyPair(
     } else {
       throw Error('faild to generate keys');
     }
-  } else if (signatureType == Platform.SignatureType.Bbs) {
+  } else if (signatureType === SignatureType.Bbs) {
     const bbsKeyPair = await Bls12381G2KeyPair.generate();
     return {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

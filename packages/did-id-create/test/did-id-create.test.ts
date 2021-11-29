@@ -6,8 +6,8 @@ import {
   Identifier,
   generateKeyPair,
   VerificationRelationshipType,
-  Platform,
   Observer,
+  SignatureType,
 } from '@trustcerts/core';
 import { LocalConfigService } from '@trustcerts/config-local';
 import { DidIdIssuerService, DidIdRegister } from '../src';
@@ -22,6 +22,7 @@ describe('test local config service', () => {
   const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
 
   beforeAll(async () => {
+    // console.log(SignatureType.Rsa);
     DidNetworks.add('tc:dev', testValues.network);
     Identifier.setNetwork('tc:dev');
     config = new LocalConfigService(testValues.filePath);
@@ -33,7 +34,7 @@ describe('test local config service', () => {
     let key = (
       await wallet.findOrCreate(
         VerificationRelationshipType.assertionMethod,
-        Platform.SignatureType.Rsa
+        SignatureType.Rsa
       )
     )[0];
     await cryptoService.init(key);

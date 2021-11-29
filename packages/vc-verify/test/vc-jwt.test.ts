@@ -4,10 +4,10 @@ import {
   CryptoService,
   DidNetworks,
   Identifier,
-  Platform,
   logger,
   JWTPayloadVC,
   JWTPayloadVP,
+  SignatureType,
 } from '@trustcerts/core';
 
 import { RevocationService } from '@trustcerts/vc-revocation';
@@ -53,7 +53,7 @@ describe('vc', () => {
     const rsaKey = (
       await walletService.findOrCreate(
         VerificationRelationshipType.assertionMethod,
-        Platform.SignatureType.Rsa
+        SignatureType.Rsa
       )
     )[0];
     if (rsaKey !== undefined) {
