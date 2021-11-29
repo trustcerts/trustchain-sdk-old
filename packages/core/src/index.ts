@@ -19,6 +19,7 @@ export * from './did/id/did-id-document';
 export * from './did/id/did-id-resolver';
 export * from './did/did-creation';
 
+
 export * from './crypto';
 export * from './crypto-service';
 export * from './issuerService';
