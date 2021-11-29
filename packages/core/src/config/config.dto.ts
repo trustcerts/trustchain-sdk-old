@@ -1,4 +1,4 @@
-import { SignatureType } from '../crypto/key';
+import { SignatureType } from '../crypto/signature-type';
 
 export class DecryptedKeyPair {
   privateKey!: JsonWebKey;

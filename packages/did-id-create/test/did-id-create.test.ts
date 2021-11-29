@@ -22,6 +22,7 @@ describe('test local config service', () => {
   const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
 
   beforeAll(async () => {
+    // console.log(SignatureType.Rsa);
     DidNetworks.add('tc:dev', testValues.network);
     Identifier.setNetwork('tc:dev');
     config = new LocalConfigService(testValues.filePath);

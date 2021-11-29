@@ -4,7 +4,6 @@ import {
   exists,
   read,
   write,
-  SignatureType,
 } from '@trustcerts/core';
 import { AxiosError, AxiosPromise } from 'axios';
 import { CloudEncryption } from './cloud-encryption';
@@ -235,7 +234,7 @@ export class CloudService {
             JSON.stringify(keypair.privateKey)
           ),
           // TODO remove
-          signatureType: (keypair.signatureType as unknown) as SignatureType,
+          signatureType: keypair.signatureType,
         };
       })
     );

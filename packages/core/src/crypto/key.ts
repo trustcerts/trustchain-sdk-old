@@ -1,3 +1,4 @@
+import { SignatureType } from './signature-type';
 import { defaultAlgorithm } from './sign';
 import { hashAlgorithm, subtle } from './values';
 import { Bls12381G2KeyPair } from '@mattrglobal/jsonld-signatures-bbs';
@@ -7,17 +8,9 @@ import { base58Encode } from '../helpers';
 /**
  * Type of a key.
  */
-export enum KeyType {
+export const enum KeyType {
   RSA = 'RSA',
   EC = 'EC',
-}
-
-/**
- * Default signature types
- */
-export declare enum SignatureType {
-  Rsa = 'RSA',
-  Bbs = 'BBS+',
 }
 
 /**
