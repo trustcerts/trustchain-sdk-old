@@ -1,5 +1,5 @@
 {
-  "version": "0.3.0",
+  "version": "0.3.1",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -55,8 +55,8 @@
     "@mattrglobal/bls12381-key-pair": "^0.7.0",
     "@mattrglobal/jsonld-signatures-bbs": "^0.11.0",
     "@transmute/vc-status-rl-2020": "^0.7.0-unstable.8",
-    "@trustcerts/core": "^0.3.0",
-    "@trustcerts/vc-revocation": "^0.3.0",
+    "@trustcerts/core": "^0.3.1",
+    "@trustcerts/vc-revocation": "^0.3.1",
     "jose": "^4.3.7",
     "jsonld-signatures": "5.0.1"
   },
