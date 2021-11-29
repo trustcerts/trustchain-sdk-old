@@ -10,6 +10,7 @@
     "build": "./build.sh",
     "postinstall": "./bootstrap.sh",
     "version": "lerna version --conventional-commits --conventional-graduate --yes",
+    "version:dev": "lerna version --conventional-commits --conventional-prerelease --preid beta --yes",
     "release": "lerna publish from-git --yes --no-verify-access",
     "release:canary": "lerna publish --canary",
     "install:pages": "lerna bootstrap --scope smoke-test-react --include-dependencies",
