@@ -6,6 +6,10 @@ import {
   ClaimVerifierService,
 } from '@trustcerts/claim-verify';
 import Ajv from 'ajv';
+
+/**
+ * service to creaton and revocation of claims.
+ */
 export class ClaimIssuerService {
   /**
    * create a claim.
