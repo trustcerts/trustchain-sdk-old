@@ -8,7 +8,7 @@ import {
 import Ajv from 'ajv';
 
 /**
- * service to creaton and revocation of claims.
+ * service to creaton and revocation of claims
  */
 export class ClaimIssuerService {
   /**
