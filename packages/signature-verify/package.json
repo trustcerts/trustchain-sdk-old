@@ -31,7 +31,7 @@
     "trailingComma": "es5"
   },
   "name": "@trustcerts/signature-verify",
-  "author": "trustcerts",
+  "author": "Mirko Mollik",
   "module": "dist/signature-verify.esm.js",
   "size-limit": [
     {

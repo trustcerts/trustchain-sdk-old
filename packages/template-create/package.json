@@ -31,7 +31,7 @@
     "trailingComma": "es5"
   },
   "name": "@trustcerts/template-create",
-  "author": "trustcerts",
+  "author": "Mirko Mollik",
   "module": "dist/template-create.esm.js",
   "size-limit": [
     {

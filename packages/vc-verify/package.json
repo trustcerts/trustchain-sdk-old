@@ -31,7 +31,7 @@
     "trailingComma": "es5"
   },
   "name": "@trustcerts/vc-verify",
-  "author": "trustcerts",
+  "author": "Mirko Mollik",
   "module": "dist/vc-verify.esm.js",
   "size-limit": [
     {
@@ -75,7 +75,6 @@
   "devDependencies": {
     "@size-limit/preset-small-lib": "^6.0.3",
     "@transmute/vc-status-rl-2020": "^0.7.0-unstable.16",
-    "@trustcerts/vc-create": "^0.1.6",
     "husky": "^7.0.4",
     "size-limit": "^6.0.3",
     "tsdx": "^0.14.1",
@@ -86,6 +85,7 @@
     "@mattrglobal/jsonld-signatures-bbs": "^0.11.0",
     "@trustcerts/config-local": "^0.1.6",
     "@trustcerts/core": "^0.1.6",
+    "@trustcerts/vc-create": "^0.1.6",
     "@trustcerts/vc-revocation": "^0.1.6",
     "@trustcerts/wallet": "^0.0.6",
     "base64url": "^3.0.1",

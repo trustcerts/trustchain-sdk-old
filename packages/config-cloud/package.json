@@ -31,7 +31,7 @@
     "trailingComma": "es5"
   },
   "name": "@trustcerts/config-cloud",
-  "author": "trustcerts",
+  "author": "Mirko Mollik",
   "module": "dist/config-cloud.esm.js",
   "size-limit": [
     {

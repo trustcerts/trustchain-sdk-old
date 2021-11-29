@@ -31,7 +31,7 @@
     "trailingComma": "es5"
   },
   "name": "@trustcerts/vc-create",
-  "author": "trustcerts",
+  "author": "Mirko Mollik",
   "module": "dist/vc-create.esm.js",
   "size-limit": [
     {
