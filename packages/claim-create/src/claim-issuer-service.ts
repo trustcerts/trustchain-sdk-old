@@ -7,6 +7,9 @@ import {
 } from '@trustcerts/claim-verify';
 import Ajv from 'ajv';
 export class ClaimIssuerService {
+  /**
+   * create a claim
+   */
   async create(
     template: Observer.Template,
     values: ClaimValues,
