@@ -8,7 +8,7 @@ import {
 import Ajv from 'ajv';
 export class ClaimIssuerService {
   /**
-   * create a claim
+   * create a claim.
    */
   async create(
     template: Observer.Template,
