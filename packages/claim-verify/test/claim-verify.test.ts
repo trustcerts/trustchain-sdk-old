@@ -1,5 +1,4 @@
 import {
-  Platform,
   Gateway,
   CryptoService,
   VerificationRelationshipType,
