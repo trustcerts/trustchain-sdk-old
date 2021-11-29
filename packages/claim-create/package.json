@@ -90,5 +90,5 @@
     "@trustcerts/core": "^0.1.0",
     "@trustcerts/signature-create": "^0.1.0"
   },
-  "gitHead": "9cc3c3d078fe46729a72961bc6bd241667d43309"
+  "gitHead": "81da4338c72f81cd2026c6c51e5b573e6944644e"
 }

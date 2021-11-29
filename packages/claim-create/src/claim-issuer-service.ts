@@ -25,6 +25,11 @@ export class ClaimIssuerService {
     return new Claim(values, template, host);
   }
 
+  /**
+   * revokes a claim.
+   * @param claim
+   * @param signatureIssuer
+   */
   async revoke(
     claim: Claim,
     signatureIssuer: SignatureIssuerService
