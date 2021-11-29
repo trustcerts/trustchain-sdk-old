@@ -29,6 +29,9 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: "Install deps"
+        run: npm ci
+
       - name: "Version and publish"
         env:
           GH_TOKEN: ${{ secrets.NPM_TOKEN }}
