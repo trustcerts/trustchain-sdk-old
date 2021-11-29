@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.5](https://github.com/trustcerts/sdk/compare/v0.1.3...v0.1.5) (2021-11-29)
+
+
+### Bug Fixes
+
+* test ([be68213](https://github.com/trustcerts/sdk/commit/be6821338d80b07153dfabf5cc605863cc00bdd0))
+
+
+
+
+
+## [0.1.4](https://github.com/trustcerts/sdk/compare/v0.1.3...v0.1.4) (2021-11-29)
+
+
+### Bug Fixes
+
+* test ([be68213](https://github.com/trustcerts/sdk/commit/be6821338d80b07153dfabf5cc605863cc00bdd0))
+
+
+
+
+
 ## [0.1.3](https://github.com/trustcerts/sdk/compare/v0.1.2...v0.1.3) (2021-11-29)
 
 
