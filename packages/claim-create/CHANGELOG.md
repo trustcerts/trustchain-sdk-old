@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/trustcerts/trustchain-sdk/compare/v0.1.0...v0.1.1) (2021-11-29)
+
+
+### Bug Fixes
+
+* ci ([74f298a](https://github.com/trustcerts/trustchain-sdk/commit/74f298ac039d8f01ff13699d97da3b3551916738))
+
+
+
+
+
 # [0.1.0](https://github.com/trustcerts/trustchain-sdk/compare/v0.0.9...v0.1.0) (2021-11-29)
 
 
