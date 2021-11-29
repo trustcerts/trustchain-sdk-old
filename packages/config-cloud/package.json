@@ -1,5 +1,5 @@
 {
-  "version": "0.1.6",
+  "version": "0.3.0",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -74,17 +74,17 @@
     ]
   },
   "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.4.7",
     "@size-limit/preset-small-lib": "^6.0.4",
     "@types/axios": "^0.14.0",
     "husky": "^7.0.4",
     "size-limit": "^6.0.4",
     "tsdx": "^0.14.1",
     "tslib": "^2.3.1",
-    "typescript": "^3.9.10",
-    "@openapitools/openapi-generator-cli": "^2.4.7"
+    "typescript": "^3.9.10"
   },
   "dependencies": {
-    "@trustcerts/core": "^0.1.6",
+    "@trustcerts/core": "^0.3.0",
     "axios": "0.21.1"
   },
   "gitHead": "9cc3c3d078fe46729a72961bc6bd241667d43309"
