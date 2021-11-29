@@ -1,19 +1,16 @@
-import {
-  Configuration,
-  ShortenPlatformApi,
-} from '@trustcerts/core/dist/platform';
+import { Platform } from '@trustcerts/core';
 
 /**
  * Shortes a url
  */
 export class ShortenerService {
-  private api: ShortenPlatformApi;
+  private api: Platform.ShortenPlatformApi;
 
   constructor(url: string) {
-    const configuration = new Configuration({
+    const configuration = new Platform.Configuration({
       basePath: url,
     });
-    this.api = new ShortenPlatformApi(configuration);
+    this.api = new Platform.ShortenPlatformApi(configuration);
   }
 
   public shorten(url: string, iv: string): Promise<string> {
