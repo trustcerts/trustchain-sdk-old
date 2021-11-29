@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/trustcerts/trustchain-sdk/compare/v0.1.6...v0.3.0) (2021-11-29)
+
+
+### Bug Fixes
+
+* change author ([5699e1d](https://github.com/trustcerts/trustchain-sdk/commit/5699e1d18d219fb7dbaa9f49cc4ed24f85973fc2))
+* change author to trustcerts ([b7a6844](https://github.com/trustcerts/trustchain-sdk/commit/b7a68442b4ea2f345788d62520e001aade36aabb))
+* remove platform form core ([17e2bb7](https://github.com/trustcerts/trustchain-sdk/commit/17e2bb73942dca9d892ed58b5fd348e5fdf15e4e))
+
+
+
+
+
+# [0.2.0](https://github.com/trustcerts/trustchain-sdk/compare/v0.1.6...v0.2.0) (2021-11-29)
+
+
+### Bug Fixes
+
+* change author ([5699e1d](https://github.com/trustcerts/trustchain-sdk/commit/5699e1d18d219fb7dbaa9f49cc4ed24f85973fc2))
+* change author to trustcerts ([b7a6844](https://github.com/trustcerts/trustchain-sdk/commit/b7a68442b4ea2f345788d62520e001aade36aabb))
+* remove platform form core ([17e2bb7](https://github.com/trustcerts/trustchain-sdk/commit/17e2bb73942dca9d892ed58b5fd348e5fdf15e4e))
+
+
+
+
+
 ## [0.1.6](https://github.com/trustcerts/trustchain-sdk/compare/v0.1.5...v0.1.6) (2021-11-29)
 
 
