@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.1.6",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -78,8 +78,8 @@
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "^2.4.7",
     "@size-limit/preset-small-lib": "^5.0.5",
-    "@trustcerts/config-local": "^0.1.0",
-    "@trustcerts/did-id-create": "^0.1.0",
+    "@trustcerts/config-local": "^0.1.6",
+    "@trustcerts/did-id-create": "^0.1.6",
     "@trustcerts/wallet": "^0.0.6",
     "@types/axios": "^0.14.0",
     "@types/bs58": "^4.0.1",
