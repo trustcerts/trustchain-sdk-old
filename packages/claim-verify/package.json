@@ -31,7 +31,7 @@
     "trailingComma": "es5"
   },
   "name": "@trustcerts/claim-verify",
-  "author": "Mirko Mollik",
+  "author": "trustcerts",
   "module": "dist/claim-verify.esm.js",
   "size-limit": [
     {
@@ -77,6 +77,7 @@
     "@trustcerts/claim-create": "^0.1.6",
     "@trustcerts/config-local": "^0.1.6",
     "@trustcerts/signature-create": "^0.1.6",
+    "@trustcerts/template-create": "^0.1.6",
     "@trustcerts/wallet": "^0.0.6",
     "@types/mustache": "^4.1.2",
     "@types/node": "^16.11.7",
@@ -91,7 +92,6 @@
   "dependencies": {
     "@trustcerts/core": "^0.1.6",
     "@trustcerts/signature-verify": "^0.1.6",
-    "@trustcerts/template-create": "^0.1.6",
     "@trustcerts/template-verify": "^0.1.6",
     "mustache": "^4.2.0",
     "protobufjs": "^6.11.2",

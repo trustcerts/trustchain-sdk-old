@@ -34,7 +34,7 @@
     "trailingComma": "es5"
   },
   "name": "@trustcerts/core",
-  "author": "Mirko Mollik",
+  "author": "trustcerts",
   "module": "dist/common.esm.js",
   "size-limit": [
     {

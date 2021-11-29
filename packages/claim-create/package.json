@@ -31,7 +31,7 @@
     "trailingComma": "es5"
   },
   "name": "@trustcerts/claim-create",
-  "author": "Mirko Mollik",
+  "author": "trustcerts",
   "module": "dist/claim-create.esm.js",
   "size-limit": [
     {

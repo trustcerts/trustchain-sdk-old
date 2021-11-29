@@ -31,7 +31,7 @@
     "trailingComma": "es5"
   },
   "name": "@trustcerts/vc-revocation",
-  "author": "Mirko Mollik",
+  "author": "trustcerts",
   "module": "dist/vc-revocation.esm.js",
   "size-limit": [
     {
