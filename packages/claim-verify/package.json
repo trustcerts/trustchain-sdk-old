@@ -1,5 +1,5 @@
 {
-  "version": "0.3.2",
+  "version": "0.3.3",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -75,9 +75,9 @@
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^6.0.4",
-    "@trustcerts/claim-create": "^0.3.2",
-    "@trustcerts/config-local": "^0.3.2",
-    "@trustcerts/signature-create": "^0.3.2",
+    "@trustcerts/claim-create": "^0.3.3",
+    "@trustcerts/config-local": "^0.3.3",
+    "@trustcerts/signature-create": "^0.3.3",
     "@trustcerts/wallet": "^0.0.6",
     "@types/mustache": "^4.1.2",
     "@types/node": "^16.11.7",
@@ -91,10 +91,10 @@
   },
   "dependencies": {
     "@openapitools/openapi-generator-cli": "^2.4.7",
-    "@trustcerts/core": "^0.3.2",
-    "@trustcerts/signature-verify": "^0.3.2",
-    "@trustcerts/template-create": "^0.3.2",
-    "@trustcerts/template-verify": "^0.3.2",
+    "@trustcerts/core": "^0.3.3",
+    "@trustcerts/signature-verify": "^0.3.3",
+    "@trustcerts/template-create": "^0.3.3",
+    "@trustcerts/template-verify": "^0.3.3",
     "mustache": "^4.2.0",
     "protobufjs": "^6.11.2",
     "qrcode": "^1.4.4"

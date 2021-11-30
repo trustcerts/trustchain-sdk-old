@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.3](https://github.com/trustcerts/sdk/compare/v0.3.2...v0.3.3) (2021-11-30)
+
+
+### Bug Fixes
+
+* fix bug in isbrowser function ([ad82b59](https://github.com/trustcerts/sdk/commit/ad82b59b50b7c09dda8d8a74fc2116e8ae60eb0e))
+
+
+
+
+
 ## [0.3.2](https://github.com/trustcerts/sdk/compare/v0.3.1...v0.3.2) (2021-11-29)
 
 
