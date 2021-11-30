@@ -8,7 +8,11 @@ let read: (path: string) => string;
  * Checks if code is run in browser
  */
 function isBrowser(): boolean {
-  return typeof process !== 'object';
+  return (
+    (typeof process !== 'undefined' &&
+      process.versions &&
+      process.versions.node) === undefined
+  );
 }
 
 function base58Encode(buffer: Buffer | number[] | Uint8Array): string {
