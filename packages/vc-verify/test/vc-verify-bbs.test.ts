@@ -17,22 +17,12 @@ import {
 import { BbsVerifiableCredentialIssuerService } from '@trustcerts/vc-create';
 import { BbsVerifiableCredentialVerifierService } from '../src/bbs';
 
-import { createList, createCredential } from '@transmute/vc-status-rl-2020';
-import { RevocationService } from '@trustcerts/vc-revocation';
 import { purposes, verify } from 'jsonld-signatures';
 
 import { WalletService } from '@trustcerts/wallet';
 import { LocalConfigService } from '@trustcerts/config-local';
 
 import { readFileSync } from 'fs';
-
-//import { JWT } from '../src/jwt-service';
-// import {
-//   JWTPayloadVC,
-//   JWTPayloadVP,
-// } from '../src/vc/vc-jwt/credential.interface';
-// import { VerifiableCredentialIssuerService } from '../src/vc/vc-jwt/verifiable-credential-issuer-service';
-// import { VerifiableCredentialVerifierService } from '../src/vc/vc-jwt/verifiable-credential-verifier-service';
 
 /**
  * Test vc class.
@@ -47,10 +37,7 @@ describe('vc', () => {
 
   let walletService: WalletService;
 
-  //jest.setTimeout(20000000);
   beforeAll(async () => {
-    // TODO: Zeile löschen
-    //jest.setTimeout(20000000);
 
     const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
 
@@ -63,15 +50,6 @@ describe('vc', () => {
     await walletService.init();
 
     cryptoServiceRSA = new CryptoService();
-
-    /*
-        const generateOptions: GenerateKeyPairOptions = {
-        //id: '',
-        // controller: 'did:trust:test'
-        };
-
-        const bbsKeyPair = await Bls12381G2KeyPair.generate(generateOptions);
-        */
 
     bbsAssertionKey = (
       await walletService.findOrCreate(
@@ -86,8 +64,6 @@ describe('vc', () => {
       )
     )[0];
 
-    // await cryptoServiceBBS.init(bbsKey);
-
     const rsaKey = (
       await walletService.findOrCreate(
         VerificationRelationshipType.assertionMethod,
@@ -98,22 +74,6 @@ describe('vc', () => {
       await cryptoServiceRSA.init(rsaKey);
     }
   }, 10000);
-
-  // async function createVc() {
-  //   const vcIssuerService = new VerifiableCredentialIssuerService();
-
-  //   return await vcIssuerService.createVerifiableCredential(
-  //     {
-  //       '@context': [],
-  //       type: ['TestCredential'],
-  //       credentialSubject: { id: 'did:max:mustermann' },
-  //       id: 'unique_id',
-  //       issuer: config.config.invite!.id,
-  //       // nonce: 'randomVC',
-  //     },
-  //     cryptoServiceRSA
-  //   );
-  // }
 
   // BBS+
   async function createVcBbs(): Promise<VerifiableCredentialBBS> {
@@ -154,82 +114,6 @@ describe('vc', () => {
     );
   }
 
-  // async function createVp() {
-  //   const vcIssuerService = new VerifiableCredentialIssuerService();
-  //   const vc1 = await createVc();
-  //   const vc2 = await createVc();
-  //   return await vcIssuerService.createPresentation(
-  //     {
-  //       '@context': [],
-  //       type: ['TestPresentation'],
-  //       verifiableCredentials: [vc1, vc2],
-  //       domain: 'domain',
-  //       challenge: 'challenge',
-  //       holder: 'did:max:mustermann',
-  //       nonce: 'randomVP',
-  //     },
-  //     cryptoServiceRSA
-  //   );
-  // }
-
-  it('revocation', async () => {
-    // Klasse fürs RevocationList-Handling (gib mir eine Liste mit Index, setze revoked / nicht revoked, ...)
-    // Müssen Methode machen fürs Erstellen eines revocationList-Credentials
-    // welche id soll eine RevocationList haben? => did:trust:[...]
-    // Welchen Index innerhalb einer Liste soll ein Credential haben?
-    // -> wir brauchen einen API-Call, um einen Credential-Index für ein neues Credential zu bekommen
-    // Müssen beim Erstellen eines VC auch den Credential-Status setzen in der revocationList
-    // Müssen beim Verifien eine RevocationList über den docLoader resolven
-    // -> können wir erstmal mocken und ein vorher erstelltes hardcoded revocationList-Credential resolven lassen
-
-    // Todo Montag:
-    // rausfinden id für credentialStatus und in issuerService anpassen
-    // Tests anpassen
-    // für JWT analog umsetzen
-
-    const vcIssuerService = new BbsVerifiableCredentialIssuerService();
-    const id = 'https://example.com/status/2';
-    const length = 100000;
-    const issuer = config.config.invite!.id;
-    // const listCredential =
-    await vcIssuerService.createRevocationListCredential(
-      id,
-      length,
-      issuer,
-      bbsAssertionKey
-    );
-
-    const list = await createList({ length: length });
-    list.setRevoked(1234, true);
-    const rlCredential = await createCredential({
-      id: 'did:trust:tc:dev:REVOCATION_LIST_WITH_1234_REVOKED',
-      list,
-    });
-
-    const bbsVcIssuerService = new BbsVerifiableCredentialIssuerService();
-
-    const vc = await bbsVcIssuerService.createBBSVerifiableCredential(
-      {
-        ...rlCredential,
-        issuer: issuer,
-      },
-      bbsAssertionKey,
-      false
-    );
-
-    logger.debug(vc);
-  });
-
-  // it('create vc', async () => {
-  //   const vc = await createVc();
-  //   logger.debug(vc);
-  // }, 15000);
-
-  // BBS+
-  it('create BBS vc', async () => {
-    const vc = await createVcBbs();
-    logger.debug(vc);
-  }, 15000);
 
   it('BBS selective disclosure', async () => {
     const docLoader = new DocumentLoader().getLoader();
@@ -275,101 +159,11 @@ describe('vc', () => {
     expect(await vcVerifierService.verifyCredential(vc)).toBe(true);
   }, 15000);
 
-  // it('verify vc', async () => {
-  //   const vc = await createVc();
-  //   const vcVerifierService = new VerifiableCredentialVerifierService();
-  //   expect(await vcVerifierService.verifyCredential(vc)).toBe(true);
-  // }, 15000);
-
-  it('create BBS vp', async () => {
-    const vp = await createVpBbs();
-    logger.debug(JSON.stringify(vp, null, 4));
-  }, 15000);
-
-  // it('create vp', async () => {
-  //   const vp = await createVp();
-  //   const vpJWT = new JWT(vp);
-  //   const vpJWTPayload = vpJWT.getPayload() as JWTPayloadVP;
-  //   const vp_ = vpJWTPayload.vp;
-  //   logger.debug(JSON.stringify(vp, null, 4));
-  //   logger.debug(vpJWT);
-  // }, 15000);
-
-  // it('verify vp', async () => {
-  //   const vp = await createVp();
-  //   logger.debug(vp);
-  //   const vcVerifierService = new VerifiableCredentialVerifierService();
-  //   expect(await vcVerifierService.verifyPresentation(vp)).toBe(true);
-  // }, 15000);
   it('verify BBS vp', async () => {
     const vp = await createVpBbs();
     logger.debug(vp);
     const vcVerifierService = new BbsVerifiableCredentialVerifierService();
     expect(await vcVerifierService.verifyPresentation(vp)).toBe(true);
-  }, 15000);
-
-  // it('verify revocation JWT', async () => {
-  //   const vc = await createVc();
-  //   const vcJWT = new JWT(vc);
-  //   const vcJWTPayload = vcJWT.getPayload() as JWTPayloadVC;
-  //   const vcVerifierService = new VerifiableCredentialVerifierService();
-  //   const revocationService = new RevocationService();
-  //   await revocationService.init();
-
-  //   // Expect credential to be valid
-  //   expect(await vcVerifierService.verifyCredential(vc)).toBe(true);
-  //   // Expect credential to be not revoked
-  //   expect(
-  //     await revocationService.isRevoked(vcJWTPayload.vc.credentialStatus!)
-  //   ).toBe(false);
-
-  //   // Revoke credential
-  //   revocationService.setRevoked(vcJWTPayload.vc.credentialStatus!, true);
-
-  //   // Expect credential to be invalid
-  //   expect(await vcVerifierService.verifyCredential(vc)).toBe(false);
-  //   // Expect credential to be revoked
-  //   expect(
-  //     await revocationService.isRevoked(vcJWTPayload.vc.credentialStatus!)
-  //   ).toBe(true);
-
-  //   // Un-revoke credential
-  //   revocationService.setRevoked(vcJWTPayload.vc.credentialStatus!, false);
-
-  //   // Expect credential to be valid again
-  //   expect(await vcVerifierService.verifyCredential(vc)).toBe(true);
-  //   // Expect credential to be not revoked again
-  //   expect(
-  //     await revocationService.isRevoked(vcJWTPayload.vc.credentialStatus!)
-  //   ).toBe(false);
-  // }, 15000);
-
-  it('verify revocation BBS+', async () => {
-    const vc = await createVcBbs();
-    const vcVerifierService = new BbsVerifiableCredentialVerifierService();
-    const revocationService = new RevocationService();
-    await revocationService.init();
-
-    // Expect credential to be valid
-    expect(await vcVerifierService.verifyCredential(vc)).toBe(true);
-    // Expect credential to be not revoked
-    expect(await revocationService.isRevoked(vc.credentialStatus!)).toBe(false);
-
-    // Revoke credential
-    revocationService.setRevoked(vc.credentialStatus!, true);
-
-    // Expect credential to be invalid
-    expect(await vcVerifierService.verifyCredential(vc)).toBe(false);
-    // Expect credential to be revoked
-    expect(await revocationService.isRevoked(vc.credentialStatus!)).toBe(true);
-
-    // Un-revoke credential
-    revocationService.setRevoked(vc.credentialStatus!, false);
-
-    // Expect credential to be valid again
-    expect(await vcVerifierService.verifyCredential(vc)).toBe(true);
-    // Expect credential to be not revoked again
-    expect(await revocationService.isRevoked(vc.credentialStatus!)).toBe(false);
   }, 15000);
 
   // Beispiel, um Zugriff auf Properties der VC/VP zu demonstrieren

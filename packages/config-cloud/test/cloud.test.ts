@@ -23,6 +23,7 @@ describe('test cloud functions', () => {
   it('login', async () => {
     const cloud = new CloudService(url, 'tmp/login');
     await cloud.init().catch(() => {
+      console.info("LOGIN FAILED!!!!");
       return cloud.login(username, password);
     });
   });
