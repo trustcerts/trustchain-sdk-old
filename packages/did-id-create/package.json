@@ -1,5 +1,5 @@
 {
-  "version": "0.3.3",
+  "version": "0.3.4",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -74,7 +74,7 @@
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^5.0.5",
-    "@trustcerts/config-local": "^0.3.3",
+    "@trustcerts/config-local": "^0.3.4",
     "@trustcerts/wallet": "^0.0.6",
     "@types/axios": "^0.14.0",
     "husky": "^7.0.2",
@@ -84,7 +84,7 @@
     "typescript": "^4.4.3"
   },
   "dependencies": {
-    "@trustcerts/core": "^0.3.3",
+    "@trustcerts/core": "^0.3.4",
     "axios": "^0.24.0"
   },
   "gitHead": "9cc3c3d078fe46729a72961bc6bd241667d43309"
