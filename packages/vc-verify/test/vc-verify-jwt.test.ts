@@ -10,8 +10,6 @@ import {
   SignatureType,
 } from '@trustcerts/core';
 
-import { RevocationService } from '@trustcerts/vc-revocation';
-
 import { WalletService } from '@trustcerts/wallet';
 import { LocalConfigService } from '@trustcerts/config-local';
 
@@ -31,10 +29,7 @@ describe('vc', () => {
 
   let walletService: WalletService;
 
-  //jest.setTimeout(20000000);
   beforeAll(async () => {
-    // TODO: Zeile löschen
-    //jest.setTimeout(20000000);
 
     const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
 
@@ -47,8 +42,6 @@ describe('vc', () => {
     await walletService.init();
 
     cryptoServiceRSA = new CryptoService();
-
-    // await cryptoServiceBBS.init(bbsKey);
 
     const rsaKey = (
       await walletService.findOrCreate(
@@ -95,25 +88,10 @@ describe('vc', () => {
     );
   }
 
-  it('create vc', async () => {
-    const vc = await createVc();
-    logger.debug(vc);
-  }, 15000);
-
   it('verify vc', async () => {
     const vc = await createVc();
     const vcVerifierService = new JWTVerifiableCredentialVerifierService();
     expect(await vcVerifierService.verifyCredential(vc)).toBe(true);
-  }, 15000);
-
-  it('create vp', async () => {
-    const vp = await createVp();
-    const vpJWT = new JWT(vp);
-    //const vpJWTPayload = vpJWT.getPayload() as JWTPayloadVP;
-    //const vp_ = vpJWTPayload.vp;
-    logger.debug(JSON.stringify(vp, null, 4));
-    logger.debug(vpJWT);
-    //TODO expect(vp).to...;
   }, 15000);
 
   it('verify vp', async () => {
@@ -121,42 +99,6 @@ describe('vc', () => {
     logger.debug(vp);
     const vcVerifierService = new JWTVerifiableCredentialVerifierService();
     expect(await vcVerifierService.verifyPresentation(vp)).toBe(true);
-  }, 15000);
-
-  it('verify revocation JWT', async () => {
-    const vc = await createVc();
-    const vcJWT = new JWT(vc);
-    const vcJWTPayload = vcJWT.getPayload() as JWTPayloadVC;
-    const vcVerifierService = new JWTVerifiableCredentialVerifierService();
-    const revocationService = new RevocationService();
-    await revocationService.init();
-
-    // Expect credential to be valid
-    expect(await vcVerifierService.verifyCredential(vc)).toBe(true);
-    // Expect credential to be not revoked
-    expect(
-      await revocationService.isRevoked(vcJWTPayload.vc.credentialStatus!)
-    ).toBe(false);
-
-    // Revoke credential
-    revocationService.setRevoked(vcJWTPayload.vc.credentialStatus!, true);
-
-    // Expect credential to be invalid
-    expect(await vcVerifierService.verifyCredential(vc)).toBe(false);
-    // Expect credential to be revoked
-    expect(
-      await revocationService.isRevoked(vcJWTPayload.vc.credentialStatus!)
-    ).toBe(true);
-
-    // Un-revoke credential
-    revocationService.setRevoked(vcJWTPayload.vc.credentialStatus!, false);
-
-    // Expect credential to be valid again
-    expect(await vcVerifierService.verifyCredential(vc)).toBe(true);
-    // Expect credential to be not revoked again
-    expect(
-      await revocationService.isRevoked(vcJWTPayload.vc.credentialStatus!)
-    ).toBe(false);
   }, 15000);
 
   //Beispiel, um Zugriff auf Properties der VC/VP zu demonstrieren
