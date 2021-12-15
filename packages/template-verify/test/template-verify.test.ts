@@ -67,11 +67,11 @@ describe('test template service', () => {
     const transaction = await client.create(value);
     const verifier = new TemplateVerifierService(testValues.network.observers);
     await setTimeout(() => Promise.resolve(), 2000);
-    const transaction1 = await verifier.get(
+    const transaction2 = await verifier.get(
       transaction.transaction.body.value.id
     );
-    expect(transaction1.template).toEqual(value.template);
-    expect(transaction1.compression).toEqual(value.compression);
-    expect(transaction1.schema).toEqual(value.schema);
+    expect(transaction2.template).toEqual(value.template);
+    expect(transaction2.compression).toEqual(value.compression);
+    expect(transaction2.schema).toEqual(value.schema);
   });
 });

@@ -22,7 +22,6 @@ describe('test local config service', () => {
   const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
 
   beforeAll(async () => {
-    // console.log(SignatureType.Rsa);
     DidNetworks.add('tc:dev', testValues.network);
     Identifier.setNetwork('tc:dev');
     config = new LocalConfigService(testValues.filePath);
@@ -63,7 +62,7 @@ describe('test local config service', () => {
     await DidIdRegister.save(did, client);
     await setTimeout(() => Promise.resolve(), 2000);
     const did1 = await DidIdResolver.load(did.id);
-    expect(did1).toBeDefined();
+    expect(did1).toEqual(did);
   }, 7000);
 
   it('update did', async () => {
@@ -107,15 +106,13 @@ describe('test local config service', () => {
       VerificationRelationshipType.authentication
     );
 
-    await DidIdRegister.save(did, client);
-    // did.print()
+    await expect(DidIdRegister.save(did, client)).resolves.toBeDefined();
 
     did.removeVerificationRelationship(
       keyPair.identifier,
       VerificationRelationshipType.authentication
     );
-    await DidIdRegister.save(did, client);
-    // did.print()
-    return true;
+    
+    await expect(DidIdRegister.save(did, client)).resolves.toBeDefined();
   }, 7000);
 });

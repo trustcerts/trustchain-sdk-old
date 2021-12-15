@@ -33,7 +33,7 @@ export class WalletService {
       ).then(async values => {
         // save the key that way used.
         this.configService.config.keyPairs.push(values.keyPair);
-        await this.configService.saveKeys();
+        await this.configService.saveConfig();
         return values.did;
       });
     });
@@ -69,7 +69,7 @@ export class WalletService {
     if (keyPosition > -1) {
       this.configService.config.keyPairs.splice(keyPosition, 1);
     }
-    await this.configService.saveKeys();
+    await this.configService.saveConfig();
     this.did.removeKey(keyId);
     // remove verification relationship
     this.did.removeAllVerificationRelationships(keyId);
@@ -132,7 +132,7 @@ export class WalletService {
     return DidIdRegister.createByInvite(invite).then(async values => {
       // save the key that way used.
       this.configService.config.keyPairs.push(values.keyPair);
-      await this.configService.saveKeys();
+      await this.configService.saveConfig();
       //update the did in the wallet
       this.did = values.did;
       return values.keyPair;
@@ -189,7 +189,7 @@ export class WalletService {
     const newKey = await generateKeyPair(this.did.id, signatureType);
     // persist in config
     this.configService.config.keyPairs.push(newKey);
-    await this.configService.saveKeys();
+    await this.configService.saveConfig();
     this.did.addKey(newKey.identifier, newKey.publicKey);
     // adds relationships when passed
     verificationRelationships.forEach(verificationRelationship =>
@@ -231,7 +231,7 @@ export class WalletService {
       if (keyPosition > -1) {
         this.configService.config.keyPairs.splice(keyPosition, 1);
       }
-      await this.configService.saveKeys();
+      await this.configService.saveConfig();
     }
   }
 

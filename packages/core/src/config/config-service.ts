@@ -14,5 +14,12 @@ export abstract class ConfigService {
 
   abstract loadConfig(): Promise<void>;
 
-  abstract saveKeys(): Promise<void>;
+  abstract saveConfig(): Promise<void>;
+
+  /**
+   * @deprecated The method should not be used, use saveConfig() instead
+   */
+  async saveKeys(): Promise<void> {
+    return this.saveConfig();
+  }
 }

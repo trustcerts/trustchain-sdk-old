@@ -5,7 +5,6 @@ import {
   DidNetworks,
   Identifier,
   VerificationRelationshipType,
-  logger,
   Observer,
   SignatureType,
 } from '..';
@@ -27,21 +26,17 @@ describe('test local config serviceze', () => {
     config = new LocalConfigService(testValues.filePath);
     await config.init(testValues.configValues);
 
-    try {
-      const wallet = new WalletService(config);
-      await wallet.init();
+    const wallet = new WalletService(config);
+    await wallet.init();
 
-      cryptoService = new CryptoService();
-      let key = (
-        await wallet.findOrCreate(
-          VerificationRelationshipType.assertionMethod,
-          SignatureType.Rsa
-        )
-      )[0];
-      await cryptoService.init(key);
-    } catch (e) {
-      console.log(e);
-    }
+    cryptoService = new CryptoService();
+    let key = (
+      await wallet.findOrCreate(
+        VerificationRelationshipType.assertionMethod,
+        SignatureType.Rsa
+      )
+    )[0];
+    await cryptoService.init(key);
   }, 10000);
 
   it('read did', async () => {
@@ -62,15 +57,18 @@ describe('test local config serviceze', () => {
   it('read non existing did', async () => {
     const id = 'did:trust:tc:dev:id:QQQQQQQQQQQQQQQQQQQQQQ';
     const did = DidIdResolver.load(id, { doc: false });
-    expect(did).rejects.toEqual(new Error(`${id} not found`));
+    await expect(did).rejects.toEqual(new Error(`${id} not found`));
   }, 7000);
 
   it('test did resolver', () => {
-    DidNetworks.add('test:foo', { gateways: ['a'], observers: ['a'] });
-    let network = DidNetworks.resolveNetwork('test:foo');
-    logger.debug(network);
-    DidNetworks.add('test:foo', { gateways: ['a', 'b'], observers: ['a'] });
-    network = DidNetworks.resolveNetwork('test:foo');
-    logger.debug(network);
+    let exampleNetwork = { gateways: ['a'], observers: ['a'] };
+    DidNetworks.add('test:foo', exampleNetwork);
+    let resolvedNetwork = DidNetworks.resolveNetwork('test:foo');
+    expect(resolvedNetwork).toEqual(exampleNetwork);
+
+    exampleNetwork = { gateways: ['a', 'b'], observers: ['a'] };
+    DidNetworks.add('test:foo', exampleNetwork);
+    resolvedNetwork = DidNetworks.resolveNetwork('test:foo');
+    expect(resolvedNetwork).toEqual(exampleNetwork);
   });
 });

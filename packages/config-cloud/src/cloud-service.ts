@@ -4,6 +4,7 @@ import {
   exists,
   read,
   write,
+  remove
 } from '@trustcerts/core';
 import { AxiosError, AxiosPromise } from 'axios';
 import { CloudEncryption } from './cloud-encryption';
@@ -49,7 +50,7 @@ export class CloudService {
    */
   async init(): Promise<void> {
     if (!exists(this.persistName)) {
-      return Promise.reject();
+      return Promise.reject("Access token does not exist");
     }
     await this.getLoginInformation();
     return Promise.resolve();
@@ -139,6 +140,15 @@ export class CloudService {
    */
   public persistLoginInformation(values: Credentials): void {
     write(this.persistName, JSON.stringify(values, null, 4));
+  }
+
+  /**
+   * Deletes the login information from persisted storage.
+   */
+  public deleteLoginInformation(): void {
+    if (exists(this.persistName)) {
+      remove(this.persistName);
+    }
   }
 
   /**

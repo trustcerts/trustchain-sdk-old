@@ -55,8 +55,8 @@ describe('test signature service', () => {
     await issuer.signFile(testFile).catch(err => logger.error(err));
     // wait some time since the observer has to be synced.
     await setTimeout(() => Promise.resolve(), 2000);
-    const transaction1 = await verifier.verifyFile(testFile);
-    expect(transaction1).toBeDefined();
+    const transaction = await verifier.verifyFile(testFile);
+    expect(transaction).toBeDefined();
   }, 5000);
 
   it('verify string', async () => {

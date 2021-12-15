@@ -3,8 +3,7 @@ import {
   read,
   write,
   ConfigService,
-  Config,
-  DecryptedKeyPair,
+  Config
 } from '@trustcerts/core';
 
 export class LocalConfigService extends ConfigService {
@@ -34,13 +33,8 @@ export class LocalConfigService extends ConfigService {
     return Promise.resolve();
   }
 
-  async saveKeys(): Promise<void> {
+  async saveConfig(): Promise<void> {
     write(this.storagePath, JSON.stringify(this.config, null, 4));
     return Promise.resolve();
-  }
-
-  async addKeyPair(keyPair: DecryptedKeyPair): Promise<void> {
-    this.config.keyPairs?.push(keyPair);
-    await this.saveKeys();
   }
 }

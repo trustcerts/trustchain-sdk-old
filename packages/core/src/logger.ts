@@ -1,6 +1,6 @@
 export let logger = console;
 
-let loggingDebugDisabled = false;
+let loggingDebugDisabled = true;
 export function disableLogging() {
   logger.debug = () => {
     if (!loggingDebugDisabled) {
@@ -9,7 +9,7 @@ export function disableLogging() {
     }
   };
 }
-//disableLogging();
+disableLogging();
 
 export function setLogger(newLogger: Console): void {
   logger = newLogger;

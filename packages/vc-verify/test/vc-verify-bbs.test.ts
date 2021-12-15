@@ -114,7 +114,6 @@ describe('vc', () => {
     );
   }
 
-
   it('BBS selective disclosure', async () => {
     const docLoader = new DocumentLoader().getLoader();
     const signedDocument = await createVcBbs();
@@ -141,8 +140,6 @@ describe('vc', () => {
 
     logger.debug(JSON.stringify(derivedProof, null, 2));
 
-    // TODO: verify
-
     //Verify the derived proof
     const verified = await verify(derivedProof, {
       suite: new BbsBlsSignatureProof2020(),
@@ -152,6 +149,12 @@ describe('vc', () => {
 
     logger.debug('Verification result');
     logger.debug(JSON.stringify(verified, null, 2));
+
+    expect(verified).toEqual(
+      expect.objectContaining({
+        verified: true,
+      })
+    );
   }, 15000);
   it('verify BBS vc', async () => {
     const vc = await createVcBbs();

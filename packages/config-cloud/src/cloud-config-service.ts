@@ -22,7 +22,7 @@ export class CloudConfigService extends ConfigService {
     this.config = await this.cloudService.getConfig();
   }
 
-  async saveKeys(): Promise<void> {
+  async saveConfig(): Promise<void> {
     await this.cloudService.saveConfig(this.config);
   }
 }

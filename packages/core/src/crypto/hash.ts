@@ -53,16 +53,6 @@ function getFileContent(file: string | File): Promise<ArrayBuffer> {
       } else {
         reject('file not found');
       }
-      // const input = createReadStream(file as string);
-      // let data: ArrayBuffer;
-      // input.on('data', (input) => (data = input as Buffer));
-      // input.on('end', () => {
-      //     console.log(data);
-      //     resolve(data);
-      // });
-      // input.on('error', () => {
-      //     reject('file not found');
-      // });
     }
   });
 }

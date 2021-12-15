@@ -3,6 +3,7 @@ import { encode, decode } from 'bs58';
 let write: (path: string, value: string) => void;
 let exists: (path: string) => boolean;
 let read: (path: string) => string;
+let remove: (path: string) => void;
 
 /**
  * Checks if code is run in browser
@@ -38,13 +39,16 @@ if (!isBrowser()) {
   exists = fs.existsSync;
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
   read = (path: string): string => fs.readFileSync(path, 'utf-8');
+
+  remove = fs.unlinkSync;
 } else {
   write = (path: string, value: string): void => {
     window.localStorage.setItem(path, value);
   };
   exists = (path: string): boolean =>
     window.localStorage.getItem(path) !== null;
-  read = (path: string): string => window.localStorage.getItem(path) as string;
+    read = (path: string): string => window.localStorage.getItem(path) as string;
+    remove = window.localStorage.removeItem;
 }
 
-export { write, exists, read, isBrowser, base58Encode, base58Decode };
+export { write, exists, read, remove, isBrowser, base58Encode, base58Decode };

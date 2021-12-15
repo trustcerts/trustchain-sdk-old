@@ -86,11 +86,12 @@ describe('vc', () => {
   it('create vc', async () => {
     const vc = await createVc();
     logger.debug(vc);
+    expect(vc).toBeDefined();
   }, 15000);
 
   it('create vp', async () => {
     const vp = await createVp();
     logger.debug(JSON.stringify(vp, null, 4));
-    //TODO expect(vp).to...;
+    expect(vp).toBeDefined();
   }, 15000);
 });

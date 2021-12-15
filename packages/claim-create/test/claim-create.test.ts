@@ -102,6 +102,7 @@ describe('claim', () => {
     const claim = await createClaim(val);
     logger.debug(claim.getUrl());
     logger.debug(await claim.getHtml());
+    expect(claim.values).toEqual(val);
   }, 15000);
 
   it('revoke a claim', async () => {
