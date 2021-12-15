@@ -1,0 +1,35 @@
+{
+  "name": "root",
+  "private": true,
+  "scripts": {
+    "install:clean": "npx lerna clean -y && rm -rf node_modules && npm i",
+    "install:ci": "npm install --ignore-scripts && lerna link && lerna bootstrap --since origin/main --include-dependencies",
+    "bootstrap": "lerna bootstrap",
+    "lint": "lerna run lint --stream",
+    "test": "lerna run --concurrency=1 test --stream",
+    "build": "./build.sh",
+    "postinstall": "./bootstrap.sh",
+    "version": "lerna version --conventional-commits --conventional-graduate --yes",
+    "version:dev": "lerna version --conventional-commits --conventional-prerelease --preid beta --yes",
+    "release": "lerna publish from-git --yes --no-verify-access",
+    "release:canary": "lerna publish --canary",
+    "install:pages": "lerna bootstrap --scope smoke-test-react --include-dependencies",
+    "build:pages": "rm -rf ./docs/smoke-test-react && lerna run build:smoke-test-react"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:trustcerts/sdk.git"
+  },
+  "devDependencies": {
+    "husky": "^7.0.2",
+    "lerna": "^4.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
+  "dependencies": {
+    "tsdx": "^0.14.1"
+  }
+}

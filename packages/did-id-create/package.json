@@ -1,0 +1,91 @@
+{
+  "version": "0.3.4",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=15"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --coverage --runInBand --detectOpenHandles",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "name": "@trustcerts/did-id-create",
+  "author": "trustcerts",
+  "module": "dist/did-id-create.esm.js",
+  "size-limit": [
+    {
+      "path": "dist/did-id-create.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/did-id-create.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "testEnvironment": "node",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "moduleNameMapper": {
+      "^jose/(.*)$": "<rootDir>/node_modules/jose/dist/node/cjs/$1"
+    },
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 0,
+        "functions": 0,
+        "lines": 0,
+        "statements": 0
+      }
+    },
+    "collectCoverageFrom": [
+      "src/*.{js,ts}"
+    ]
+  },
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^5.0.5",
+    "@trustcerts/config-local": "^0.3.4",
+    "@trustcerts/wallet": "^0.0.6",
+    "@types/axios": "^0.14.0",
+    "husky": "^7.0.2",
+    "size-limit": "^5.0.5",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.3"
+  },
+  "dependencies": {
+    "@trustcerts/core": "^0.3.4",
+    "axios": "^0.24.0"
+  },
+  "gitHead": "9cc3c3d078fe46729a72961bc6bd241667d43309"
+}

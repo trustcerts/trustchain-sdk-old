@@ -1,0 +1,74 @@
+import {
+  ConfigService,
+  CryptoService,
+  DidIdResolver,
+  DidNetworks,
+  Identifier,
+  VerificationRelationshipType,
+  Observer,
+  SignatureType,
+} from '..';
+import { LocalConfigService } from '@trustcerts/config-local';
+import { DidIdIssuerService, DidIdRegister } from '@trustcerts/did-id-create';
+import { WalletService } from '@trustcerts/wallet';
+import { readFileSync } from 'fs';
+
+describe('test local config serviceze', () => {
+  let config: ConfigService;
+
+  let cryptoService: CryptoService;
+
+  const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
+
+  beforeAll(async () => {
+    DidNetworks.add('tc:dev', testValues.network);
+    Identifier.setNetwork('tc:dev');
+    config = new LocalConfigService(testValues.filePath);
+    await config.init(testValues.configValues);
+
+    const wallet = new WalletService(config);
+    await wallet.init();
+
+    cryptoService = new CryptoService();
+    let key = (
+      await wallet.findOrCreate(
+        VerificationRelationshipType.assertionMethod,
+        SignatureType.Rsa
+      )
+    )[0];
+    await cryptoService.init(key);
+  }, 10000);
+
+  it('read did', async () => {
+    const did = DidIdRegister.create({
+      controllers: [config.config.invite!.id],
+    });
+    did.addRole(Observer.RoleManageAddEnum.Client);
+    const client = new DidIdIssuerService(
+      testValues.network.gateways,
+      cryptoService
+    );
+    await DidIdRegister.save(did, client);
+    await setTimeout(() => Promise.resolve(), 2000);
+    const did1 = await DidIdResolver.load(did.id);
+    expect(did.getDocument()).toEqual(did1.getDocument());
+  }, 7000);
+
+  it('read non existing did', async () => {
+    const id = 'did:trust:tc:dev:id:QQQQQQQQQQQQQQQQQQQQQQ';
+    const did = DidIdResolver.load(id, { doc: false });
+    await expect(did).rejects.toEqual(new Error(`${id} not found`));
+  }, 7000);
+
+  it('test did resolver', () => {
+    let exampleNetwork = { gateways: ['a'], observers: ['a'] };
+    DidNetworks.add('test:foo', exampleNetwork);
+    let resolvedNetwork = DidNetworks.resolveNetwork('test:foo');
+    expect(resolvedNetwork).toEqual(exampleNetwork);
+
+    exampleNetwork = { gateways: ['a', 'b'], observers: ['a'] };
+    DidNetworks.add('test:foo', exampleNetwork);
+    resolvedNetwork = DidNetworks.resolveNetwork('test:foo');
+    expect(resolvedNetwork).toEqual(exampleNetwork);
+  });
+});

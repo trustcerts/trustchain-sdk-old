@@ -1,0 +1,47 @@
+name: Publish
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - development
+      - main
+
+jobs:
+  publish:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: "Use NodeJS 16"
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+
+      - name: "Setup npm"
+        run: |
+          npm set "//registry.npmjs.org/:_authToken=$NPM_TOKEN"
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: "Install deps"
+        run: npm ci
+
+      - name: "Version and publish"
+        env:
+          GH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          git config user.name "trustcerts"
+          git config user.email "dev@trustcerts.de"          
+          if [ ${{ github.base_ref }} = development ]; then
+            npm run version:dev
+          else
+            npm run version
+          fi
+
+          npm run release
