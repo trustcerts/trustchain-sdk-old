@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.5](https://github.com/trustcerts/sdk/compare/v0.3.4...v0.3.5) (2021-12-15)
+
+
+### Bug Fixes
+
+* add ajv as deps ([c897f24](https://github.com/trustcerts/sdk/commit/c897f2471c20dcfae20b8add286931eade312f92))
+
+
+
+
+
 ## [0.3.4](https://github.com/trustcerts/sdk/compare/v0.3.3...v0.3.4) (2021-12-08)
 
 
