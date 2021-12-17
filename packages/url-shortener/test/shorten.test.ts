@@ -1,10 +1,7 @@
-import { CloudService } from '@trustcerts/config-cloud';
 import { EncoderService } from '../src/encoder-service';
 import { ShortenerService } from '../src/shortener-service';
 describe('shorten', () => {
-  const url = 'https://platform.dev.trustcerts.de';
-  const username = 'root';
-  const password = 'foo';
+  const url = 'https://creator.dev.trustcerts.de';
 
   beforeAll(async () => {});
 
@@ -16,13 +13,10 @@ describe('shorten', () => {
   });
   it('upload and download', async () => {
     const input = 'hello world';
+    const mail = 'info@trustcerts.de';
+    const shortenService = new ShortenerService(url);
 
-    const cloud = new CloudService(url, 'tmp/login');
-    await cloud.login(username, password);
-    const token = cloud.getAccessToken();
-    const shortenService = new ShortenerService(url, token);
-
-    const encoded = await shortenService.shorten(input);
+    const encoded = await shortenService.shorten(input, mail);
     const decoded = await shortenService.resolve(encoded);
     expect(decoded).toEqual(input);
   });
