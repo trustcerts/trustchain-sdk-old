@@ -1,1 +1,1 @@
-export * from './url-shortener-service';
+export * from './shortener-service';
