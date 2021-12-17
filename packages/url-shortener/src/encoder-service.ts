@@ -5,7 +5,7 @@ import {
   base58Decode,
 } from '@trustcerts/core';
 
-interface Encryption {
+export interface Encryption {
   value: string;
   key: string;
   iv: string;
