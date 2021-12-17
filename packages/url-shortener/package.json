@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.4.0",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -75,7 +75,7 @@
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^7.0.4",
-    "@trustcerts/config-cloud": "^0.3.4",
+    "@trustcerts/config-cloud": "^0.4.0",
     "husky": "^7.0.4",
     "size-limit": "^7.0.4",
     "tsdx": "^0.14.1",
@@ -84,6 +84,6 @@
   },
   "dependencies": {
     "@openapitools/openapi-generator-cli": "^2.4.18",
-    "@trustcerts/core": "^0.3.4"
+    "@trustcerts/core": "^0.4.0"
   }
 }
