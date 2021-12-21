@@ -14,7 +14,7 @@
 
 
 import { Configuration } from './configuration';
-import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
+import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
@@ -32,13 +32,13 @@ export interface Compression {
      * @type {string}
      * @memberof Compression
      */
-    type: CompressionTypeEnum;
+    'type': CompressionTypeEnum;
     /**
      * Json encoded information that are required for this kind of compression.
      * @type {string}
      * @memberof Compression
      */
-    value?: string;
+    'value'?: string;
 }
 
 /**
@@ -61,13 +61,13 @@ export interface ControllerManage {
      * @type {Array<string>}
      * @memberof ControllerManage
      */
-    add?: Array<string>;
+    'add'?: Array<string>;
     /**
      * id that should be removed from the controller list.
      * @type {Array<string>}
      * @memberof ControllerManage
      */
-    remove?: Array<string>;
+    'remove'?: Array<string>;
 }
 /**
  * 
@@ -80,19 +80,19 @@ export interface CreateDidDto {
      * @type {string}
      * @memberof CreateDidDto
      */
-    identifier: string;
+    'identifier': string;
     /**
      * Invite code that allows the creation of a certificate that includes the public key of the identifier.
      * @type {string}
      * @memberof CreateDidDto
      */
-    secret: string;
+    'secret': string;
     /**
      * Value of the public key as a json web key.
      * @type {PublicKeyJwkDto}
      * @memberof CreateDidDto
      */
-    publicKey: PublicKeyJwkDto;
+    'publicKey': PublicKeyJwkDto;
 }
 /**
  * 
@@ -105,13 +105,13 @@ export interface DidCreationResponse {
      * @type {PersistedTransaction}
      * @memberof DidCreationResponse
      */
-    metaData: PersistedTransaction;
+    'metaData': PersistedTransaction;
     /**
      * 
      * @type {DidTransactionDto}
      * @memberof DidCreationResponse
      */
-    transaction: DidTransactionDto;
+    'transaction': DidTransactionDto;
 }
 /**
  * 
@@ -124,25 +124,25 @@ export interface DidPublicKey {
      * @type {string}
      * @memberof DidPublicKey
      */
-    id: string;
+    'id': string;
     /**
      * controller of the key
      * @type {string}
      * @memberof DidPublicKey
      */
-    controller: string;
+    'controller': string;
     /**
      * Type of the key
      * @type {string}
      * @memberof DidPublicKey
      */
-    type: DidPublicKeyTypeEnum;
+    'type': DidPublicKeyTypeEnum;
     /**
      * encoded key value
      * @type {PublicKeyJwkDto}
      * @memberof DidPublicKey
      */
-    publicKeyJwk: PublicKeyJwkDto;
+    'publicKeyJwk': PublicKeyJwkDto;
 }
 
 /**
@@ -164,19 +164,19 @@ export interface DidService {
      * @type {string}
      * @memberof DidService
      */
-    id: string;
+    'id': string;
     /**
      * name of the service
      * @type {string}
      * @memberof DidService
      */
-    type: string;
+    'type': string;
     /**
      * url to the service
      * @type {string}
      * @memberof DidService
      */
-    endpoint: string;
+    'endpoint': string;
 }
 /**
  * 
@@ -189,67 +189,67 @@ export interface DidStructure {
      * @type {string}
      * @memberof DidStructure
      */
-    id: string;
+    'id': string;
     /**
      * 
      * @type {ControllerManage}
      * @memberof DidStructure
      */
-    controller?: ControllerManage;
+    'controller'?: ControllerManage;
     /**
      * 
      * @type {RoleManage}
      * @memberof DidStructure
      */
-    role?: RoleManage;
+    'role'?: RoleManage;
     /**
      * 
      * @type {VerificationMethod}
      * @memberof DidStructure
      */
-    verificationMethod?: VerificationMethod;
+    'verificationMethod'?: VerificationMethod;
     /**
      * 
      * @type {ServiceMange}
      * @memberof DidStructure
      */
-    service?: ServiceMange;
+    'service'?: ServiceMange;
     /**
      * 
      * @type {VerificationRelationshipManage}
      * @memberof DidStructure
      */
-    authentication?: VerificationRelationshipManage;
+    'authentication'?: VerificationRelationshipManage;
     /**
      * 
      * @type {VerificationRelationshipManage}
      * @memberof DidStructure
      */
-    assertionMethod?: VerificationRelationshipManage;
+    'assertionMethod'?: VerificationRelationshipManage;
     /**
      * 
      * @type {VerificationRelationshipManage}
      * @memberof DidStructure
      */
-    keyAgreement?: VerificationRelationshipManage;
+    'keyAgreement'?: VerificationRelationshipManage;
     /**
      * 
      * @type {VerificationRelationshipManage}
      * @memberof DidStructure
      */
-    modification?: VerificationRelationshipManage;
+    'modification'?: VerificationRelationshipManage;
     /**
      * 
      * @type {VerificationRelationshipManage}
      * @memberof DidStructure
      */
-    capabilityDelegation?: VerificationRelationshipManage;
+    'capabilityDelegation'?: VerificationRelationshipManage;
     /**
      * 
      * @type {VerificationRelationshipManage}
      * @memberof DidStructure
      */
-    capabilityInvocation?: VerificationRelationshipManage;
+    'capabilityInvocation'?: VerificationRelationshipManage;
 }
 /**
  * 
@@ -262,31 +262,31 @@ export interface DidTransactionBody {
      * @type {number}
      * @memberof DidTransactionBody
      */
-    version: number;
+    'version': number;
     /**
      * timestamp when transaction was created.
      * @type {string}
      * @memberof DidTransactionBody
      */
-    date: string;
+    'date': string;
     /**
      * 
      * @type {TransactionType}
      * @memberof DidTransactionBody
      */
-    type: TransactionType;
+    'type': TransactionType;
     /**
      * signature of the did document after applying the changes
      * @type {SignatureInfo}
      * @memberof DidTransactionBody
      */
-    didDocSignature: SignatureInfo;
+    'didDocSignature': SignatureInfo;
     /**
      * 
      * @type {DidStructure}
      * @memberof DidTransactionBody
      */
-    value: DidStructure;
+    'value': DidStructure;
 }
 /**
  * 
@@ -299,25 +299,25 @@ export interface DidTransactionDto {
      * @type {number}
      * @memberof DidTransactionDto
      */
-    version: number;
+    'version': number;
     /**
      * 
      * @type {DidTransactionBody}
      * @memberof DidTransactionDto
      */
-    body: DidTransactionBody;
+    'body': DidTransactionBody;
     /**
      * 
      * @type {TransactionMetadata}
      * @memberof DidTransactionDto
      */
-    metadata: TransactionMetadata;
+    'metadata': TransactionMetadata;
     /**
      * 
      * @type {SignatureInfo}
      * @memberof DidTransactionDto
      */
-    signature: SignatureInfo;
+    'signature': SignatureInfo;
 }
 /**
  * 
@@ -330,13 +330,13 @@ export interface HashCreationResponse {
      * @type {PersistedTransaction}
      * @memberof HashCreationResponse
      */
-    metaData: PersistedTransaction;
+    'metaData': PersistedTransaction;
     /**
      * transaction that was persisted.
-     * @type {TransactionHashCreationDto}
+     * @type {HashCreationTransactionDto}
      * @memberof HashCreationResponse
      */
-    transaction: TransactionHashCreationDto;
+    'transaction': HashCreationTransactionDto;
 }
 /**
  * 
@@ -349,25 +349,56 @@ export interface HashCreationTransactionBody {
      * @type {number}
      * @memberof HashCreationTransactionBody
      */
-    version: number;
+    'version': number;
     /**
      * timestamp when transaction was created.
      * @type {string}
      * @memberof HashCreationTransactionBody
      */
-    date: string;
+    'date': string;
     /**
      * 
      * @type {TransactionType}
      * @memberof HashCreationTransactionBody
      */
-    type: TransactionType;
+    'type': TransactionType;
     /**
      * 
      * @type {TransactionHashValue}
      * @memberof HashCreationTransactionBody
      */
-    value: TransactionHashValue;
+    'value': TransactionHashValue;
+}
+/**
+ * 
+ * @export
+ * @interface HashCreationTransactionDto
+ */
+export interface HashCreationTransactionDto {
+    /**
+     * Version number of the base transaction.
+     * @type {number}
+     * @memberof HashCreationTransactionDto
+     */
+    'version': number;
+    /**
+     * 
+     * @type {HashCreationTransactionBody}
+     * @memberof HashCreationTransactionDto
+     */
+    'body': HashCreationTransactionBody;
+    /**
+     * 
+     * @type {TransactionMetadata}
+     * @memberof HashCreationTransactionDto
+     */
+    'metadata': TransactionMetadata;
+    /**
+     * 
+     * @type {SignatureInfo}
+     * @memberof HashCreationTransactionDto
+     */
+    'signature': SignatureInfo;
 }
 /**
  * 
@@ -380,13 +411,13 @@ export interface HashRevocationResponse {
      * @type {PersistedTransaction}
      * @memberof HashRevocationResponse
      */
-    metaData: PersistedTransaction;
+    'metaData': PersistedTransaction;
     /**
      * transaction that was persisted.
-     * @type {TransactionHashRevocationDto}
+     * @type {HashRevocationTransactionDto}
      * @memberof HashRevocationResponse
      */
-    transaction: TransactionHashRevocationDto;
+    'transaction': HashRevocationTransactionDto;
 }
 /**
  * 
@@ -399,25 +430,56 @@ export interface HashRevocationTransactionBody {
      * @type {number}
      * @memberof HashRevocationTransactionBody
      */
-    version: number;
+    'version': number;
     /**
      * timestamp when transaction was created.
      * @type {string}
      * @memberof HashRevocationTransactionBody
      */
-    date: string;
+    'date': string;
     /**
      * 
      * @type {TransactionType}
      * @memberof HashRevocationTransactionBody
      */
-    type: TransactionType;
+    'type': TransactionType;
     /**
      * 
      * @type {TransactionHashValue}
      * @memberof HashRevocationTransactionBody
      */
-    value: TransactionHashValue;
+    'value': TransactionHashValue;
+}
+/**
+ * 
+ * @export
+ * @interface HashRevocationTransactionDto
+ */
+export interface HashRevocationTransactionDto {
+    /**
+     * Version number of the base transaction.
+     * @type {number}
+     * @memberof HashRevocationTransactionDto
+     */
+    'version': number;
+    /**
+     * 
+     * @type {HashRevocationTransactionBody}
+     * @memberof HashRevocationTransactionDto
+     */
+    'body': HashRevocationTransactionBody;
+    /**
+     * 
+     * @type {TransactionMetadata}
+     * @memberof HashRevocationTransactionDto
+     */
+    'metadata': TransactionMetadata;
+    /**
+     * 
+     * @type {SignatureInfo}
+     * @memberof HashRevocationTransactionDto
+     */
+    'signature': SignatureInfo;
 }
 /**
  * 
@@ -430,13 +492,13 @@ export interface ImportedMetadata {
      * @type {string}
      * @memberof ImportedMetadata
      */
-    date: string;
+    'date': string;
     /**
      * 
      * @type {SignatureInfo}
      * @memberof ImportedMetadata
      */
-    imported: SignatureInfo;
+    'imported': SignatureInfo;
 }
 /**
  * 
@@ -449,19 +511,19 @@ export interface InviteNode {
      * @type {string}
      * @memberof InviteNode
      */
-    id: string;
+    'id': string;
     /**
      * Secret token
      * @type {string}
      * @memberof InviteNode
      */
-    secret: string;
+    'secret': string;
     /**
      * Url of the node endpoint
      * @type {string}
      * @memberof InviteNode
      */
-    url: string;
+    'url': string;
 }
 /**
  * 
@@ -474,25 +536,31 @@ export interface InviteRequest {
      * @type {string}
      * @memberof InviteRequest
      */
-    id?: string;
+    'id'?: string;
     /**
      * Secret that is used for authentication
      * @type {string}
      * @memberof InviteRequest
      */
-    secret?: string;
+    'secret'?: string;
     /**
      * Unique identifier that will be stored to identify the did with a human readable name.
      * @type {string}
      * @memberof InviteRequest
      */
-    name: string;
+    'name': string;
     /**
      * Describes for what type of role in the network the secret is allowed to be used
      * @type {string}
      * @memberof InviteRequest
      */
-    role: InviteRequestRoleEnum;
+    'role': InviteRequestRoleEnum;
+    /**
+     * If set to true a new secret will be set for an existing entry
+     * @type {boolean}
+     * @memberof InviteRequest
+     */
+    'force'?: boolean;
 }
 
 /**
@@ -517,19 +585,19 @@ export interface PersistedBlock {
      * @type {number}
      * @memberof PersistedBlock
      */
-    id: number;
+    'id': number;
     /**
      * 
      * @type {string}
      * @memberof PersistedBlock
      */
-    createdAt: string;
+    'createdAt': string;
     /**
      * 
      * @type {Array<string>}
      * @memberof PersistedBlock
      */
-    validators: Array<string>;
+    'validators': Array<string>;
 }
 /**
  * 
@@ -542,13 +610,13 @@ export interface PersistedTransaction {
      * @type {PersistedTransactionMetaData}
      * @memberof PersistedTransaction
      */
-    transaction: PersistedTransactionMetaData;
+    'transaction': PersistedTransactionMetaData;
     /**
      * 
      * @type {PersistedBlock}
      * @memberof PersistedTransaction
      */
-    block: PersistedBlock;
+    'block': PersistedBlock;
 }
 /**
  * 
@@ -561,13 +629,13 @@ export interface PersistedTransactionMetaData {
      * @type {string}
      * @memberof PersistedTransactionMetaData
      */
-    hash: string;
+    'hash': string;
     /**
      * 
      * @type {string}
      * @memberof PersistedTransactionMetaData
      */
-    persisted: string;
+    'persisted': string;
 }
 /**
  * 
@@ -580,31 +648,31 @@ export interface PublicKeyJwkDto {
      * @type {Array<string>}
      * @memberof PublicKeyJwkDto
      */
-    key_ops?: Array<string>;
+    'key_ops'?: Array<string>;
     /**
      * The family of cryptographic algorithms used with the key.
      * @type {string}
      * @memberof PublicKeyJwkDto
      */
-    kty?: string;
+    'kty'?: string;
     /**
      * The modulus for the RSA public key.
      * @type {string}
      * @memberof PublicKeyJwkDto
      */
-    n?: string;
+    'n'?: string;
     /**
      * The exponent for the RSA public key.
      * @type {string}
      * @memberof PublicKeyJwkDto
      */
-    e?: string;
+    'e'?: string;
     /**
      * The specific cryptographic algorithm used with the key.
      * @type {string}
      * @memberof PublicKeyJwkDto
      */
-    alg?: string;
+    'alg'?: string;
 }
 /**
  * 
@@ -617,13 +685,13 @@ export interface RoleManage {
      * @type {Array<string>}
      * @memberof RoleManage
      */
-    add?: Array<RoleManageAddEnum>;
+    'add'?: Array<RoleManageAddEnum>;
     /**
      * 
      * @type {Array<string>}
      * @memberof RoleManage
      */
-    remove?: Array<string>;
+    'remove'?: Array<string>;
 }
 
 /**
@@ -648,13 +716,13 @@ export interface ServiceMange {
      * @type {Array<DidService>}
      * @memberof ServiceMange
      */
-    add?: Array<DidService>;
+    'add'?: Array<DidService>;
     /**
      * 
      * @type {Array<string>}
      * @memberof ServiceMange
      */
-    remove?: Array<string>;
+    'remove'?: Array<string>;
 }
 /**
  * 
@@ -667,13 +735,13 @@ export interface SignatureDto {
      * @type {string}
      * @memberof SignatureDto
      */
-    identifier: string;
+    'identifier': string;
     /**
      * The actual signature as a hex encoded string.
      * @type {string}
      * @memberof SignatureDto
      */
-    signature: string;
+    'signature': string;
 }
 /**
  * 
@@ -686,13 +754,13 @@ export interface SignatureInfo {
      * @type {string}
      * @memberof SignatureInfo
      */
-    type: SignatureInfoTypeEnum;
+    'type': SignatureInfoTypeEnum;
     /**
      * signature of the document values.
      * @type {Array<SignatureDto>}
      * @memberof SignatureInfo
      */
-    values: Array<SignatureDto>;
+    'values': Array<SignatureDto>;
 }
 
 /**
@@ -715,13 +783,13 @@ export interface TemplateCreationResponse {
      * @type {PersistedTransaction}
      * @memberof TemplateCreationResponse
      */
-    metaData: PersistedTransaction;
+    'metaData': PersistedTransaction;
     /**
      * transaction that was persisted.
      * @type {TemplateTransactionDto}
      * @memberof TemplateCreationResponse
      */
-    transaction: TemplateTransactionDto;
+    'transaction': TemplateTransactionDto;
 }
 /**
  * 
@@ -734,25 +802,25 @@ export interface TemplateStructure {
      * @type {string}
      * @memberof TemplateStructure
      */
-    id: string;
+    'id': string;
     /**
      * template that should be used.
      * @type {string}
      * @memberof TemplateStructure
      */
-    template: string;
+    'template': string;
     /**
      * json schema to validate the data that should be parsed into the
      * @type {string}
      * @memberof TemplateStructure
      */
-    schema: string;
+    'schema': string;
     /**
      * 
      * @type {Compression}
      * @memberof TemplateStructure
      */
-    compression: Compression;
+    'compression': Compression;
 }
 /**
  * 
@@ -765,25 +833,25 @@ export interface TemplateTransactionBody {
      * @type {number}
      * @memberof TemplateTransactionBody
      */
-    version: number;
+    'version': number;
     /**
      * timestamp when transaction was created.
      * @type {string}
      * @memberof TemplateTransactionBody
      */
-    date: string;
+    'date': string;
     /**
      * 
      * @type {TransactionType}
      * @memberof TemplateTransactionBody
      */
-    type: TransactionType;
+    'type': TransactionType;
     /**
      * 
      * @type {TemplateStructure}
      * @memberof TemplateTransactionBody
      */
-    value: TemplateStructure;
+    'value': TemplateStructure;
 }
 /**
  * 
@@ -796,87 +864,25 @@ export interface TemplateTransactionDto {
      * @type {number}
      * @memberof TemplateTransactionDto
      */
-    version: number;
+    'version': number;
     /**
      * 
      * @type {TemplateTransactionBody}
      * @memberof TemplateTransactionDto
      */
-    body: TemplateTransactionBody;
+    'body': TemplateTransactionBody;
     /**
      * 
      * @type {TransactionMetadata}
      * @memberof TemplateTransactionDto
      */
-    metadata: TransactionMetadata;
+    'metadata': TransactionMetadata;
     /**
      * 
      * @type {SignatureInfo}
      * @memberof TemplateTransactionDto
      */
-    signature: SignatureInfo;
-}
-/**
- * 
- * @export
- * @interface TransactionHashCreationDto
- */
-export interface TransactionHashCreationDto {
-    /**
-     * Version number of the base transaction.
-     * @type {number}
-     * @memberof TransactionHashCreationDto
-     */
-    version: number;
-    /**
-     * 
-     * @type {HashCreationTransactionBody}
-     * @memberof TransactionHashCreationDto
-     */
-    body: HashCreationTransactionBody;
-    /**
-     * 
-     * @type {TransactionMetadata}
-     * @memberof TransactionHashCreationDto
-     */
-    metadata: TransactionMetadata;
-    /**
-     * 
-     * @type {SignatureInfo}
-     * @memberof TransactionHashCreationDto
-     */
-    signature: SignatureInfo;
-}
-/**
- * 
- * @export
- * @interface TransactionHashRevocationDto
- */
-export interface TransactionHashRevocationDto {
-    /**
-     * Version number of the base transaction.
-     * @type {number}
-     * @memberof TransactionHashRevocationDto
-     */
-    version: number;
-    /**
-     * 
-     * @type {HashRevocationTransactionBody}
-     * @memberof TransactionHashRevocationDto
-     */
-    body: HashRevocationTransactionBody;
-    /**
-     * 
-     * @type {TransactionMetadata}
-     * @memberof TransactionHashRevocationDto
-     */
-    metadata: TransactionMetadata;
-    /**
-     * 
-     * @type {SignatureInfo}
-     * @memberof TransactionHashRevocationDto
-     */
-    signature: SignatureInfo;
+    'signature': SignatureInfo;
 }
 /**
  * 
@@ -889,13 +895,13 @@ export interface TransactionHashValue {
      * @type {string}
      * @memberof TransactionHashValue
      */
-    hash: string;
+    'hash': string;
     /**
      * Used algorithm for the hash.
      * @type {string}
      * @memberof TransactionHashValue
      */
-    algorithm: string;
+    'algorithm': string;
 }
 /**
  * 
@@ -908,13 +914,13 @@ export interface TransactionMetadata {
      * @type {number}
      * @memberof TransactionMetadata
      */
-    version: number;
+    'version': number;
     /**
      * 
      * @type {ImportedMetadata}
      * @memberof TransactionMetadata
      */
-    imported?: ImportedMetadata;
+    'imported'?: ImportedMetadata;
 }
 /**
  * 
@@ -946,13 +952,13 @@ export interface VerificationMethod {
      * @type {Array<DidPublicKey>}
      * @memberof VerificationMethod
      */
-    add?: Array<DidPublicKey>;
+    'add'?: Array<DidPublicKey>;
     /**
      * 
      * @type {Array<string>}
      * @memberof VerificationMethod
      */
-    remove?: Array<string>;
+    'remove'?: Array<string>;
 }
 /**
  * 
@@ -965,13 +971,13 @@ export interface VerificationRelationshipManage {
      * @type {Array<string>}
      * @memberof VerificationRelationshipManage
      */
-    add?: Array<string>;
+    'add'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof VerificationRelationshipManage
      */
-    remove?: Array<string>;
+    'remove'?: Array<string>;
 }
 
 /**
@@ -985,7 +991,7 @@ export const DefaultGatewayApiAxiosParamCreator = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        promControllerIndex: async (options: any = {}): Promise<RequestArgs> => {
+        prometheusControllerIndex: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/metrics`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1000,7 +1006,7 @@ export const DefaultGatewayApiAxiosParamCreator = function (configuration?: Conf
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1024,8 +1030,8 @@ export const DefaultGatewayApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async promControllerIndex(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.promControllerIndex(options);
+        async prometheusControllerIndex(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.prometheusControllerIndex(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1043,8 +1049,8 @@ export const DefaultGatewayApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        promControllerIndex(options?: any): AxiosPromise<void> {
-            return localVarFp.promControllerIndex(options).then((request) => request(axios, basePath));
+        prometheusControllerIndex(options?: any): AxiosPromise<void> {
+            return localVarFp.prometheusControllerIndex(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1062,8 +1068,8 @@ export class DefaultGatewayApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefaultGatewayApi
      */
-    public promControllerIndex(options?: any) {
-        return DefaultGatewayApiFp(this.configuration).promControllerIndex(options).then((request) => request(this.axios, this.basePath));
+    public prometheusControllerIndex(options?: AxiosRequestConfig) {
+        return DefaultGatewayApiFp(this.configuration).prometheusControllerIndex(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -1081,7 +1087,7 @@ export const DidGatewayApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        gatewayDidControllerCreate: async (createDidDto: CreateDidDto, options: any = {}): Promise<RequestArgs> => {
+        gatewayDidControllerCreate: async (createDidDto: CreateDidDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'createDidDto' is not null or undefined
             assertParamExists('gatewayDidControllerCreate', 'createDidDto', createDidDto)
             const localVarPath = `/did/create`;
@@ -1100,7 +1106,7 @@ export const DidGatewayApiAxiosParamCreator = function (configuration?: Configur
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(createDidDto, localVarRequestOptions, configuration)
@@ -1117,7 +1123,7 @@ export const DidGatewayApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        gatewayDidControllerInvite: async (inviteRequest: InviteRequest, options: any = {}): Promise<RequestArgs> => {
+        gatewayDidControllerInvite: async (inviteRequest: InviteRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'inviteRequest' is not null or undefined
             assertParamExists('gatewayDidControllerInvite', 'inviteRequest', inviteRequest)
             const localVarPath = `/did/invite`;
@@ -1140,7 +1146,7 @@ export const DidGatewayApiAxiosParamCreator = function (configuration?: Configur
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(inviteRequest, localVarRequestOptions, configuration)
@@ -1157,7 +1163,7 @@ export const DidGatewayApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        gatewayDidControllerResolve: async (id: string, options: any = {}): Promise<RequestArgs> => {
+        gatewayDidControllerResolve: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('gatewayDidControllerResolve', 'id', id)
             const localVarPath = `/did/resolve/{id}`
@@ -1175,7 +1181,7 @@ export const DidGatewayApiAxiosParamCreator = function (configuration?: Configur
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1191,7 +1197,7 @@ export const DidGatewayApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        gatewayDidControllerStore: async (didTransactionDto: DidTransactionDto, options: any = {}): Promise<RequestArgs> => {
+        gatewayDidControllerStore: async (didTransactionDto: DidTransactionDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'didTransactionDto' is not null or undefined
             assertParamExists('gatewayDidControllerStore', 'didTransactionDto', didTransactionDto)
             const localVarPath = `/did`;
@@ -1210,7 +1216,7 @@ export const DidGatewayApiAxiosParamCreator = function (configuration?: Configur
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(didTransactionDto, localVarRequestOptions, configuration)
@@ -1237,7 +1243,7 @@ export const DidGatewayApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async gatewayDidControllerCreate(createDidDto: CreateDidDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DidCreationResponse>> {
+        async gatewayDidControllerCreate(createDidDto: CreateDidDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DidCreationResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.gatewayDidControllerCreate(createDidDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1248,7 +1254,7 @@ export const DidGatewayApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async gatewayDidControllerInvite(inviteRequest: InviteRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InviteRequest>> {
+        async gatewayDidControllerInvite(inviteRequest: InviteRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InviteRequest>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.gatewayDidControllerInvite(inviteRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1259,7 +1265,7 @@ export const DidGatewayApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async gatewayDidControllerResolve(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async gatewayDidControllerResolve(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.gatewayDidControllerResolve(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1270,7 +1276,7 @@ export const DidGatewayApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async gatewayDidControllerStore(didTransactionDto: DidTransactionDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async gatewayDidControllerStore(didTransactionDto: DidTransactionDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.gatewayDidControllerStore(didTransactionDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1342,7 +1348,7 @@ export class DidGatewayApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DidGatewayApi
      */
-    public gatewayDidControllerCreate(createDidDto: CreateDidDto, options?: any) {
+    public gatewayDidControllerCreate(createDidDto: CreateDidDto, options?: AxiosRequestConfig) {
         return DidGatewayApiFp(this.configuration).gatewayDidControllerCreate(createDidDto, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1354,7 +1360,7 @@ export class DidGatewayApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DidGatewayApi
      */
-    public gatewayDidControllerInvite(inviteRequest: InviteRequest, options?: any) {
+    public gatewayDidControllerInvite(inviteRequest: InviteRequest, options?: AxiosRequestConfig) {
         return DidGatewayApiFp(this.configuration).gatewayDidControllerInvite(inviteRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1366,7 +1372,7 @@ export class DidGatewayApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DidGatewayApi
      */
-    public gatewayDidControllerResolve(id: string, options?: any) {
+    public gatewayDidControllerResolve(id: string, options?: AxiosRequestConfig) {
         return DidGatewayApiFp(this.configuration).gatewayDidControllerResolve(id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1378,7 +1384,7 @@ export class DidGatewayApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DidGatewayApi
      */
-    public gatewayDidControllerStore(didTransactionDto: DidTransactionDto, options?: any) {
+    public gatewayDidControllerStore(didTransactionDto: DidTransactionDto, options?: AxiosRequestConfig) {
         return DidGatewayApiFp(this.configuration).gatewayDidControllerStore(didTransactionDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -1393,13 +1399,13 @@ export const HashGatewayApiAxiosParamCreator = function (configuration?: Configu
         /**
          * 
          * @summary Adds new hash to the chain.
-         * @param {TransactionHashCreationDto} transactionHashCreationDto 
+         * @param {HashCreationTransactionDto} hashCreationTransactionDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        gatewayHashControllerCreate: async (transactionHashCreationDto: TransactionHashCreationDto, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'transactionHashCreationDto' is not null or undefined
-            assertParamExists('gatewayHashControllerCreate', 'transactionHashCreationDto', transactionHashCreationDto)
+        gatewayHashControllerCreate: async (hashCreationTransactionDto: HashCreationTransactionDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'hashCreationTransactionDto' is not null or undefined
+            assertParamExists('gatewayHashControllerCreate', 'hashCreationTransactionDto', hashCreationTransactionDto)
             const localVarPath = `/hash/create`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1416,10 +1422,10 @@ export const HashGatewayApiAxiosParamCreator = function (configuration?: Configu
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(transactionHashCreationDto, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(hashCreationTransactionDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1429,13 +1435,13 @@ export const HashGatewayApiAxiosParamCreator = function (configuration?: Configu
         /**
          * 
          * @summary Revokes a hash.
-         * @param {TransactionHashRevocationDto} transactionHashRevocationDto 
+         * @param {HashRevocationTransactionDto} hashRevocationTransactionDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        gatewayHashControllerRevoke: async (transactionHashRevocationDto: TransactionHashRevocationDto, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'transactionHashRevocationDto' is not null or undefined
-            assertParamExists('gatewayHashControllerRevoke', 'transactionHashRevocationDto', transactionHashRevocationDto)
+        gatewayHashControllerRevoke: async (hashRevocationTransactionDto: HashRevocationTransactionDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'hashRevocationTransactionDto' is not null or undefined
+            assertParamExists('gatewayHashControllerRevoke', 'hashRevocationTransactionDto', hashRevocationTransactionDto)
             const localVarPath = `/hash/revoke`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1452,10 +1458,10 @@ export const HashGatewayApiAxiosParamCreator = function (configuration?: Configu
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(transactionHashRevocationDto, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(hashRevocationTransactionDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1475,23 +1481,23 @@ export const HashGatewayApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Adds new hash to the chain.
-         * @param {TransactionHashCreationDto} transactionHashCreationDto 
+         * @param {HashCreationTransactionDto} hashCreationTransactionDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async gatewayHashControllerCreate(transactionHashCreationDto: TransactionHashCreationDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HashCreationResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.gatewayHashControllerCreate(transactionHashCreationDto, options);
+        async gatewayHashControllerCreate(hashCreationTransactionDto: HashCreationTransactionDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HashCreationResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.gatewayHashControllerCreate(hashCreationTransactionDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary Revokes a hash.
-         * @param {TransactionHashRevocationDto} transactionHashRevocationDto 
+         * @param {HashRevocationTransactionDto} hashRevocationTransactionDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async gatewayHashControllerRevoke(transactionHashRevocationDto: TransactionHashRevocationDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HashRevocationResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.gatewayHashControllerRevoke(transactionHashRevocationDto, options);
+        async gatewayHashControllerRevoke(hashRevocationTransactionDto: HashRevocationTransactionDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HashRevocationResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.gatewayHashControllerRevoke(hashRevocationTransactionDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1507,22 +1513,22 @@ export const HashGatewayApiFactory = function (configuration?: Configuration, ba
         /**
          * 
          * @summary Adds new hash to the chain.
-         * @param {TransactionHashCreationDto} transactionHashCreationDto 
+         * @param {HashCreationTransactionDto} hashCreationTransactionDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        gatewayHashControllerCreate(transactionHashCreationDto: TransactionHashCreationDto, options?: any): AxiosPromise<HashCreationResponse> {
-            return localVarFp.gatewayHashControllerCreate(transactionHashCreationDto, options).then((request) => request(axios, basePath));
+        gatewayHashControllerCreate(hashCreationTransactionDto: HashCreationTransactionDto, options?: any): AxiosPromise<HashCreationResponse> {
+            return localVarFp.gatewayHashControllerCreate(hashCreationTransactionDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Revokes a hash.
-         * @param {TransactionHashRevocationDto} transactionHashRevocationDto 
+         * @param {HashRevocationTransactionDto} hashRevocationTransactionDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        gatewayHashControllerRevoke(transactionHashRevocationDto: TransactionHashRevocationDto, options?: any): AxiosPromise<HashRevocationResponse> {
-            return localVarFp.gatewayHashControllerRevoke(transactionHashRevocationDto, options).then((request) => request(axios, basePath));
+        gatewayHashControllerRevoke(hashRevocationTransactionDto: HashRevocationTransactionDto, options?: any): AxiosPromise<HashRevocationResponse> {
+            return localVarFp.gatewayHashControllerRevoke(hashRevocationTransactionDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1537,25 +1543,25 @@ export class HashGatewayApi extends BaseAPI {
     /**
      * 
      * @summary Adds new hash to the chain.
-     * @param {TransactionHashCreationDto} transactionHashCreationDto 
+     * @param {HashCreationTransactionDto} hashCreationTransactionDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof HashGatewayApi
      */
-    public gatewayHashControllerCreate(transactionHashCreationDto: TransactionHashCreationDto, options?: any) {
-        return HashGatewayApiFp(this.configuration).gatewayHashControllerCreate(transactionHashCreationDto, options).then((request) => request(this.axios, this.basePath));
+    public gatewayHashControllerCreate(hashCreationTransactionDto: HashCreationTransactionDto, options?: AxiosRequestConfig) {
+        return HashGatewayApiFp(this.configuration).gatewayHashControllerCreate(hashCreationTransactionDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Revokes a hash.
-     * @param {TransactionHashRevocationDto} transactionHashRevocationDto 
+     * @param {HashRevocationTransactionDto} hashRevocationTransactionDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof HashGatewayApi
      */
-    public gatewayHashControllerRevoke(transactionHashRevocationDto: TransactionHashRevocationDto, options?: any) {
-        return HashGatewayApiFp(this.configuration).gatewayHashControllerRevoke(transactionHashRevocationDto, options).then((request) => request(this.axios, this.basePath));
+    public gatewayHashControllerRevoke(hashRevocationTransactionDto: HashRevocationTransactionDto, options?: AxiosRequestConfig) {
+        return HashGatewayApiFp(this.configuration).gatewayHashControllerRevoke(hashRevocationTransactionDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -1572,7 +1578,7 @@ export const NodeGatewayApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        httpGatewayControllerInformation: async (options: any = {}): Promise<RequestArgs> => {
+        httpGatewayControllerInformation: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1587,7 +1593,7 @@ export const NodeGatewayApiAxiosParamCreator = function (configuration?: Configu
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1603,7 +1609,7 @@ export const NodeGatewayApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        httpGatewayControllerInit: async (inviteNode: InviteNode, options: any = {}): Promise<RequestArgs> => {
+        httpGatewayControllerInit: async (inviteNode: InviteNode, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'inviteNode' is not null or undefined
             assertParamExists('httpGatewayControllerInit', 'inviteNode', inviteNode)
             const localVarPath = `/init`;
@@ -1626,7 +1632,7 @@ export const NodeGatewayApiAxiosParamCreator = function (configuration?: Configu
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(inviteNode, localVarRequestOptions, configuration)
@@ -1642,7 +1648,7 @@ export const NodeGatewayApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        httpGatewayControllerRebuild: async (options: any = {}): Promise<RequestArgs> => {
+        httpGatewayControllerRebuild: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/rebuild`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1661,7 +1667,7 @@ export const NodeGatewayApiAxiosParamCreator = function (configuration?: Configu
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1676,7 +1682,7 @@ export const NodeGatewayApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        httpGatewayControllerReset: async (options: any = {}): Promise<RequestArgs> => {
+        httpGatewayControllerReset: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/reset`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1695,7 +1701,7 @@ export const NodeGatewayApiAxiosParamCreator = function (configuration?: Configu
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1720,7 +1726,7 @@ export const NodeGatewayApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async httpGatewayControllerInformation(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async httpGatewayControllerInformation(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.httpGatewayControllerInformation(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1731,7 +1737,7 @@ export const NodeGatewayApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async httpGatewayControllerInit(inviteNode: InviteNode, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async httpGatewayControllerInit(inviteNode: InviteNode, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.httpGatewayControllerInit(inviteNode, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1741,7 +1747,7 @@ export const NodeGatewayApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async httpGatewayControllerRebuild(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async httpGatewayControllerRebuild(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.httpGatewayControllerRebuild(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1751,7 +1757,7 @@ export const NodeGatewayApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async httpGatewayControllerReset(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async httpGatewayControllerReset(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.httpGatewayControllerReset(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1819,7 +1825,7 @@ export class NodeGatewayApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof NodeGatewayApi
      */
-    public httpGatewayControllerInformation(options?: any) {
+    public httpGatewayControllerInformation(options?: AxiosRequestConfig) {
         return NodeGatewayApiFp(this.configuration).httpGatewayControllerInformation(options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1831,7 +1837,7 @@ export class NodeGatewayApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof NodeGatewayApi
      */
-    public httpGatewayControllerInit(inviteNode: InviteNode, options?: any) {
+    public httpGatewayControllerInit(inviteNode: InviteNode, options?: AxiosRequestConfig) {
         return NodeGatewayApiFp(this.configuration).httpGatewayControllerInit(inviteNode, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1842,7 +1848,7 @@ export class NodeGatewayApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof NodeGatewayApi
      */
-    public httpGatewayControllerRebuild(options?: any) {
+    public httpGatewayControllerRebuild(options?: AxiosRequestConfig) {
         return NodeGatewayApiFp(this.configuration).httpGatewayControllerRebuild(options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1853,7 +1859,7 @@ export class NodeGatewayApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof NodeGatewayApi
      */
-    public httpGatewayControllerReset(options?: any) {
+    public httpGatewayControllerReset(options?: AxiosRequestConfig) {
         return NodeGatewayApiFp(this.configuration).httpGatewayControllerReset(options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -1872,7 +1878,7 @@ export const TemplateGatewayApiAxiosParamCreator = function (configuration?: Con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        gatewayTemplateControllerCreate: async (templateTransactionDto: TemplateTransactionDto, options: any = {}): Promise<RequestArgs> => {
+        gatewayTemplateControllerCreate: async (templateTransactionDto: TemplateTransactionDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'templateTransactionDto' is not null or undefined
             assertParamExists('gatewayTemplateControllerCreate', 'templateTransactionDto', templateTransactionDto)
             const localVarPath = `/template`;
@@ -1891,7 +1897,7 @@ export const TemplateGatewayApiAxiosParamCreator = function (configuration?: Con
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(templateTransactionDto, localVarRequestOptions, configuration)
@@ -1918,7 +1924,7 @@ export const TemplateGatewayApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async gatewayTemplateControllerCreate(templateTransactionDto: TemplateTransactionDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TemplateCreationResponse>> {
+        async gatewayTemplateControllerCreate(templateTransactionDto: TemplateTransactionDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TemplateCreationResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.gatewayTemplateControllerCreate(templateTransactionDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1960,7 +1966,7 @@ export class TemplateGatewayApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TemplateGatewayApi
      */
-    public gatewayTemplateControllerCreate(templateTransactionDto: TemplateTransactionDto, options?: any) {
+    public gatewayTemplateControllerCreate(templateTransactionDto: TemplateTransactionDto, options?: AxiosRequestConfig) {
         return TemplateGatewayApiFp(this.configuration).gatewayTemplateControllerCreate(templateTransactionDto, options).then((request) => request(this.axios, this.basePath));
     }
 }

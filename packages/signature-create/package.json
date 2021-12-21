@@ -1,6 +1,11 @@
 {
+<<<<<<< HEAD
   "version": "0.4.3",
   "license": "MIT",
+=======
+  "version": "0.4.2",
+  "license": "Apache-2.0",
+>>>>>>> cff26bf (fix: mode open api deps to an own package)
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -73,8 +78,13 @@
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^5.0.5",
+<<<<<<< HEAD
     "@trustcerts/config-local": "^0.4.3",
     "@trustcerts/wallet": "^0.0.6",
+=======
+    "@trustcerts/config-local": "^0.4.2",
+    "@trustcerts/wallet": "^0.4.2",
+>>>>>>> cff26bf (fix: mode open api deps to an own package)
     "@types/axios": "^0.14.0",
     "husky": "^7.0.2",
     "size-limit": "^5.0.5",

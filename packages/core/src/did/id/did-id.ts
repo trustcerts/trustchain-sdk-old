@@ -6,7 +6,7 @@ import {
   DidTransaction,
   DocResponse,
   RoleManageAddEnum,
-} from '../../bc/observer';
+} from '@trustcerts/observer';
 import { Did } from '../did';
 import { Management } from '../management';
 import { IDidIdDocument } from './did-id-document';

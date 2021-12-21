@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Gateway interaction
- * Explore the functionality of an gateway
+ * Observer interaction
+ * Explore the functionality of a Observer
  *
  * The version of the OpenAPI document: 1.0.0 - f20cfc7657a97641
  * 
@@ -16,7 +16,7 @@
 import { Configuration } from "./configuration";
 // Some imports not used depending on template conditions
 // @ts-ignore
-import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
+import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
 
 export const BASE_PATH = "http://localhost".replace(/\/+$/, "");
 
@@ -38,7 +38,7 @@ export const COLLECTION_FORMATS = {
  */
 export interface RequestArgs {
     url: string;
-    options: any;
+    options: AxiosRequestConfig;
 }
 
 /**

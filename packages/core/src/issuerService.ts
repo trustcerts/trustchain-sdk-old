@@ -1,5 +1,5 @@
-import { Configuration } from './bc/gateway';
-import { BaseAPI } from './bc/gateway/base';
+import { Configuration } from '@trustcerts/gateway';
+import { BaseAPI } from '@trustcerts/gateway/dist/base';
 import { CryptoService } from './crypto-service';
 
 /**

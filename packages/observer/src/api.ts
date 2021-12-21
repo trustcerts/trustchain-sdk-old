@@ -14,7 +14,7 @@
 
 
 import { Configuration } from './configuration';
-import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
+import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
@@ -32,19 +32,19 @@ export interface BlockInfo {
      * @type {number}
      * @memberof BlockInfo
      */
-    id: number;
+    'id': number;
     /**
      * time when the block got persisted
      * @type {string}
      * @memberof BlockInfo
      */
-    createdAt: string;
+    'createdAt': string;
     /**
      * time when the transaction was persisted in an imported blockchain
      * @type {string}
      * @memberof BlockInfo
      */
-    imported?: string;
+    'imported'?: string;
 }
 /**
  * 
@@ -57,13 +57,13 @@ export interface Compression {
      * @type {string}
      * @memberof Compression
      */
-    type: CompressionTypeEnum;
+    'type': CompressionTypeEnum;
     /**
      * Json encoded information that are required for this kind of compression.
      * @type {string}
      * @memberof Compression
      */
-    value?: string;
+    'value'?: string;
 }
 
 /**
@@ -86,81 +86,14 @@ export interface ControllerManage {
      * @type {Array<string>}
      * @memberof ControllerManage
      */
-    add?: Array<string>;
+    'add'?: Array<string>;
     /**
      * id that should be removed from the controller list.
      * @type {Array<string>}
      * @memberof ControllerManage
      */
-    remove?: Array<string>;
+    'remove'?: Array<string>;
 }
-/**
- * 
- * @export
- * @interface DidDocument
- */
-export interface DidDocument {
-    /**
-     * unique identifier of a did.
-     * @type {string}
-     * @memberof DidDocument
-     */
-    id: string;
-    /**
-     * unique identifiers of the controller.
-     * @type {Array<string>}
-     * @memberof DidDocument
-     */
-    controller: Array<string>;
-    /**
-     * array of keys that belong to the did document.
-     * @type {Array<DidPublicKey>}
-     * @memberof DidDocument
-     */
-    verificationMethod: Array<DidPublicKey>;
-    /**
-     * keys that are used for authentication.
-     * @type {Array<string>}
-     * @memberof DidDocument
-     */
-    authentication: Array<string>;
-    /**
-     * keys that are used for assertion.
-     * @type {Array<string>}
-     * @memberof DidDocument
-     */
-    assertionMethod: Array<string>;
-    /**
-     * keys that are used for modification.
-     * @type {Array<string>}
-     * @memberof DidDocument
-     */
-    modification: Array<string>;
-    /**
-     * services that are connected with this did.
-     * @type {Array<DidService>}
-     * @memberof DidDocument
-     */
-    service: Array<DidService>;
-    /**
-     * role of the did
-     * @type {Array<string>}
-     * @memberof DidDocument
-     */
-    role: Array<DidDocumentRoleEnum>;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum DidDocumentRoleEnum {
-    Validator = 'validator',
-    Gateway = 'gateway',
-    Observer = 'observer',
-    Client = 'client'
-}
-
 /**
  * 
  * @export
@@ -172,38 +105,105 @@ export interface DidDocumentMetaData {
      * @type {string}
      * @memberof DidDocumentMetaData
      */
-    updated: string;
+    'updated': string;
     /**
      * 
      * @type {boolean}
      * @memberof DidDocumentMetaData
      */
-    deactivated: boolean;
+    'deactivated': boolean;
     /**
      * 
      * @type {string}
      * @memberof DidDocumentMetaData
      */
-    nextUpdate: string;
+    'nextUpdate': string;
     /**
      * 
      * @type {number}
      * @memberof DidDocumentMetaData
      */
-    versionId: number;
+    'versionId': number;
     /**
      * 
      * @type {number}
      * @memberof DidDocumentMetaData
      */
-    nextVersionId: number;
+    'nextVersionId': number;
     /**
      * 
      * @type {string}
      * @memberof DidDocumentMetaData
      */
-    created: string;
+    'created': string;
 }
+/**
+ * 
+ * @export
+ * @interface DidIdDocument
+ */
+export interface DidIdDocument {
+    /**
+     * unique identifier of a did.
+     * @type {string}
+     * @memberof DidIdDocument
+     */
+    'id': string;
+    /**
+     * unique identifiers of the controller.
+     * @type {Array<string>}
+     * @memberof DidIdDocument
+     */
+    'controller': Array<string>;
+    /**
+     * array of keys that belong to the did document.
+     * @type {Array<DidPublicKey>}
+     * @memberof DidIdDocument
+     */
+    'verificationMethod': Array<DidPublicKey>;
+    /**
+     * keys that are used for authentication.
+     * @type {Array<string>}
+     * @memberof DidIdDocument
+     */
+    'authentication': Array<string>;
+    /**
+     * keys that are used for assertion.
+     * @type {Array<string>}
+     * @memberof DidIdDocument
+     */
+    'assertionMethod': Array<string>;
+    /**
+     * keys that are used for modification.
+     * @type {Array<string>}
+     * @memberof DidIdDocument
+     */
+    'modification': Array<string>;
+    /**
+     * services that are connected with this did.
+     * @type {Array<DidService>}
+     * @memberof DidIdDocument
+     */
+    'service': Array<DidService>;
+    /**
+     * role of the did
+     * @type {Array<string>}
+     * @memberof DidIdDocument
+     */
+    'role': Array<DidIdDocumentRoleEnum>;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum DidIdDocumentRoleEnum {
+    Validator = 'validator',
+    Gateway = 'gateway',
+    Observer = 'observer',
+    Client = 'client'
+}
+
 /**
  * 
  * @export
@@ -215,25 +215,25 @@ export interface DidPublicKey {
      * @type {string}
      * @memberof DidPublicKey
      */
-    id: string;
+    'id': string;
     /**
      * controller of the key
      * @type {string}
      * @memberof DidPublicKey
      */
-    controller: string;
+    'controller': string;
     /**
      * Type of the key
      * @type {string}
      * @memberof DidPublicKey
      */
-    type: DidPublicKeyTypeEnum;
+    'type': DidPublicKeyTypeEnum;
     /**
      * encoded key value
      * @type {PublicKeyJwkDto}
      * @memberof DidPublicKey
      */
-    publicKeyJwk: PublicKeyJwkDto;
+    'publicKeyJwk': PublicKeyJwkDto;
 }
 
 /**
@@ -255,19 +255,19 @@ export interface DidService {
      * @type {string}
      * @memberof DidService
      */
-    id: string;
+    'id': string;
     /**
      * name of the service
      * @type {string}
      * @memberof DidService
      */
-    type: string;
+    'type': string;
     /**
      * url to the service
      * @type {string}
      * @memberof DidService
      */
-    endpoint: string;
+    'endpoint': string;
 }
 /**
  * 
@@ -280,67 +280,67 @@ export interface DidStructure {
      * @type {string}
      * @memberof DidStructure
      */
-    id: string;
+    'id': string;
     /**
      * 
      * @type {ControllerManage}
      * @memberof DidStructure
      */
-    controller?: ControllerManage;
+    'controller'?: ControllerManage;
     /**
      * 
      * @type {RoleManage}
      * @memberof DidStructure
      */
-    role?: RoleManage;
+    'role'?: RoleManage;
     /**
      * 
      * @type {VerificationMethod}
      * @memberof DidStructure
      */
-    verificationMethod?: VerificationMethod;
+    'verificationMethod'?: VerificationMethod;
     /**
      * 
      * @type {ServiceMange}
      * @memberof DidStructure
      */
-    service?: ServiceMange;
+    'service'?: ServiceMange;
     /**
      * 
      * @type {VerificationRelationshipManage}
      * @memberof DidStructure
      */
-    authentication?: VerificationRelationshipManage;
+    'authentication'?: VerificationRelationshipManage;
     /**
      * 
      * @type {VerificationRelationshipManage}
      * @memberof DidStructure
      */
-    assertionMethod?: VerificationRelationshipManage;
+    'assertionMethod'?: VerificationRelationshipManage;
     /**
      * 
      * @type {VerificationRelationshipManage}
      * @memberof DidStructure
      */
-    keyAgreement?: VerificationRelationshipManage;
+    'keyAgreement'?: VerificationRelationshipManage;
     /**
      * 
      * @type {VerificationRelationshipManage}
      * @memberof DidStructure
      */
-    modification?: VerificationRelationshipManage;
+    'modification'?: VerificationRelationshipManage;
     /**
      * 
      * @type {VerificationRelationshipManage}
      * @memberof DidStructure
      */
-    capabilityDelegation?: VerificationRelationshipManage;
+    'capabilityDelegation'?: VerificationRelationshipManage;
     /**
      * 
      * @type {VerificationRelationshipManage}
      * @memberof DidStructure
      */
-    capabilityInvocation?: VerificationRelationshipManage;
+    'capabilityInvocation'?: VerificationRelationshipManage;
 }
 /**
  * 
@@ -353,37 +353,105 @@ export interface DidTransaction {
      * @type {Array<SignatureDto>}
      * @memberof DidTransaction
      */
-    signature: Array<SignatureDto>;
+    'signature': Array<SignatureDto>;
     /**
      * Blockinformation
      * @type {BlockInfo}
      * @memberof DidTransaction
      */
-    block: BlockInfo;
+    'block': BlockInfo;
     /**
      * Timestamp when the element was created.
      * @type {string}
      * @memberof DidTransaction
      */
-    createdAt: string;
+    'createdAt': string;
     /**
      * Values of the transaction
      * @type {DidStructure}
      * @memberof DidTransaction
      */
-    values: DidStructure;
+    'values': DidStructure;
     /**
      * Signature of the hash.
      * @type {Array<SignatureDto>}
      * @memberof DidTransaction
      */
-    didDocumentSignature: Array<SignatureDto>;
+    'didDocumentSignature': Array<SignatureDto>;
     /**
      * 
      * @type {string}
      * @memberof DidTransaction
      */
-    id: string;
+    'id': string;
+}
+/**
+ * 
+ * @export
+ * @interface DidTransactionBody
+ */
+export interface DidTransactionBody {
+    /**
+     * Version number of the transaction.
+     * @type {number}
+     * @memberof DidTransactionBody
+     */
+    'version': number;
+    /**
+     * timestamp when transaction was created.
+     * @type {string}
+     * @memberof DidTransactionBody
+     */
+    'date': string;
+    /**
+     * 
+     * @type {TransactionType}
+     * @memberof DidTransactionBody
+     */
+    'type': TransactionType;
+    /**
+     * signature of the did document after applying the changes
+     * @type {SignatureInfo}
+     * @memberof DidTransactionBody
+     */
+    'didDocSignature': SignatureInfo;
+    /**
+     * 
+     * @type {DidStructure}
+     * @memberof DidTransactionBody
+     */
+    'value': DidStructure;
+}
+/**
+ * 
+ * @export
+ * @interface DidTransactionDto
+ */
+export interface DidTransactionDto {
+    /**
+     * Version number of the base transaction.
+     * @type {number}
+     * @memberof DidTransactionDto
+     */
+    'version': number;
+    /**
+     * 
+     * @type {DidTransactionBody}
+     * @memberof DidTransactionDto
+     */
+    'body': DidTransactionBody;
+    /**
+     * 
+     * @type {TransactionMetadata}
+     * @memberof DidTransactionDto
+     */
+    'metadata': TransactionMetadata;
+    /**
+     * 
+     * @type {SignatureInfo}
+     * @memberof DidTransactionDto
+     */
+    'signature': SignatureInfo;
 }
 /**
  * 
@@ -393,22 +461,77 @@ export interface DidTransaction {
 export interface DocResponse {
     /**
      * parsed did document
-     * @type {DidDocument}
+     * @type {DidIdDocument}
      * @memberof DocResponse
      */
-    document: DidDocument;
+    'document': DidIdDocument;
     /**
      * signatures of the parsed document
      * @type {Array<SignatureDto>}
      * @memberof DocResponse
      */
-    signatures: Array<SignatureDto>;
+    'signatures': Array<SignatureDto>;
     /**
      * Metadata of the document
      * @type {DidDocumentMetaData}
      * @memberof DocResponse
      */
-    metaData: DidDocumentMetaData;
+    'metaData': DidDocumentMetaData;
+}
+/**
+ * 
+ * @export
+ * @interface GenesisBlock
+ */
+export interface GenesisBlock {
+    /**
+     * index of the block
+     * @type {number}
+     * @memberof GenesisBlock
+     */
+    'index': number;
+    /**
+     * hash of the previous block
+     * @type {string}
+     * @memberof GenesisBlock
+     */
+    'previousHash': string;
+    /**
+     * merkle root hash
+     * @type {string}
+     * @memberof GenesisBlock
+     */
+    'hash': string;
+    /**
+     * timestamp of the block
+     * @type {string}
+     * @memberof GenesisBlock
+     */
+    'timestamp': string;
+    /**
+     * transactions that are included in this block
+     * @type {Array<DidTransactionDto>}
+     * @memberof GenesisBlock
+     */
+    'transactions': Array<DidTransactionDto>;
+    /**
+     * version of this block
+     * @type {number}
+     * @memberof GenesisBlock
+     */
+    'version': number;
+    /**
+     * signatures of the validators that accepted the block
+     * @type {Array<SignatureDto>}
+     * @memberof GenesisBlock
+     */
+    'signatures': Array<SignatureDto>;
+    /**
+     * validator that proposed the block
+     * @type {SignatureDto}
+     * @memberof GenesisBlock
+     */
+    'proposer': SignatureDto;
 }
 /**
  * 
@@ -421,37 +544,56 @@ export interface Hash {
      * @type {Array<SignatureDto>}
      * @memberof Hash
      */
-    signature: Array<SignatureDto>;
+    'signature': Array<SignatureDto>;
     /**
      * Blockinformation
      * @type {BlockInfo}
      * @memberof Hash
      */
-    block: BlockInfo;
+    'block': BlockInfo;
     /**
      * Hash of the file.
      * @type {string}
      * @memberof Hash
      */
-    hash: string;
+    'hash': string;
     /**
      * Used algorithm for the hash.
      * @type {string}
      * @memberof Hash
      */
-    hashAlgorithm: string;
+    'hashAlgorithm': string;
     /**
      * Timestamp when the hash was signed.
      * @type {string}
      * @memberof Hash
      */
-    createdAt: string;
+    'createdAt': string;
     /**
      * Timestamp when the hash was revoked.
      * @type {string}
      * @memberof Hash
      */
-    revokedAt?: string;
+    'revokedAt'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ImportedMetadata
+ */
+export interface ImportedMetadata {
+    /**
+     * timestamp when transaction was persisted in the old blockchain.
+     * @type {string}
+     * @memberof ImportedMetadata
+     */
+    'date': string;
+    /**
+     * 
+     * @type {SignatureInfo}
+     * @memberof ImportedMetadata
+     */
+    'imported': SignatureInfo;
 }
 /**
  * 
@@ -464,19 +606,19 @@ export interface InviteNode {
      * @type {string}
      * @memberof InviteNode
      */
-    id: string;
+    'id': string;
     /**
      * Secret token
      * @type {string}
      * @memberof InviteNode
      */
-    secret: string;
+    'secret': string;
     /**
      * Url of the node endpoint
      * @type {string}
      * @memberof InviteNode
      */
-    url: string;
+    'url': string;
 }
 /**
  * 
@@ -489,31 +631,31 @@ export interface PublicKeyJwkDto {
      * @type {Array<string>}
      * @memberof PublicKeyJwkDto
      */
-    key_ops?: Array<string>;
+    'key_ops'?: Array<string>;
     /**
      * The family of cryptographic algorithms used with the key.
      * @type {string}
      * @memberof PublicKeyJwkDto
      */
-    kty?: string;
+    'kty'?: string;
     /**
      * The modulus for the RSA public key.
      * @type {string}
      * @memberof PublicKeyJwkDto
      */
-    n?: string;
+    'n'?: string;
     /**
      * The exponent for the RSA public key.
      * @type {string}
      * @memberof PublicKeyJwkDto
      */
-    e?: string;
+    'e'?: string;
     /**
      * The specific cryptographic algorithm used with the key.
      * @type {string}
      * @memberof PublicKeyJwkDto
      */
-    alg?: string;
+    'alg'?: string;
 }
 /**
  * 
@@ -526,13 +668,13 @@ export interface RoleManage {
      * @type {Array<string>}
      * @memberof RoleManage
      */
-    add?: Array<RoleManageAddEnum>;
+    'add'?: Array<RoleManageAddEnum>;
     /**
      * 
      * @type {Array<string>}
      * @memberof RoleManage
      */
-    remove?: Array<string>;
+    'remove'?: Array<string>;
 }
 
 /**
@@ -557,13 +699,13 @@ export interface ServiceMange {
      * @type {Array<DidService>}
      * @memberof ServiceMange
      */
-    add?: Array<DidService>;
+    'add'?: Array<DidService>;
     /**
      * 
      * @type {Array<string>}
      * @memberof ServiceMange
      */
-    remove?: Array<string>;
+    'remove'?: Array<string>;
 }
 /**
  * 
@@ -576,14 +718,43 @@ export interface SignatureDto {
      * @type {string}
      * @memberof SignatureDto
      */
-    identifier: string;
+    'identifier': string;
     /**
      * The actual signature as a hex encoded string.
      * @type {string}
      * @memberof SignatureDto
      */
-    signature: string;
+    'signature': string;
 }
+/**
+ * 
+ * @export
+ * @interface SignatureInfo
+ */
+export interface SignatureInfo {
+    /**
+     * Type of the signature procedure.
+     * @type {string}
+     * @memberof SignatureInfo
+     */
+    'type': SignatureInfoTypeEnum;
+    /**
+     * signature of the document values.
+     * @type {Array<SignatureDto>}
+     * @memberof SignatureInfo
+     */
+    'values': Array<SignatureDto>;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SignatureInfoTypeEnum {
+    Single = 'single',
+    Multi = 'multi'
+}
+
 /**
  * 
  * @export
@@ -595,38 +766,76 @@ export interface Template {
      * @type {Array<SignatureDto>}
      * @memberof Template
      */
-    signature: Array<SignatureDto>;
+    'signature': Array<SignatureDto>;
     /**
      * Blockinformation
      * @type {BlockInfo}
      * @memberof Template
      */
-    block: BlockInfo;
+    'block': BlockInfo;
     /**
      * did of the template
      * @type {string}
      * @memberof Template
      */
-    id: string;
+    'id': string;
     /**
      * information about the compression
      * @type {Compression}
      * @memberof Template
      */
-    compression: Compression;
+    'compression': Compression;
     /**
      * value of the template
      * @type {string}
      * @memberof Template
      */
-    template: string;
+    'template': string;
     /**
      * schema of the input
      * @type {string}
      * @memberof Template
      */
-    schema: string;
+    'schema': string;
 }
+/**
+ * 
+ * @export
+ * @interface TransactionMetadata
+ */
+export interface TransactionMetadata {
+    /**
+     * Version number of the metadata.
+     * @type {number}
+     * @memberof TransactionMetadata
+     */
+    'version': number;
+    /**
+     * 
+     * @type {ImportedMetadata}
+     * @memberof TransactionMetadata
+     */
+    'imported'?: ImportedMetadata;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum TransactionType {
+    HashCreation = 'HashCreation',
+    HashRevocation = 'HashRevocation',
+    SecurityLimit = 'SecurityLimit',
+    SecurityRecaptcha = 'SecurityRecaptcha',
+    Did = 'Did',
+    SchemaCreation = 'SchemaCreation',
+    ClaimDefinition = 'ClaimDefinition',
+    RevocationRegistryCreation = 'RevocationRegistryCreation',
+    RevocationEntry = 'RevocationEntry',
+    Template = 'Template'
+}
+
 /**
  * 
  * @export
@@ -638,13 +847,13 @@ export interface VerificationMethod {
      * @type {Array<DidPublicKey>}
      * @memberof VerificationMethod
      */
-    add?: Array<DidPublicKey>;
+    'add'?: Array<DidPublicKey>;
     /**
      * 
      * @type {Array<string>}
      * @memberof VerificationMethod
      */
-    remove?: Array<string>;
+    'remove'?: Array<string>;
 }
 /**
  * 
@@ -657,13 +866,13 @@ export interface VerificationRelationshipManage {
      * @type {Array<string>}
      * @memberof VerificationRelationshipManage
      */
-    add?: Array<string>;
+    'add'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof VerificationRelationshipManage
      */
-    remove?: Array<string>;
+    'remove'?: Array<string>;
 }
 
 /**
@@ -677,7 +886,7 @@ export const DefaultObserverApiAxiosParamCreator = function (configuration?: Con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        promControllerIndex: async (options: any = {}): Promise<RequestArgs> => {
+        prometheusControllerIndex: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/metrics`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -692,7 +901,7 @@ export const DefaultObserverApiAxiosParamCreator = function (configuration?: Con
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -716,8 +925,8 @@ export const DefaultObserverApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async promControllerIndex(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.promControllerIndex(options);
+        async prometheusControllerIndex(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.prometheusControllerIndex(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -735,8 +944,8 @@ export const DefaultObserverApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        promControllerIndex(options?: any): AxiosPromise<void> {
-            return localVarFp.promControllerIndex(options).then((request) => request(axios, basePath));
+        prometheusControllerIndex(options?: any): AxiosPromise<void> {
+            return localVarFp.prometheusControllerIndex(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -754,8 +963,8 @@ export class DefaultObserverApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefaultObserverApi
      */
-    public promControllerIndex(options?: any) {
-        return DefaultObserverApiFp(this.configuration).promControllerIndex(options).then((request) => request(this.axios, this.basePath));
+    public prometheusControllerIndex(options?: AxiosRequestConfig) {
+        return DefaultObserverApiFp(this.configuration).prometheusControllerIndex(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -772,7 +981,7 @@ export const DidObserverApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        observerDidControllerGenesis: async (options: any = {}): Promise<RequestArgs> => {
+        observerDidControllerGenesis: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/did/genesis`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -787,7 +996,7 @@ export const DidObserverApiAxiosParamCreator = function (configuration?: Configu
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -800,12 +1009,12 @@ export const DidObserverApiAxiosParamCreator = function (configuration?: Configu
          * 
          * @summary returns the did document to a did.
          * @param {string} id identifier of the did.
-         * @param {string} [versionTime] return the did document that was present to 2021-09-26T18:18:36.854Z
+         * @param {string} [versionTime] return the did document that was present to 2021-12-20T11:29:27.588Z
          * @param {number} [versionId] return the did document with this version
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        observerDidControllerGetDoc: async (id: string, versionTime?: string, versionId?: number, options: any = {}): Promise<RequestArgs> => {
+        observerDidControllerGetDoc: async (id: string, versionTime?: string, versionId?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('observerDidControllerGetDoc', 'id', id)
             const localVarPath = `/did/{id}/doc`
@@ -831,7 +1040,7 @@ export const DidObserverApiAxiosParamCreator = function (configuration?: Configu
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -844,12 +1053,12 @@ export const DidObserverApiAxiosParamCreator = function (configuration?: Configu
          * 
          * @summary returns the transaction to assemble a did document.
          * @param {string} id identifier of the did.
-         * @param {string} [versionTime] only request transactions that are less than the given timestamp like 2021-09-26T18:18:36.853Z
+         * @param {string} [versionTime] only request transactions that are less than the given timestamp like 2021-12-20T11:29:27.587Z
          * @param {number} [versionId] only request transactions that belong to reach the version
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        observerDidControllerGetTransactions: async (id: string, versionTime?: string, versionId?: number, options: any = {}): Promise<RequestArgs> => {
+        observerDidControllerGetTransactions: async (id: string, versionTime?: string, versionId?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('observerDidControllerGetTransactions', 'id', id)
             const localVarPath = `/did/{id}`
@@ -875,7 +1084,7 @@ export const DidObserverApiAxiosParamCreator = function (configuration?: Configu
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -888,12 +1097,12 @@ export const DidObserverApiAxiosParamCreator = function (configuration?: Configu
          * 
          * @summary returns the did document metadata to a did.
          * @param {string} id identifier of the did.
-         * @param {string} [versionTime] only request transactions that are less than the given timestamp 2021-09-26T18:18:36.855Z
+         * @param {string} [versionTime] only request transactions that are less than the given timestamp 2021-12-20T11:29:27.589Z
          * @param {number} [versionId] only request transactions that belong to reach the version
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        observerDidControllerMetaData: async (id: string, versionTime?: string, versionId?: number, options: any = {}): Promise<RequestArgs> => {
+        observerDidControllerMetaData: async (id: string, versionTime?: string, versionId?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('observerDidControllerMetaData', 'id', id)
             const localVarPath = `/did/{id}/metadata`
@@ -919,7 +1128,7 @@ export const DidObserverApiAxiosParamCreator = function (configuration?: Configu
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -944,7 +1153,7 @@ export const DidObserverApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async observerDidControllerGenesis(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async observerDidControllerGenesis(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GenesisBlock>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.observerDidControllerGenesis(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -952,12 +1161,12 @@ export const DidObserverApiFp = function(configuration?: Configuration) {
          * 
          * @summary returns the did document to a did.
          * @param {string} id identifier of the did.
-         * @param {string} [versionTime] return the did document that was present to 2021-09-26T18:18:36.854Z
+         * @param {string} [versionTime] return the did document that was present to 2021-12-20T11:29:27.588Z
          * @param {number} [versionId] return the did document with this version
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async observerDidControllerGetDoc(id: string, versionTime?: string, versionId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DocResponse>> {
+        async observerDidControllerGetDoc(id: string, versionTime?: string, versionId?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DocResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.observerDidControllerGetDoc(id, versionTime, versionId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -965,12 +1174,12 @@ export const DidObserverApiFp = function(configuration?: Configuration) {
          * 
          * @summary returns the transaction to assemble a did document.
          * @param {string} id identifier of the did.
-         * @param {string} [versionTime] only request transactions that are less than the given timestamp like 2021-09-26T18:18:36.853Z
+         * @param {string} [versionTime] only request transactions that are less than the given timestamp like 2021-12-20T11:29:27.587Z
          * @param {number} [versionId] only request transactions that belong to reach the version
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async observerDidControllerGetTransactions(id: string, versionTime?: string, versionId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DidTransaction>>> {
+        async observerDidControllerGetTransactions(id: string, versionTime?: string, versionId?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DidTransaction>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.observerDidControllerGetTransactions(id, versionTime, versionId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -978,12 +1187,12 @@ export const DidObserverApiFp = function(configuration?: Configuration) {
          * 
          * @summary returns the did document metadata to a did.
          * @param {string} id identifier of the did.
-         * @param {string} [versionTime] only request transactions that are less than the given timestamp 2021-09-26T18:18:36.855Z
+         * @param {string} [versionTime] only request transactions that are less than the given timestamp 2021-12-20T11:29:27.589Z
          * @param {number} [versionId] only request transactions that belong to reach the version
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async observerDidControllerMetaData(id: string, versionTime?: string, versionId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async observerDidControllerMetaData(id: string, versionTime?: string, versionId?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DidDocumentMetaData>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.observerDidControllerMetaData(id, versionTime, versionId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1003,14 +1212,14 @@ export const DidObserverApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        observerDidControllerGenesis(options?: any): AxiosPromise<void> {
+        observerDidControllerGenesis(options?: any): AxiosPromise<GenesisBlock> {
             return localVarFp.observerDidControllerGenesis(options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary returns the did document to a did.
          * @param {string} id identifier of the did.
-         * @param {string} [versionTime] return the did document that was present to 2021-09-26T18:18:36.854Z
+         * @param {string} [versionTime] return the did document that was present to 2021-12-20T11:29:27.588Z
          * @param {number} [versionId] return the did document with this version
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1022,7 +1231,7 @@ export const DidObserverApiFactory = function (configuration?: Configuration, ba
          * 
          * @summary returns the transaction to assemble a did document.
          * @param {string} id identifier of the did.
-         * @param {string} [versionTime] only request transactions that are less than the given timestamp like 2021-09-26T18:18:36.853Z
+         * @param {string} [versionTime] only request transactions that are less than the given timestamp like 2021-12-20T11:29:27.587Z
          * @param {number} [versionId] only request transactions that belong to reach the version
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1034,12 +1243,12 @@ export const DidObserverApiFactory = function (configuration?: Configuration, ba
          * 
          * @summary returns the did document metadata to a did.
          * @param {string} id identifier of the did.
-         * @param {string} [versionTime] only request transactions that are less than the given timestamp 2021-09-26T18:18:36.855Z
+         * @param {string} [versionTime] only request transactions that are less than the given timestamp 2021-12-20T11:29:27.589Z
          * @param {number} [versionId] only request transactions that belong to reach the version
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        observerDidControllerMetaData(id: string, versionTime?: string, versionId?: number, options?: any): AxiosPromise<void> {
+        observerDidControllerMetaData(id: string, versionTime?: string, versionId?: number, options?: any): AxiosPromise<DidDocumentMetaData> {
             return localVarFp.observerDidControllerMetaData(id, versionTime, versionId, options).then((request) => request(axios, basePath));
         },
     };
@@ -1059,7 +1268,7 @@ export class DidObserverApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DidObserverApi
      */
-    public observerDidControllerGenesis(options?: any) {
+    public observerDidControllerGenesis(options?: AxiosRequestConfig) {
         return DidObserverApiFp(this.configuration).observerDidControllerGenesis(options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1067,13 +1276,13 @@ export class DidObserverApi extends BaseAPI {
      * 
      * @summary returns the did document to a did.
      * @param {string} id identifier of the did.
-     * @param {string} [versionTime] return the did document that was present to 2021-09-26T18:18:36.854Z
+     * @param {string} [versionTime] return the did document that was present to 2021-12-20T11:29:27.588Z
      * @param {number} [versionId] return the did document with this version
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DidObserverApi
      */
-    public observerDidControllerGetDoc(id: string, versionTime?: string, versionId?: number, options?: any) {
+    public observerDidControllerGetDoc(id: string, versionTime?: string, versionId?: number, options?: AxiosRequestConfig) {
         return DidObserverApiFp(this.configuration).observerDidControllerGetDoc(id, versionTime, versionId, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1081,13 +1290,13 @@ export class DidObserverApi extends BaseAPI {
      * 
      * @summary returns the transaction to assemble a did document.
      * @param {string} id identifier of the did.
-     * @param {string} [versionTime] only request transactions that are less than the given timestamp like 2021-09-26T18:18:36.853Z
+     * @param {string} [versionTime] only request transactions that are less than the given timestamp like 2021-12-20T11:29:27.587Z
      * @param {number} [versionId] only request transactions that belong to reach the version
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DidObserverApi
      */
-    public observerDidControllerGetTransactions(id: string, versionTime?: string, versionId?: number, options?: any) {
+    public observerDidControllerGetTransactions(id: string, versionTime?: string, versionId?: number, options?: AxiosRequestConfig) {
         return DidObserverApiFp(this.configuration).observerDidControllerGetTransactions(id, versionTime, versionId, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1095,13 +1304,13 @@ export class DidObserverApi extends BaseAPI {
      * 
      * @summary returns the did document metadata to a did.
      * @param {string} id identifier of the did.
-     * @param {string} [versionTime] only request transactions that are less than the given timestamp 2021-09-26T18:18:36.855Z
+     * @param {string} [versionTime] only request transactions that are less than the given timestamp 2021-12-20T11:29:27.589Z
      * @param {number} [versionId] only request transactions that belong to reach the version
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DidObserverApi
      */
-    public observerDidControllerMetaData(id: string, versionTime?: string, versionId?: number, options?: any) {
+    public observerDidControllerMetaData(id: string, versionTime?: string, versionId?: number, options?: AxiosRequestConfig) {
         return DidObserverApiFp(this.configuration).observerDidControllerMetaData(id, versionTime, versionId, options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -1120,7 +1329,7 @@ export const HashObserverApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        observerHashControllerGetHash: async (hash: string, options: any = {}): Promise<RequestArgs> => {
+        observerHashControllerGetHash: async (hash: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'hash' is not null or undefined
             assertParamExists('observerHashControllerGetHash', 'hash', hash)
             const localVarPath = `/hash/{hash}`
@@ -1138,7 +1347,7 @@ export const HashObserverApiAxiosParamCreator = function (configuration?: Config
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1164,7 +1373,7 @@ export const HashObserverApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async observerHashControllerGetHash(hash: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Hash>> {
+        async observerHashControllerGetHash(hash: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Hash>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.observerHashControllerGetHash(hash, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1206,7 +1415,7 @@ export class HashObserverApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof HashObserverApi
      */
-    public observerHashControllerGetHash(hash: string, options?: any) {
+    public observerHashControllerGetHash(hash: string, options?: AxiosRequestConfig) {
         return HashObserverApiFp(this.configuration).observerHashControllerGetHash(hash, options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -1224,7 +1433,7 @@ export const NodeObserverApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        httpObserverControllerInformation: async (options: any = {}): Promise<RequestArgs> => {
+        httpObserverControllerInformation: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1239,7 +1448,7 @@ export const NodeObserverApiAxiosParamCreator = function (configuration?: Config
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1255,7 +1464,7 @@ export const NodeObserverApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        httpObserverControllerInit: async (inviteNode: InviteNode, options: any = {}): Promise<RequestArgs> => {
+        httpObserverControllerInit: async (inviteNode: InviteNode, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'inviteNode' is not null or undefined
             assertParamExists('httpObserverControllerInit', 'inviteNode', inviteNode)
             const localVarPath = `/init`;
@@ -1278,7 +1487,7 @@ export const NodeObserverApiAxiosParamCreator = function (configuration?: Config
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(inviteNode, localVarRequestOptions, configuration)
@@ -1294,7 +1503,7 @@ export const NodeObserverApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        httpObserverControllerRebuild: async (options: any = {}): Promise<RequestArgs> => {
+        httpObserverControllerRebuild: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/rebuild`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1313,7 +1522,7 @@ export const NodeObserverApiAxiosParamCreator = function (configuration?: Config
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1328,7 +1537,7 @@ export const NodeObserverApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        httpObserverControllerReset: async (options: any = {}): Promise<RequestArgs> => {
+        httpObserverControllerReset: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/reset`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1347,7 +1556,7 @@ export const NodeObserverApiAxiosParamCreator = function (configuration?: Config
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1372,7 +1581,7 @@ export const NodeObserverApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async httpObserverControllerInformation(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async httpObserverControllerInformation(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.httpObserverControllerInformation(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1383,7 +1592,7 @@ export const NodeObserverApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async httpObserverControllerInit(inviteNode: InviteNode, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async httpObserverControllerInit(inviteNode: InviteNode, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.httpObserverControllerInit(inviteNode, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1393,7 +1602,7 @@ export const NodeObserverApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async httpObserverControllerRebuild(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async httpObserverControllerRebuild(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.httpObserverControllerRebuild(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1403,7 +1612,7 @@ export const NodeObserverApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async httpObserverControllerReset(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async httpObserverControllerReset(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.httpObserverControllerReset(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1471,7 +1680,7 @@ export class NodeObserverApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof NodeObserverApi
      */
-    public httpObserverControllerInformation(options?: any) {
+    public httpObserverControllerInformation(options?: AxiosRequestConfig) {
         return NodeObserverApiFp(this.configuration).httpObserverControllerInformation(options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1483,7 +1692,7 @@ export class NodeObserverApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof NodeObserverApi
      */
-    public httpObserverControllerInit(inviteNode: InviteNode, options?: any) {
+    public httpObserverControllerInit(inviteNode: InviteNode, options?: AxiosRequestConfig) {
         return NodeObserverApiFp(this.configuration).httpObserverControllerInit(inviteNode, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1494,7 +1703,7 @@ export class NodeObserverApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof NodeObserverApi
      */
-    public httpObserverControllerRebuild(options?: any) {
+    public httpObserverControllerRebuild(options?: AxiosRequestConfig) {
         return NodeObserverApiFp(this.configuration).httpObserverControllerRebuild(options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1505,7 +1714,7 @@ export class NodeObserverApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof NodeObserverApi
      */
-    public httpObserverControllerReset(options?: any) {
+    public httpObserverControllerReset(options?: AxiosRequestConfig) {
         return NodeObserverApiFp(this.configuration).httpObserverControllerReset(options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -1524,7 +1733,7 @@ export const TemplateObserverApiAxiosParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        observerTemplateControllerGetTemplate: async (id: string, options: any = {}): Promise<RequestArgs> => {
+        observerTemplateControllerGetTemplate: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('observerTemplateControllerGetTemplate', 'id', id)
             const localVarPath = `/template/{id}`
@@ -1542,7 +1751,7 @@ export const TemplateObserverApiAxiosParamCreator = function (configuration?: Co
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1568,7 +1777,7 @@ export const TemplateObserverApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async observerTemplateControllerGetTemplate(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Template>> {
+        async observerTemplateControllerGetTemplate(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Template>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.observerTemplateControllerGetTemplate(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1610,7 +1819,7 @@ export class TemplateObserverApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TemplateObserverApi
      */
-    public observerTemplateControllerGetTemplate(id: string, options?: any) {
+    public observerTemplateControllerGetTemplate(id: string, options?: AxiosRequestConfig) {
         return TemplateObserverApiFp(this.configuration).observerTemplateControllerGetTemplate(id, options).then((request) => request(this.axios, this.basePath));
     }
 }

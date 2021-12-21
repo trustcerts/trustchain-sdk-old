@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Observer interaction
- * Explore the functionality of a Observer
+ * Gateway interaction
+ * Explore the functionality of an gateway
  *
  * The version of the OpenAPI document: 1.0.0 - f20cfc7657a97641
  * 
@@ -14,8 +14,8 @@
 
 
 import { Configuration } from "./configuration";
-import { RequiredError,　RequestArgs } from "./base";
-import { AxiosInstance } from 'axios';
+import { RequiredError, RequestArgs } from "./base";
+import { AxiosInstance, AxiosResponse } from 'axios';
 
 /**
  *
@@ -131,8 +131,8 @@ export const toPathString = function (url: URL) {
  * @export
  */
 export const createRequestFunction = function (axiosArgs: RequestArgs, globalAxios: AxiosInstance, BASE_PATH: string, configuration?: Configuration) {
-    return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+    return <T = unknown, R = AxiosResponse<T>>(axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
         const axiosRequestArgs = {...axiosArgs.options, url: (configuration?.basePath || basePath) + axiosArgs.url};
-        return axios.request(axiosRequestArgs);
+        return axios.request<T, R>(axiosRequestArgs);
     };
 }
