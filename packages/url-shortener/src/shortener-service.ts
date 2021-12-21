@@ -20,10 +20,14 @@ export class ShortenerService {
    * @param value
    * @returns id and password
    */
-  public async shorten(value: string): Promise<string> {
+  public async shorten(value: string, email: string): Promise<string> {
     const encryption = await EncoderService.encode(value);
     const id = await this.api
-      .shortenControllerShorten({ url: encryption.value, iv: encryption.iv })
+      .shortenControllerShorten({
+        url: encryption.value,
+        iv: encryption.iv,
+        email,
+      })
       .then(res => res.data.url);
     return `${id}#${encryption.key}`;
   }

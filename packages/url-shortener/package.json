@@ -4,8 +4,7 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "engines": {
     "node": ">=10"
@@ -18,7 +17,7 @@
     "prepare": "tsdx build",
     "size": "size-limit",
     "analyze": "size-limit --why",
-    "api": "openapi-generator-cli generate -g typescript-axios -i https://platform.dev.trustcerts.de/api-json -o src/platform --api-name-suffix=PlatformApi --additional-properties=supportsES6=true"
+    "api": "openapi-generator-cli generate -g typescript-axios -i https://creator.dev.trustcerts.de/api-json -o src/platform --api-name-suffix=PlatformApi --additional-properties=supportsES6=true"
   },
   "husky": {
     "hooks": {
@@ -75,7 +74,6 @@
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^7.0.4",
-    "@trustcerts/config-cloud": "^0.4.0",
     "husky": "^7.0.4",
     "size-limit": "^7.0.4",
     "tsdx": "^0.14.1",
