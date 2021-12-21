@@ -47,8 +47,8 @@ if (!isBrowser()) {
   };
   exists = (path: string): boolean =>
     window.localStorage.getItem(path) !== null;
-    read = (path: string): string => window.localStorage.getItem(path) as string;
-    remove = window.localStorage.removeItem;
+  read = (path: string): string => window.localStorage.getItem(path) as string;
+  remove = window.localStorage.removeItem;
 }
 
 export { write, exists, read, remove, isBrowser, base58Encode, base58Decode };

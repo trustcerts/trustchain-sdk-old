@@ -1,10 +1,4 @@
-import {
-  exists,
-  read,
-  write,
-  ConfigService,
-  Config
-} from '@trustcerts/core';
+import { exists, read, write, ConfigService, Config } from '@trustcerts/core';
 
 export class LocalConfigService extends ConfigService {
   constructor(private storagePath: string) {
