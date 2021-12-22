@@ -4,7 +4,6 @@ import {
   ConfigService,
   DidNetworks,
   Identifier,
-  logger,
   SignatureType,
 } from '@trustcerts/core';
 import { randomBytes } from 'crypto';
@@ -84,6 +83,7 @@ describe('claim', () => {
     };
     await templateIssuer.create(template);
     const verifier = new TemplateVerifierService(testValues.network.observers);
+    await setTimeout(() => Promise.resolve(), 2000);
     const loadedTemplate = await verifier.get(template.id);
 
     const claimIssuer = new ClaimIssuerService();
@@ -100,8 +100,6 @@ describe('claim', () => {
       name: 'Max Mustermann',
     };
     const claim = await createClaim(val);
-    logger.debug(claim.getUrl());
-    logger.debug(await claim.getHtml());
     expect(claim.values).toEqual(val);
   }, 15000);
 

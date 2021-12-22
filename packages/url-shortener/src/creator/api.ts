@@ -44,7 +44,7 @@ export interface CreateCredentialsDto {
      * @type {string}
      * @memberof CreateCredentialsDto
      */
-    'email': string;
+    'email'?: string;
     /**
      * identifier of the signer
      * @type {string}
@@ -89,6 +89,25 @@ export interface CreateTemplateResponseDto {
      * @memberof CreateTemplateResponseDto
      */
     'id': string;
+}
+/**
+ * 
+ * @export
+ * @interface CredentialCreateResponse
+ */
+export interface CredentialCreateResponse {
+    /**
+     * url of the claim that is included in the QR-Code
+     * @type {string}
+     * @memberof CredentialCreateResponse
+     */
+    'url': string;
+    /**
+     * link to add credential to linkedin.
+     * @type {string}
+     * @memberof CredentialCreateResponse
+     */
+    'linkedIn'?: string;
 }
 /**
  * 
@@ -149,10 +168,10 @@ export interface ShortenResponse {
 }
 
 /**
- * CredentialsPlatformApi - axios parameter creator
+ * CredentialsCreatorApi - axios parameter creator
  * @export
  */
-export const CredentialsPlatformApiAxiosParamCreator = function (configuration?: Configuration) {
+export const CredentialsCreatorApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * Create a new credential and send it to the user.
@@ -236,11 +255,11 @@ export const CredentialsPlatformApiAxiosParamCreator = function (configuration?:
 };
 
 /**
- * CredentialsPlatformApi - functional programming interface
+ * CredentialsCreatorApi - functional programming interface
  * @export
  */
-export const CredentialsPlatformApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = CredentialsPlatformApiAxiosParamCreator(configuration)
+export const CredentialsCreatorApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = CredentialsCreatorApiAxiosParamCreator(configuration)
     return {
         /**
          * Create a new credential and send it to the user.
@@ -248,7 +267,7 @@ export const CredentialsPlatformApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async credentialsControllerCreate(createCredentialsDto: CreateCredentialsDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async credentialsControllerCreate(createCredentialsDto: CreateCredentialsDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CredentialCreateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.credentialsControllerCreate(createCredentialsDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -266,11 +285,11 @@ export const CredentialsPlatformApiFp = function(configuration?: Configuration) 
 };
 
 /**
- * CredentialsPlatformApi - factory interface
+ * CredentialsCreatorApi - factory interface
  * @export
  */
-export const CredentialsPlatformApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = CredentialsPlatformApiFp(configuration)
+export const CredentialsCreatorApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = CredentialsCreatorApiFp(configuration)
     return {
         /**
          * Create a new credential and send it to the user.
@@ -278,7 +297,7 @@ export const CredentialsPlatformApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        credentialsControllerCreate(createCredentialsDto: CreateCredentialsDto, options?: any): AxiosPromise<void> {
+        credentialsControllerCreate(createCredentialsDto: CreateCredentialsDto, options?: any): AxiosPromise<CredentialCreateResponse> {
             return localVarFp.credentialsControllerCreate(createCredentialsDto, options).then((request) => request(axios, basePath));
         },
         /**
@@ -294,21 +313,21 @@ export const CredentialsPlatformApiFactory = function (configuration?: Configura
 };
 
 /**
- * CredentialsPlatformApi - object-oriented interface
+ * CredentialsCreatorApi - object-oriented interface
  * @export
- * @class CredentialsPlatformApi
+ * @class CredentialsCreatorApi
  * @extends {BaseAPI}
  */
-export class CredentialsPlatformApi extends BaseAPI {
+export class CredentialsCreatorApi extends BaseAPI {
     /**
      * Create a new credential and send it to the user.
      * @param {CreateCredentialsDto} createCredentialsDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CredentialsPlatformApi
+     * @memberof CredentialsCreatorApi
      */
     public credentialsControllerCreate(createCredentialsDto: CreateCredentialsDto, options?: AxiosRequestConfig) {
-        return CredentialsPlatformApiFp(this.configuration).credentialsControllerCreate(createCredentialsDto, options).then((request) => request(this.axios, this.basePath));
+        return CredentialsCreatorApiFp(this.configuration).credentialsControllerCreate(createCredentialsDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -316,19 +335,19 @@ export class CredentialsPlatformApi extends BaseAPI {
      * @param {CreateTemplateDto} createTemplateDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CredentialsPlatformApi
+     * @memberof CredentialsCreatorApi
      */
     public credentialsControllerCreateTemplate(createTemplateDto: CreateTemplateDto, options?: AxiosRequestConfig) {
-        return CredentialsPlatformApiFp(this.configuration).credentialsControllerCreateTemplate(createTemplateDto, options).then((request) => request(this.axios, this.basePath));
+        return CredentialsCreatorApiFp(this.configuration).credentialsControllerCreateTemplate(createTemplateDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
 
 /**
- * ShortenPlatformApi - axios parameter creator
+ * ShortenCreatorApi - axios parameter creator
  * @export
  */
-export const ShortenPlatformApiAxiosParamCreator = function (configuration?: Configuration) {
+export const ShortenCreatorApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -402,11 +421,11 @@ export const ShortenPlatformApiAxiosParamCreator = function (configuration?: Con
 };
 
 /**
- * ShortenPlatformApi - functional programming interface
+ * ShortenCreatorApi - functional programming interface
  * @export
  */
-export const ShortenPlatformApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = ShortenPlatformApiAxiosParamCreator(configuration)
+export const ShortenCreatorApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ShortenCreatorApiAxiosParamCreator(configuration)
     return {
         /**
          * 
@@ -432,11 +451,11 @@ export const ShortenPlatformApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * ShortenPlatformApi - factory interface
+ * ShortenCreatorApi - factory interface
  * @export
  */
-export const ShortenPlatformApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = ShortenPlatformApiFp(configuration)
+export const ShortenCreatorApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ShortenCreatorApiFp(configuration)
     return {
         /**
          * 
@@ -460,21 +479,21 @@ export const ShortenPlatformApiFactory = function (configuration?: Configuration
 };
 
 /**
- * ShortenPlatformApi - object-oriented interface
+ * ShortenCreatorApi - object-oriented interface
  * @export
- * @class ShortenPlatformApi
+ * @class ShortenCreatorApi
  * @extends {BaseAPI}
  */
-export class ShortenPlatformApi extends BaseAPI {
+export class ShortenCreatorApi extends BaseAPI {
     /**
      * 
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ShortenPlatformApi
+     * @memberof ShortenCreatorApi
      */
     public shortenControllerResolve(id: string, options?: AxiosRequestConfig) {
-        return ShortenPlatformApiFp(this.configuration).shortenControllerResolve(id, options).then((request) => request(this.axios, this.basePath));
+        return ShortenCreatorApiFp(this.configuration).shortenControllerResolve(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -482,10 +501,10 @@ export class ShortenPlatformApi extends BaseAPI {
      * @param {ShortenDto} shortenDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ShortenPlatformApi
+     * @memberof ShortenCreatorApi
      */
     public shortenControllerShorten(shortenDto: ShortenDto, options?: AxiosRequestConfig) {
-        return ShortenPlatformApiFp(this.configuration).shortenControllerShorten(shortenDto, options).then((request) => request(this.axios, this.basePath));
+        return ShortenCreatorApiFp(this.configuration).shortenControllerShorten(shortenDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

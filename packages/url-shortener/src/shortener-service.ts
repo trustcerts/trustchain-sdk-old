@@ -1,18 +1,18 @@
 import { EncoderService } from './encoder-service';
-import { Configuration, ShortenPlatformApi } from './platform';
+import { Configuration, ShortenCreatorApi } from './creator';
 
 /**
  * Shortes a url by upload the encrypted input on a server.
  */
 export class ShortenerService {
-  private api: ShortenPlatformApi;
+  private api: ShortenCreatorApi;
 
   constructor(basePath: string, accessToken?: string) {
     const configuration = new Configuration({
       basePath,
       accessToken,
     });
-    this.api = new ShortenPlatformApi(configuration);
+    this.api = new ShortenCreatorApi(configuration);
   }
 
   /**
