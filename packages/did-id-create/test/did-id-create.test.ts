@@ -112,7 +112,7 @@ describe('test local config service', () => {
       keyPair.identifier,
       VerificationRelationshipType.authentication
     );
-    
+
     await expect(DidIdRegister.save(did, client)).resolves.toBeDefined();
   }, 7000);
 });

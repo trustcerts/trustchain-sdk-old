@@ -3,7 +3,7 @@ import {
   DidNetworks,
   Identifier,
   generateKeyPair,
-  SignatureType
+  SignatureType,
 } from '@trustcerts/core';
 
 import { readFileSync } from 'fs';
@@ -23,9 +23,12 @@ describe('config-local', () => {
   }, 10000);
 
   it('test save and load key', async () => {
-    const newKey = await generateKeyPair(config.config.invite!.id, SignatureType.Rsa);
+    const newKey = await generateKeyPair(
+      config.config.invite!.id,
+      SignatureType.Rsa
+    );
     config.config.keyPairs.push(newKey);
-    
+
     await config.saveConfig();
 
     // Reload config
@@ -39,5 +42,4 @@ describe('config-local', () => {
     config.config.keyPairs.splice(keyPosition, 1);
     await config.saveConfig();
   });
-
 });
