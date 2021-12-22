@@ -1,10 +1,11 @@
 {
-  "version": "0.4.2",
-  "license": "Apache-2.0",
+  "version": "0.1.0",
+  "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "engines": {
     "node": ">=10"
@@ -12,11 +13,12 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "tsdx test --coverage",
+    "test": "tsdx test",
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "size": "size-limit",
-    "analyze": "size-limit --why"
+    "analyze": "size-limit --why",
+    "api": "openapi-generator-cli generate -g typescript-axios -i https://platform.dev.trustcerts.de/api-json -o src --api-name-suffix=PlatformApi --additional-properties=supportsES6=true"
   },
   "husky": {
     "hooks": {
@@ -29,16 +31,16 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "@trustcerts/config-cloud",
+  "name": "@trustcerts/platform",
   "author": "trustcerts",
-  "module": "dist/config-cloud.esm.js",
+  "module": "dist/platform.esm.js",
   "size-limit": [
     {
-      "path": "dist/config-cloud.cjs.production.min.js",
+      "path": "dist/platform.cjs.production.min.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/config-cloud.esm.js",
+      "path": "dist/platform.esm.js",
       "limit": "10 KB"
     }
   ],
@@ -72,19 +74,12 @@
     ]
   },
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "^2.4.7",
-    "@size-limit/preset-small-lib": "^6.0.4",
-    "@types/axios": "^0.14.0",
+    "@openapitools/openapi-generator-cli": "^2.4.21",
+    "@size-limit/preset-small-lib": "^7.0.4",
     "husky": "^7.0.4",
-    "size-limit": "^6.0.4",
+    "size-limit": "^7.0.4",
     "tsdx": "^0.14.1",
     "tslib": "^2.3.1",
     "typescript": "^3.9.10"
-  },
-  "dependencies": {
-    "@trustcerts/core": "^0.4.2",
-    "@trustcerts/platform": "^0.1.0",
-    "axios": "0.21.1"
-  },
-  "gitHead": "9cc3c3d078fe46729a72961bc6bd241667d43309"
+  }
 }

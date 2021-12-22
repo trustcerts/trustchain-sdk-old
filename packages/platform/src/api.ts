@@ -51,24 +51,6 @@ export interface Contract {
      * @type {string}
      * @memberof Contract
      */
-    '_id': string;
-    /**
-     * 
-     * @type {User}
-     * @memberof Contract
-     */
-    'user': User;
-    /**
-     * 
-     * @type {string}
-     * @memberof Contract
-     */
-    'file': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Contract
-     */
     'subject': string;
     /**
      * 
@@ -94,6 +76,30 @@ export interface Contract {
      * @memberof Contract
      */
     'nextRepeat'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Contract
+     */
+    '_id': string;
+    /**
+     * 
+     * @type {User}
+     * @memberof Contract
+     */
+    'user': User;
+    /**
+     * 
+     * @type {string}
+     * @memberof Contract
+     */
+    'file': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Contract
+     */
+    'name': string;
     /**
      * 
      * @type {string}
@@ -153,15 +159,52 @@ export interface ContractMetaData {
 /**
  * 
  * @export
- * @interface CreateContractDto
+ * @interface ContractTemplate
  */
-export interface CreateContractDto {
+export interface ContractTemplate {
     /**
      * 
      * @type {string}
-     * @memberof CreateContractDto
+     * @memberof ContractTemplate
+     */
+    '_id': string;
+    /**
+     * 
+     * @type {User}
+     * @memberof ContractTemplate
+     */
+    'user': User;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContractTemplate
      */
     'file': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContractTemplate
+     */
+    'name': string;
+    /**
+     * 
+     * @type {Array<Stakeholder>}
+     * @memberof ContractTemplate
+     */
+    'participants': Array<Stakeholder>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContractTemplate
+     */
+    'createdAt': string;
+}
+/**
+ * 
+ * @export
+ * @interface CreateContractDto
+ */
+export interface CreateContractDto {
     /**
      * 
      * @type {string}
@@ -176,12 +219,6 @@ export interface CreateContractDto {
     'message': string;
     /**
      * 
-     * @type {Array<ContractMetaData>}
-     * @memberof CreateContractDto
-     */
-    'metaData': Array<ContractMetaData>;
-    /**
-     * 
      * @type {string}
      * @memberof CreateContractDto
      */
@@ -192,6 +229,30 @@ export interface CreateContractDto {
      * @memberof CreateContractDto
      */
     'repeat'?: CreateContractDtoRepeatEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateContractDto
+     */
+    'file': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateContractDto
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateContractDto
+     */
+    'image'?: string;
+    /**
+     * 
+     * @type {Array<ContractMetaData>}
+     * @memberof CreateContractDto
+     */
+    'metaData': Array<ContractMetaData>;
 }
 
 /**
@@ -278,6 +339,37 @@ export interface CreateInputDto {
      * @memberof CreateInputDto
      */
     'file': string;
+}
+/**
+ * 
+ * @export
+ * @interface CreateTemplate
+ */
+export interface CreateTemplate {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateTemplate
+     */
+    'file': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateTemplate
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateTemplate
+     */
+    'image'?: string;
+    /**
+     * 
+     * @type {Array<ContractMetaData>}
+     * @memberof CreateTemplate
+     */
+    'metaData': Array<ContractMetaData>;
 }
 /**
  * 
@@ -390,6 +482,25 @@ export interface DeclineContractDto {
      * @memberof DeclineContractDto
      */
     'message': string;
+}
+/**
+ * 
+ * @export
+ * @interface DelegateContractDto
+ */
+export interface DelegateContractDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof DelegateContractDto
+     */
+    'secret': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DelegateContractDto
+     */
+    'user': string;
 }
 /**
  * 
@@ -698,19 +809,7 @@ export interface Participant {
      * @type {string}
      * @memberof Participant
      */
-    'userId': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Participant
-     */
     'role': ParticipantRoleEnum;
-    /**
-     * 
-     * @type {Array<Field>}
-     * @memberof Participant
-     */
-    'fields'?: Array<Field>;
     /**
      * 
      * @type {Array<ContractInput>}
@@ -741,6 +840,18 @@ export interface Participant {
      * @memberof Participant
      */
     'unsub': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof Participant
+     */
+    'userId': string;
+    /**
+     * 
+     * @type {Array<Field>}
+     * @memberof Participant
+     */
+    'fields'?: Array<Field>;
 }
 
 /**
@@ -927,25 +1038,6 @@ export interface RequestLinkDto {
 /**
  * 
  * @export
- * @interface ResolveResponse
- */
-export interface ResolveResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof ResolveResponse
-     */
-    'url': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResolveResponse
-     */
-    'iv': string;
-}
-/**
- * 
- * @export
  * @interface S3FileResponse
  */
 export interface S3FileResponse {
@@ -968,38 +1060,6 @@ export interface SaltResponse {
      * @memberof SaltResponse
      */
     'value': string;
-}
-/**
- * 
- * @export
- * @interface ShortenDto
- */
-export interface ShortenDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof ShortenDto
-     */
-    'url': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ShortenDto
-     */
-    'iv': string;
-}
-/**
- * 
- * @export
- * @interface ShortenResponse
- */
-export interface ShortenResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof ShortenResponse
-     */
-    'url': string;
 }
 /**
  * 
@@ -1031,6 +1091,25 @@ export enum SignatureType {
     Bbs = 'BBS+'
 }
 
+/**
+ * 
+ * @export
+ * @interface Stakeholder
+ */
+export interface Stakeholder {
+    /**
+     * 
+     * @type {string}
+     * @memberof Stakeholder
+     */
+    'userId': string;
+    /**
+     * 
+     * @type {Array<Field>}
+     * @memberof Stakeholder
+     */
+    'fields'?: Array<Field>;
+}
 /**
  * 
  * @export
@@ -2908,15 +2987,17 @@ export const ContractsPlatformApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @summary download the pdf file
          * @param {string} id 
+         * @param {DelegateContractDto} delegateContractDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        contractsControllerDownloadFile: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        contractsControllerDelegateContract: async (id: string, delegateContractDto: DelegateContractDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('contractsControllerDownloadFile', 'id', id)
-            const localVarPath = `/contracts/file/{id}`
+            assertParamExists('contractsControllerDelegateContract', 'id', id)
+            // verify required parameter 'delegateContractDto' is not null or undefined
+            assertParamExists('contractsControllerDelegateContract', 'delegateContractDto', delegateContractDto)
+            const localVarPath = `/contracts/{id}/delegate`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2925,15 +3006,18 @@ export const ContractsPlatformApiAxiosParamCreator = function (configuration?: C
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(delegateContractDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3296,50 +3380,6 @@ export const ContractsPlatformApiAxiosParamCreator = function (configuration?: C
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @param {any} file file that should be signed
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        contractsControllerUploadFile: async (file: any, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'file' is not null or undefined
-            assertParamExists('contractsControllerUploadFile', 'file', file)
-            const localVarPath = `/contracts/file`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-            if (file !== undefined) { 
-                localVarFormParams.append('file', file as any);
-            }
-    
-    
-            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = localVarFormParams;
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -3403,13 +3443,13 @@ export const ContractsPlatformApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary download the pdf file
          * @param {string} id 
+         * @param {DelegateContractDto} delegateContractDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async contractsControllerDownloadFile(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<S3FileResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.contractsControllerDownloadFile(id, options);
+        async contractsControllerDelegateContract(id: string, delegateContractDto: DelegateContractDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.contractsControllerDelegateContract(id, delegateContractDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3511,16 +3551,6 @@ export const ContractsPlatformApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.contractsControllerUnsubContract(id, unsubContractDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
-        /**
-         * 
-         * @param {any} file file that should be signed
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async contractsControllerUploadFile(file: any, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FileUploadResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.contractsControllerUploadFile(file, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
     }
 };
 
@@ -3579,13 +3609,13 @@ export const ContractsPlatformApiFactory = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary download the pdf file
          * @param {string} id 
+         * @param {DelegateContractDto} delegateContractDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        contractsControllerDownloadFile(id: string, options?: any): AxiosPromise<S3FileResponse> {
-            return localVarFp.contractsControllerDownloadFile(id, options).then((request) => request(axios, basePath));
+        contractsControllerDelegateContract(id: string, delegateContractDto: DelegateContractDto, options?: any): AxiosPromise<void> {
+            return localVarFp.contractsControllerDelegateContract(id, delegateContractDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3676,15 +3706,6 @@ export const ContractsPlatformApiFactory = function (configuration?: Configurati
         contractsControllerUnsubContract(id: string, unsubContractDto: UnsubContractDto, options?: any): AxiosPromise<void> {
             return localVarFp.contractsControllerUnsubContract(id, unsubContractDto, options).then((request) => request(axios, basePath));
         },
-        /**
-         * 
-         * @param {any} file file that should be signed
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        contractsControllerUploadFile(file: any, options?: any): AxiosPromise<FileUploadResponse> {
-            return localVarFp.contractsControllerUploadFile(file, options).then((request) => request(axios, basePath));
-        },
     };
 };
 
@@ -3753,14 +3774,14 @@ export class ContractsPlatformApi extends BaseAPI {
 
     /**
      * 
-     * @summary download the pdf file
      * @param {string} id 
+     * @param {DelegateContractDto} delegateContractDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ContractsPlatformApi
      */
-    public contractsControllerDownloadFile(id: string, options?: AxiosRequestConfig) {
-        return ContractsPlatformApiFp(this.configuration).contractsControllerDownloadFile(id, options).then((request) => request(this.axios, this.basePath));
+    public contractsControllerDelegateContract(id: string, delegateContractDto: DelegateContractDto, options?: AxiosRequestConfig) {
+        return ContractsPlatformApiFp(this.configuration).contractsControllerDelegateContract(id, delegateContractDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3870,17 +3891,6 @@ export class ContractsPlatformApi extends BaseAPI {
      */
     public contractsControllerUnsubContract(id: string, unsubContractDto: UnsubContractDto, options?: AxiosRequestConfig) {
         return ContractsPlatformApiFp(this.configuration).contractsControllerUnsubContract(id, unsubContractDto, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {any} file file that should be signed
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContractsPlatformApi
-     */
-    public contractsControllerUploadFile(file: any, options?: AxiosRequestConfig) {
-        return ContractsPlatformApiFp(this.configuration).contractsControllerUploadFile(file, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -4461,6 +4471,189 @@ export class CredentialsPlatformApi extends BaseAPI {
      */
     public credentialsControllerToPdf(pdfRequest: PdfRequest, options?: AxiosRequestConfig) {
         return CredentialsPlatformApiFp(this.configuration).credentialsControllerToPdf(pdfRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * FilePlatformApi - axios parameter creator
+ * @export
+ */
+export const FilePlatformApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary download the pdf file
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        fileControllerDownloadFile: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('fileControllerDownloadFile', 'id', id)
+            const localVarPath = `/file/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary upload a file
+         * @param {any} file file that should be signed
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        fileControllerUploadFile: async (file: any, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'file' is not null or undefined
+            assertParamExists('fileControllerUploadFile', 'file', file)
+            const localVarPath = `/file`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+            if (file !== undefined) { 
+                localVarFormParams.append('file', file as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * FilePlatformApi - functional programming interface
+ * @export
+ */
+export const FilePlatformApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = FilePlatformApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary download the pdf file
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async fileControllerDownloadFile(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<S3FileResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.fileControllerDownloadFile(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary upload a file
+         * @param {any} file file that should be signed
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async fileControllerUploadFile(file: any, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FileUploadResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.fileControllerUploadFile(file, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * FilePlatformApi - factory interface
+ * @export
+ */
+export const FilePlatformApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = FilePlatformApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary download the pdf file
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        fileControllerDownloadFile(id: string, options?: any): AxiosPromise<S3FileResponse> {
+            return localVarFp.fileControllerDownloadFile(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary upload a file
+         * @param {any} file file that should be signed
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        fileControllerUploadFile(file: any, options?: any): AxiosPromise<FileUploadResponse> {
+            return localVarFp.fileControllerUploadFile(file, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * FilePlatformApi - object-oriented interface
+ * @export
+ * @class FilePlatformApi
+ * @extends {BaseAPI}
+ */
+export class FilePlatformApi extends BaseAPI {
+    /**
+     * 
+     * @summary download the pdf file
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FilePlatformApi
+     */
+    public fileControllerDownloadFile(id: string, options?: AxiosRequestConfig) {
+        return FilePlatformApiFp(this.configuration).fileControllerDownloadFile(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary upload a file
+     * @param {any} file file that should be signed
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FilePlatformApi
+     */
+    public fileControllerUploadFile(file: any, options?: AxiosRequestConfig) {
+        return FilePlatformApiFp(this.configuration).fileControllerUploadFile(file, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -5759,172 +5952,6 @@ export class SettingsPlatformApi extends BaseAPI {
 
 
 /**
- * ShortenPlatformApi - axios parameter creator
- * @export
- */
-export const ShortenPlatformApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        shortenControllerResolve: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('shortenControllerResolve', 'id', id)
-            const localVarPath = `/shorten/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {ShortenDto} shortenDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        shortenControllerShorten: async (shortenDto: ShortenDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'shortenDto' is not null or undefined
-            assertParamExists('shortenControllerShorten', 'shortenDto', shortenDto)
-            const localVarPath = `/shorten`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(shortenDto, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * ShortenPlatformApi - functional programming interface
- * @export
- */
-export const ShortenPlatformApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = ShortenPlatformApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async shortenControllerResolve(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResolveResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.shortenControllerResolve(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {ShortenDto} shortenDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async shortenControllerShorten(shortenDto: ShortenDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ShortenResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.shortenControllerShorten(shortenDto, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * ShortenPlatformApi - factory interface
- * @export
- */
-export const ShortenPlatformApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = ShortenPlatformApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        shortenControllerResolve(id: string, options?: any): AxiosPromise<ResolveResponse> {
-            return localVarFp.shortenControllerResolve(id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {ShortenDto} shortenDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        shortenControllerShorten(shortenDto: ShortenDto, options?: any): AxiosPromise<ShortenResponse> {
-            return localVarFp.shortenControllerShorten(shortenDto, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * ShortenPlatformApi - object-oriented interface
- * @export
- * @class ShortenPlatformApi
- * @extends {BaseAPI}
- */
-export class ShortenPlatformApi extends BaseAPI {
-    /**
-     * 
-     * @param {string} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ShortenPlatformApi
-     */
-    public shortenControllerResolve(id: string, options?: AxiosRequestConfig) {
-        return ShortenPlatformApiFp(this.configuration).shortenControllerResolve(id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {ShortenDto} shortenDto 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ShortenPlatformApi
-     */
-    public shortenControllerShorten(shortenDto: ShortenDto, options?: AxiosRequestConfig) {
-        return ShortenPlatformApiFp(this.configuration).shortenControllerShorten(shortenDto, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
  * StripePlatformApi - axios parameter creator
  * @export
  */
@@ -6194,6 +6221,307 @@ export class StripePlatformApi extends BaseAPI {
      */
     public payControllerWebhook(options?: AxiosRequestConfig) {
         return StripePlatformApiFp(this.configuration).payControllerWebhook(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * TemplatecontractPlatformApi - axios parameter creator
+ * @export
+ */
+export const TemplatecontractPlatformApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        templateControllerAll: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/template`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        templateControllerDelete: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('templateControllerDelete', 'id', id)
+            const localVarPath = `/template/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        templateControllerGet: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('templateControllerGet', 'id', id)
+            const localVarPath = `/template/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {CreateTemplate} createTemplate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        templateControllerStore: async (createTemplate: CreateTemplate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createTemplate' is not null or undefined
+            assertParamExists('templateControllerStore', 'createTemplate', createTemplate)
+            const localVarPath = `/template`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createTemplate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * TemplatecontractPlatformApi - functional programming interface
+ * @export
+ */
+export const TemplatecontractPlatformApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = TemplatecontractPlatformApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async templateControllerAll(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ContractTemplate>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.templateControllerAll(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async templateControllerDelete(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.templateControllerDelete(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async templateControllerGet(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContractTemplate>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.templateControllerGet(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {CreateTemplate} createTemplate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async templateControllerStore(createTemplate: CreateTemplate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.templateControllerStore(createTemplate, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * TemplatecontractPlatformApi - factory interface
+ * @export
+ */
+export const TemplatecontractPlatformApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = TemplatecontractPlatformApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        templateControllerAll(options?: any): AxiosPromise<Array<ContractTemplate>> {
+            return localVarFp.templateControllerAll(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        templateControllerDelete(id: string, options?: any): AxiosPromise<void> {
+            return localVarFp.templateControllerDelete(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        templateControllerGet(id: string, options?: any): AxiosPromise<ContractTemplate> {
+            return localVarFp.templateControllerGet(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {CreateTemplate} createTemplate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        templateControllerStore(createTemplate: CreateTemplate, options?: any): AxiosPromise<void> {
+            return localVarFp.templateControllerStore(createTemplate, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * TemplatecontractPlatformApi - object-oriented interface
+ * @export
+ * @class TemplatecontractPlatformApi
+ * @extends {BaseAPI}
+ */
+export class TemplatecontractPlatformApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TemplatecontractPlatformApi
+     */
+    public templateControllerAll(options?: AxiosRequestConfig) {
+        return TemplatecontractPlatformApiFp(this.configuration).templateControllerAll(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TemplatecontractPlatformApi
+     */
+    public templateControllerDelete(id: string, options?: AxiosRequestConfig) {
+        return TemplatecontractPlatformApiFp(this.configuration).templateControllerDelete(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TemplatecontractPlatformApi
+     */
+    public templateControllerGet(id: string, options?: AxiosRequestConfig) {
+        return TemplatecontractPlatformApiFp(this.configuration).templateControllerGet(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {CreateTemplate} createTemplate 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TemplatecontractPlatformApi
+     */
+    public templateControllerStore(createTemplate: CreateTemplate, options?: AxiosRequestConfig) {
+        return TemplatecontractPlatformApiFp(this.configuration).templateControllerStore(createTemplate, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
