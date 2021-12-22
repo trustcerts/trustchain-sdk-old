@@ -1,5 +1,5 @@
 {
-  "version": "0.4.2",
+  "version": "0.4.3",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -74,7 +74,7 @@
   "devDependencies": {
     "@size-limit/preset-small-lib": "^6.0.3",
     "@transmute/vc-status-rl-2020": "^0.7.0-unstable.16",
-    "@trustcerts/vc-revocation": "^0.4.2",
+    "@trustcerts/vc-revocation": "^0.4.3",
     "husky": "^7.0.4",
     "size-limit": "^6.0.3",
     "tsdx": "^0.14.1",
@@ -83,9 +83,9 @@
   },
   "dependencies": {
     "@mattrglobal/jsonld-signatures-bbs": "^0.11.0",
-    "@trustcerts/config-local": "^0.4.2",
-    "@trustcerts/core": "^0.4.2",
-    "@trustcerts/vc-create": "^0.4.2",
+    "@trustcerts/config-local": "^0.4.3",
+    "@trustcerts/core": "^0.4.3",
+    "@trustcerts/vc-create": "^0.4.3",
     "@trustcerts/wallet": "^0.0.6",
     "base64url": "^3.0.1",
     "jose": "^4.3.7"

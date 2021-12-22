@@ -1,5 +1,5 @@
 {
-  "version": "0.4.2",
+  "version": "0.4.3",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -73,10 +73,10 @@
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^6.0.4",
-    "@trustcerts/config-local": "^0.4.2",
-    "@trustcerts/signature-verify": "^0.4.2",
-    "@trustcerts/template-create": "^0.4.2",
-    "@trustcerts/template-verify": "^0.4.2",
+    "@trustcerts/config-local": "^0.4.3",
+    "@trustcerts/signature-verify": "^0.4.3",
+    "@trustcerts/template-create": "^0.4.3",
+    "@trustcerts/template-verify": "^0.4.3",
     "@trustcerts/wallet": "^0.0.6",
     "husky": "^7.0.4",
     "size-limit": "^6.0.4",
@@ -85,9 +85,9 @@
     "typescript": "^3.9.10"
   },
   "dependencies": {
-    "@trustcerts/claim-verify": "^0.4.2",
-    "@trustcerts/core": "^0.4.2",
-    "@trustcerts/signature-create": "^0.4.2"
+    "@trustcerts/claim-verify": "^0.4.3",
+    "@trustcerts/core": "^0.4.3",
+    "@trustcerts/signature-create": "^0.4.3"
   },
   "gitHead": "5b6d6c645f256b5b4d8ba37343f091e6fdcda803"
 }

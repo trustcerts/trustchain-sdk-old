@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.3](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.2...v0.4.3) (2021-12-22)
+
+
+### Bug Fixes
+
+* remove shortservice ([c01d728](https://github.com/trustcerts/trustchain-sdk/commit/c01d7289fcf1704ace8045568e7d3aaa48b557c9))
+
+
+
+
+
 ## [0.4.2](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.1...v0.4.2) (2021-12-21)
 
 
