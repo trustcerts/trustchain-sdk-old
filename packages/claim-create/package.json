@@ -74,6 +74,7 @@
   "devDependencies": {
     "@size-limit/preset-small-lib": "^6.0.4",
     "@trustcerts/config-local": "^0.4.2",
+    "@trustcerts/gateway": "^0.1.0",
     "@trustcerts/signature-verify": "^0.4.2",
     "@trustcerts/template-create": "^0.4.2",
     "@trustcerts/template-verify": "^0.4.2",
@@ -85,9 +86,10 @@
     "typescript": "^3.9.10"
   },
   "dependencies": {
-    "@trustcerts/claim-verify": "^0.4.3",
-    "@trustcerts/core": "^0.4.3",
-    "@trustcerts/signature-create": "^0.4.3"
+    "@trustcerts/claim-verify": "^0.4.2",
+    "@trustcerts/core": "^0.4.2",
+    "@trustcerts/observer": "^0.1.0",
+    "@trustcerts/signature-create": "^0.4.2"
   },
   "gitHead": "5b6d6c645f256b5b4d8ba37343f091e6fdcda803"
 }

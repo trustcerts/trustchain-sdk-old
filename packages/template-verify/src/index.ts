@@ -1,17 +1,18 @@
-import { Observer, logger, VerifierService } from '@trustcerts/core';
+import { logger, VerifierService } from '@trustcerts/core';
+import { TemplateObserverApi, Template } from '@trustcerts/observer';
 
 export class TemplateVerifierService extends VerifierService {
-  protected apis: Observer.TemplateObserverApi[];
+  protected apis: TemplateObserverApi[];
 
   constructor(protected observerUrls: string[], equalMin = 2) {
     super(observerUrls, equalMin);
     this.apis = this.apiConfigurations.map(
-      config => new Observer.TemplateObserverApi(config)
+      config => new TemplateObserverApi(config)
     );
   }
 
-  async get(id: string): Promise<Observer.Template> {
-    const responses: { amount: number; value: Observer.Template }[] = [];
+  async get(id: string): Promise<Template> {
+    const responses: { amount: number; value: Template }[] = [];
     for (const api of this.apis) {
       const res = await api
         .observerTemplateControllerGetTemplate(id, { timeout: 2000 })

@@ -1,5 +1,4 @@
 import {
-  Gateway,
   CryptoService,
   VerificationRelationshipType,
   ConfigService,
@@ -22,6 +21,7 @@ import {
 import { TemplateVerifierService } from '@trustcerts/template-verify';
 import { WalletService } from '@trustcerts/wallet';
 import { readFileSync } from 'fs';
+import { TemplateStructure, CompressionTypeEnum } from '@trustcerts/gateway';
 
 /**
  * Test claim class.
@@ -74,9 +74,9 @@ describe('claim', () => {
       testValues.network.gateways,
       cryptoService
     );
-    const template: Gateway.TemplateStructure = {
+    const template: TemplateStructure = {
       compression: {
-        type: Gateway.CompressionTypeEnum.Json,
+        type: CompressionTypeEnum.Json,
       },
       template: '<h1>Hello {{ name }}</h1>',
       schema: JSON.stringify(schema),

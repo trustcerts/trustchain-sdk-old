@@ -1,5 +1,5 @@
 import { SignatureIssuerService } from '@trustcerts/signature-create';
-import { Observer } from '@trustcerts/core';
+import { Template } from '@trustcerts/observer';
 import {
   ClaimValues,
   Claim,
@@ -15,7 +15,7 @@ export class ClaimIssuerService {
    * create a claim.
    */
   async create(
-    template: Observer.Template,
+    template: Template,
     values: ClaimValues,
     host: string,
     signatureIssuer: SignatureIssuerService

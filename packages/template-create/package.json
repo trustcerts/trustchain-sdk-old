@@ -83,7 +83,8 @@
     "typescript": "^3.9.10"
   },
   "dependencies": {
-    "@trustcerts/core": "^0.4.3",
+    "@trustcerts/core": "^0.4.2",
+    "@trustcerts/gateway": "^0.1.0",
     "axios": "^0.24.0"
   },
   "gitHead": "9cc3c3d078fe46729a72961bc6bd241667d43309"
