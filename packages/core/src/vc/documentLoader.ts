@@ -14,6 +14,7 @@ export interface LoaderResponse {
 export class DocumentLoader {
   private cache: any;
   private cachePath = './tmp/docLoader.json';
+  private MAX_LOADING_TIME = 5000;
 
   private revocationListWith1234Revoked = {
     '@context': [
@@ -63,6 +64,27 @@ export class DocumentLoader {
     write(this.cachePath, JSON.stringify(this.cache, null, 4));
   }
 
+  private async loadResourceWithTimeout<T>(
+    url: string,
+    promise: Promise<T>
+  ): Promise<any> {
+    try {
+      const timeout = new Promise<never>((_, reject) => {
+        setTimeout(() => {
+          reject(
+            new Error(
+              `Could not load resource ${url} in time (${this.MAX_LOADING_TIME} ms)`
+            )
+          );
+        }, this.MAX_LOADING_TIME);
+      });
+
+      return await Promise.race<T>([promise, timeout]);
+    } catch (e) {
+      logger.warn(e);
+    }
+  }
+
   // TODO: is not async, but uses await. Problem?
   getLoader(): (url: string) => any {
     const docLoader = async (url: string): Promise<LoaderResponse> => {
@@ -80,14 +102,20 @@ export class DocumentLoader {
 
         // is key? (Can you reference other parts via #?)
         if (url.indexOf('#') !== -1) {
-          const did = await DidIdResolver.load(url.split('#')[0]);
+          const did = await this.loadResourceWithTimeout(
+            url,
+            DidIdResolver.load(url.split('#')[0])
+          );
           const doc = did.getKey(url);
           // Import as blsKey to extract publicKey as base58
           // TODO: directly encode as base58
-          const blsKey = await Bls12381G2KeyPair.fromJwk({
-            publicKeyJwk: doc.publicKeyJwk as JsonWebKey,
-            id: url,
-          });
+          const blsKey = await this.loadResourceWithTimeout(
+            url,
+            Bls12381G2KeyPair.fromJwk({
+              publicKeyJwk: doc.publicKeyJwk as JsonWebKey,
+              id: url,
+            })
+          );
           return {
             contextUrl: null,
             document: {
@@ -99,7 +127,10 @@ export class DocumentLoader {
           };
         } else {
           // is DID doc
-          const did = await DidIdResolver.load(url);
+          const did = await this.loadResourceWithTimeout(
+            url,
+            DidIdResolver.load(url)
+          );
           return {
             contextUrl: null,
             document: did.getDocument(),
@@ -111,7 +142,10 @@ export class DocumentLoader {
         if (!resolvedDoc) {
           logger.debug('Resolving URL ' + url);
           // assume it's an context URL and resolve
-          const response = await globalAxios.get<string>(url);
+          const response = await this.loadResourceWithTimeout(
+            url,
+            globalAxios.get<string>(url)
+          );
           const context = response.data;
           resolvedDoc = {
             contextUrl: null,
