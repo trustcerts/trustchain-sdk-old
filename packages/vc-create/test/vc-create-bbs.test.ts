@@ -68,7 +68,7 @@ describe('vc', () => {
     if (rsaKey !== undefined) {
       await cryptoServiceRSA.init(rsaKey);
     }
-  }, 10000);
+  }, 40000);
 
   // BBS+
   async function createVcBbs(): Promise<VerifiableCredentialBBS> {
