@@ -32,7 +32,7 @@ describe('vc', () => {
   //jest.setTimeout(20000000);
   beforeAll(async () => {
     // TODO: Zeile löschen
-    //jest.setTimeout(20000000);
+    jest.setTimeout(30000);
 
     const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
 
