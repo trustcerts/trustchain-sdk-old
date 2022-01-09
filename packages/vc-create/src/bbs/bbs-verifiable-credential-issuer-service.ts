@@ -14,7 +14,6 @@ import {
   DecryptedKeyPair,
 } from '@trustcerts/core';
 
-import { createList, createCredential } from '@transmute/vc-status-rl-2020';
 import { RevocationService } from '@trustcerts/vc-revocation';
 export class BbsVerifiableCredentialIssuerService {
   /**
