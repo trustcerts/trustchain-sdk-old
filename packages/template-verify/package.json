@@ -1,6 +1,6 @@
 {
-  "version": "0.4.3",
-  "license": "MIT",
+  "version": "0.4.2",
+  "license": "Apache-2.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -73,9 +73,10 @@
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^6.0.4",
-    "@trustcerts/config-local": "^0.4.3",
-    "@trustcerts/template-create": "^0.4.3",
-    "@trustcerts/wallet": "^0.0.6",
+    "@trustcerts/config-local": "^0.4.2",
+    "@trustcerts/gateway": "^0.1.0",
+    "@trustcerts/template-create": "^0.4.2",
+    "@trustcerts/wallet": "^0.4.2",
     "husky": "^7.0.4",
     "size-limit": "^6.0.4",
     "tsdx": "^0.14.1",
@@ -83,7 +84,8 @@
     "typescript": "^3.9.10"
   },
   "dependencies": {
-    "@trustcerts/core": "^0.4.3"
+    "@trustcerts/core": "^0.4.2",
+    "@trustcerts/observer": "^0.1.0"
   },
   "gitHead": "9cc3c3d078fe46729a72961bc6bd241667d43309"
 }

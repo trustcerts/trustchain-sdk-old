@@ -8,30 +8,30 @@ import {
   SignatureContent,
   VerifierService,
   logger,
-  Observer,
 } from '@trustcerts/core';
+import { Hash, HashObserverApi } from '@trustcerts/observer';
 
 export class SignatureVerifierService extends VerifierService {
-  protected apis: Observer.HashObserverApi[];
+  protected apis: HashObserverApi[];
 
   constructor(protected observerUrls: string[], equalMin = 2) {
     super(observerUrls, equalMin);
     this.apis = this.apiConfigurations.map(
-      config => new Observer.HashObserverApi(config)
+      config => new HashObserverApi(config)
     );
   }
 
-  public async verifyString(value: string): Promise<Observer.Hash> {
+  public async verifyString(value: string): Promise<Hash> {
     const hash = await getHash(value);
     return this.verify(hash);
   }
 
-  public async verifyFile(file: string | File): Promise<Observer.Hash> {
+  public async verifyFile(file: string | File): Promise<Hash> {
     const hash = await getHashFromFile(file);
     return this.verify(hash);
   }
 
-  public async verify(checksum: string): Promise<Observer.Hash> {
+  public async verify(checksum: string): Promise<Hash> {
     const hash = await this.getHash(checksum);
     const usedKey = hash.signature[0].identifier;
     const time = hash.block.imported ? hash.block.createdAt : hash.createdAt;
@@ -54,8 +54,8 @@ export class SignatureVerifierService extends VerifierService {
    * Request status from all urls. Timeout if there is no response.
    * @param hash
    */
-  public async getHash(hash: string): Promise<Observer.Hash> {
-    const responses: { amount: number; value: Observer.Hash }[] = [];
+  public async getHash(hash: string): Promise<Hash> {
+    const responses: { amount: number; value: Hash }[] = [];
     // TODO refactor this! only request the endpoint if there is a timeout. Since the chain of trust is build a wrong response is not the problem.
     for (const api of this.apis) {
       const res = await api
@@ -81,7 +81,7 @@ export class SignatureVerifierService extends VerifierService {
     return Promise.reject('not enough matches');
   }
 
-  private static hash(hash: Observer.Hash): string {
+  private static hash(hash: Hash): string {
     const content: SignatureContent = {
       date: hash.createdAt,
       // TODO TransactionType.HashCreation,

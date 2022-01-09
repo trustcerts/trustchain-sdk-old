@@ -4,7 +4,7 @@ import {
   exists,
   read,
   write,
-  remove
+  remove,
 } from '@trustcerts/core';
 import { AxiosError, AxiosPromise } from 'axios';
 import { CloudEncryption } from './cloud-encryption';
@@ -13,7 +13,7 @@ import {
   Configuration,
   KeyPair,
   SettingsPlatformApi,
-} from './platform';
+} from '@trustcerts/platform';
 
 interface Credentials {
   accessToken: string;
@@ -50,7 +50,7 @@ export class CloudService {
    */
   async init(): Promise<void> {
     if (!exists(this.persistName)) {
-      return Promise.reject("Access token does not exist");
+      return Promise.reject('Access token does not exist');
     }
     await this.getLoginInformation();
     return Promise.resolve();

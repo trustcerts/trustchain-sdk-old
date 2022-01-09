@@ -1,11 +1,9 @@
 import {
-  Gateway,
   CryptoService,
   VerificationRelationshipType,
   ConfigService,
   DidNetworks,
   Identifier,
-  logger,
   SignatureType,
 } from '@trustcerts/core';
 import { randomBytes } from 'crypto';
@@ -22,6 +20,7 @@ import {
 import { TemplateVerifierService } from '@trustcerts/template-verify';
 import { WalletService } from '@trustcerts/wallet';
 import { readFileSync } from 'fs';
+import { TemplateStructure, CompressionTypeEnum } from '@trustcerts/gateway';
 
 /**
  * Test claim class.
@@ -74,9 +73,9 @@ describe('claim', () => {
       testValues.network.gateways,
       cryptoService
     );
-    const template: Gateway.TemplateStructure = {
+    const template: TemplateStructure = {
       compression: {
-        type: Gateway.CompressionTypeEnum.Json,
+        type: CompressionTypeEnum.Json,
       },
       template: '<h1>Hello {{ name }}</h1>',
       schema: JSON.stringify(schema),
@@ -84,6 +83,7 @@ describe('claim', () => {
     };
     await templateIssuer.create(template);
     const verifier = new TemplateVerifierService(testValues.network.observers);
+    await setTimeout(() => Promise.resolve(), 2000);
     const loadedTemplate = await verifier.get(template.id);
 
     const claimIssuer = new ClaimIssuerService();
@@ -100,8 +100,6 @@ describe('claim', () => {
       name: 'Max Mustermann',
     };
     const claim = await createClaim(val);
-    logger.debug(claim.getUrl());
-    logger.debug(await claim.getHtml());
     expect(claim.values).toEqual(val);
   }, 15000);
 

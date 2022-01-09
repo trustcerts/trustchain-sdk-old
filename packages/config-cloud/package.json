@@ -1,6 +1,6 @@
 {
-  "version": "0.4.3",
-  "license": "MIT",
+  "version": "0.4.2",
+  "license": "Apache-2.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -16,8 +16,7 @@
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "size": "size-limit",
-    "analyze": "size-limit --why",
-    "api:platform": "openapi-generator-cli generate -g typescript-axios -i https://platform.dev.trustcerts.de/api-json -o src/platform --api-name-suffix=PlatformApi --additional-properties=supportsES6=true"
+    "analyze": "size-limit --why"
   },
   "husky": {
     "hooks": {
@@ -83,7 +82,8 @@
     "typescript": "^3.9.10"
   },
   "dependencies": {
-    "@trustcerts/core": "^0.4.3",
+    "@trustcerts/core": "^0.4.2",
+    "@trustcerts/platform": "^0.1.0",
     "axios": "0.21.1"
   },
   "gitHead": "9cc3c3d078fe46729a72961bc6bd241667d43309"

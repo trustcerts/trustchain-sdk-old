@@ -1,4 +1,8 @@
-import { DidPublicKey, DidService, RoleManageAddEnum } from '../../bc/observer';
+import {
+  DidPublicKey,
+  DidService,
+  RoleManageAddEnum,
+} from '@trustcerts/observer';
 import { IDidDocument } from '../did-document';
 
 export interface IDidIdDocument extends IDidDocument {

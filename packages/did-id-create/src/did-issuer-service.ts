@@ -9,33 +9,41 @@ import {
   Identifier,
   SignatureContent,
   IssuerService,
-  Gateway,
   IDidIdDocument,
   DidIdResolver,
   DidCreation,
   DidId,
   SignatureType,
 } from '@trustcerts/core';
+import {
+  Configuration,
+  CreateDidDto,
+  DidGatewayApi,
+  DidStructure,
+  DidTransactionDto,
+  SignatureInfoTypeEnum,
+  TransactionType,
+} from '@trustcerts/gateway';
 export class DidIdIssuerService extends IssuerService {
-  protected api: Gateway.DidGatewayApi;
+  protected api: DidGatewayApi;
 
   constructor(gateways: string[], cryptoService: CryptoService) {
     super(gateways, cryptoService);
-    this.api = new Gateway.DidGatewayApi(this.apiConfiguration);
+    this.api = new DidGatewayApi(this.apiConfiguration);
   }
 
   async persistDid(
-    value: Gateway.DidStructure,
+    value: DidStructure,
     document: IDidIdDocument,
     version: number
   ): Promise<void> {
-    const transaction: Gateway.DidTransactionDto = {
+    const transaction: DidTransactionDto = {
       version: 1,
       body: {
         date: new Date().toISOString(),
         value,
         didDocSignature: {
-          type: Gateway.SignatureInfoTypeEnum.Single,
+          type: SignatureInfoTypeEnum.Single,
           values: [
             {
               signature: await this.cryptoService.sign(
@@ -50,14 +58,14 @@ export class DidIdIssuerService extends IssuerService {
             },
           ],
         },
-        type: Gateway.TransactionType.Did,
+        type: TransactionType.Did,
         version: 1,
       },
       metadata: {
         version: 1,
       },
       signature: {
-        type: Gateway.SignatureInfoTypeEnum.Single,
+        type: SignatureInfoTypeEnum.Single,
         values: [],
       },
     };
@@ -109,16 +117,16 @@ export class DidIdRegister {
     // generate first key pair
     const newKey = await generateKeyPair(invite.id, this.defaultSignatureType);
     // set first keypair to manipularte did
-    const inviteValues: Gateway.CreateDidDto = {
+    const inviteValues: CreateDidDto = {
       identifier: invite.id,
       publicKey: newKey.publicKey,
       secret: invite.secret,
     };
     // register the key on the chain
-    const configuration = new Gateway.Configuration({
+    const configuration = new Configuration({
       basePath: invite.endpoint,
     });
-    const api = new Gateway.DidGatewayApi(configuration);
+    const api = new DidGatewayApi(configuration);
     await api.gatewayDidControllerCreate(inviteValues);
     // load own did document.
     return {

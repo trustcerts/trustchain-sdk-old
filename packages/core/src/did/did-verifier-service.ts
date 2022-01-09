@@ -1,6 +1,10 @@
 import { DidManagerConfigValues } from './DidManagerConfigValues';
 import { VerifierService } from '../verifierService';
-import { DidObserverApi, DidTransaction, DocResponse } from '../bc/observer';
+import {
+  DidObserverApi,
+  DidTransaction,
+  DocResponse,
+} from '@trustcerts/observer';
 import { sortKeys } from '../crypto/hash';
 import { verifySignature } from '../crypto/sign';
 import { importKey } from '../crypto/key';

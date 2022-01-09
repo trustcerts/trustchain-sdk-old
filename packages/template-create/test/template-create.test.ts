@@ -1,5 +1,4 @@
 import {
-  Gateway,
   ConfigService,
   CryptoService,
   DidNetworks,
@@ -12,6 +11,7 @@ import { TemplateIssuerService } from '../src';
 import { JSONSchemaType } from 'ajv';
 import { WalletService } from '@trustcerts/wallet';
 import { readFileSync } from 'fs';
+import { TemplateStructure, CompressionTypeEnum } from '@trustcerts/gateway';
 describe('test template service', () => {
   let config: ConfigService;
 
@@ -55,9 +55,9 @@ describe('test template service', () => {
       testValues.network.gateways,
       cryptoService
     );
-    const value: Gateway.TemplateStructure = {
+    const value: TemplateStructure = {
       compression: {
-        type: Gateway.CompressionTypeEnum.Json,
+        type: CompressionTypeEnum.Json,
       },
       template,
       schema: JSON.stringify(schema),

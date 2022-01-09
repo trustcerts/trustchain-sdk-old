@@ -1,24 +1,29 @@
 import { AxiosError } from 'axios';
 import {
-  Gateway,
   CryptoService,
   sortKeys,
   SignatureContent,
   IssuerService,
 } from '@trustcerts/core';
+import {
+  TemplateGatewayApi,
+  TemplateStructure,
+  TemplateCreationResponse,
+  TemplateTransactionDto,
+  TransactionType,
+  SignatureInfoTypeEnum,
+} from '@trustcerts/gateway';
 
 export class TemplateIssuerService extends IssuerService {
-  protected api: Gateway.TemplateGatewayApi;
+  protected api: TemplateGatewayApi;
 
   constructor(gateways: string[], cryptoService: CryptoService) {
     super(gateways, cryptoService);
-    this.api = new Gateway.TemplateGatewayApi(this.apiConfiguration);
+    this.api = new TemplateGatewayApi(this.apiConfiguration);
   }
 
-  async create(
-    value: Gateway.TemplateStructure
-  ): Promise<Gateway.TemplateCreationResponse> {
-    const transaction: Gateway.TemplateTransactionDto = {
+  async create(value: TemplateStructure): Promise<TemplateCreationResponse> {
+    const transaction: TemplateTransactionDto = {
       version: 1,
       metadata: {
         version: 1,
@@ -26,11 +31,11 @@ export class TemplateIssuerService extends IssuerService {
       body: {
         version: 1,
         date: new Date().toISOString(),
-        type: Gateway.TransactionType.Template,
+        type: TransactionType.Template,
         value,
       },
       signature: {
-        type: Gateway.SignatureInfoTypeEnum.Single,
+        type: SignatureInfoTypeEnum.Single,
         values: [],
       },
     };

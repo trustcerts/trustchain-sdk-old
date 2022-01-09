@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">64% </span>
+                <span class="strong">64.7% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>32/50</span>
+                <span class='fraction'>33/51</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">63.41% </span>
+                <span class="strong">64.28% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>26/41</span>
+                <span class='fraction'>27/42</span>
             </div>
         
             
@@ -223,9 +223,23 @@
 <a name='L164'></a><a href='#L164'>164</a>
 <a name='L165'></a><a href='#L165'>165</a>
 <a name='L166'></a><a href='#L166'>166</a>
-<a name='L167'></a><a href='#L167'>167</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L167'></a><a href='#L167'>167</a>
+<a name='L168'></a><a href='#L168'>168</a>
+<a name='L169'></a><a href='#L169'>169</a>
+<a name='L170'></a><a href='#L170'>170</a>
+<a name='L171'></a><a href='#L171'>171</a>
+<a name='L172'></a><a href='#L172'>172</a>
+<a name='L173'></a><a href='#L173'>173</a>
+<a name='L174'></a><a href='#L174'>174</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -392,22 +406,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {
   IssuerService,
   CryptoService,
-  Gateway,
   getHash,
   getHashFromFile,
   sortKeys,
   SignatureContent,
 } from '@trustcerts/core';
 import { AxiosError } from 'axios';
+import {
+  HashGatewayApi,
+  HashCreationResponse,
+  TransactionType,
+  HashRevocationResponse,
+  HashCreationTransactionDto,
+  SignatureInfoTypeEnum,
+} from '@trustcerts/gateway';
 &nbsp;
 export class SignatureIssuerService extends IssuerService {
-  protected api: Gateway.HashGatewayApi;
+  protected api: HashGatewayApi;
 &nbsp;
   public timeout = 10000;
 &nbsp;
   constructor(gateways: string[], cryptoService: CryptoService) {
     super(gateways, cryptoService);
-    this.api = new Gateway.HashGatewayApi(this.apiConfiguration);
+    this.api = new HashGatewayApi(this.apiConfiguration);
   }
 &nbsp;
   /**
@@ -415,7 +436,7 @@ export class SignatureIssuerService extends IssuerService {
    *
    * @returns {Promise&lt;void&gt;}
    */
-  async signFile(filePath: string): Promise&lt;Gateway.HashCreationResponse&gt; {
+  async signFile(filePath: string): Promise&lt;HashCreationResponse&gt; {
     const hash = await getHashFromFile(filePath);
     return this.create(hash);
   }
@@ -424,7 +445,7 @@ export class SignatureIssuerService extends IssuerService {
    * Signs a string.
    * @param value
    */
-  async signString(value: string): Promise&lt;Gateway.HashCreationResponse&gt; {
+  async signString(value: string): Promise&lt;HashCreationResponse&gt; {
     const hash = await getHash(value);
     return this.create(hash);
   }
@@ -437,10 +458,10 @@ export class SignatureIssuerService extends IssuerService {
   public async create(
     hash: string,
     <span class="missing-if-branch" title="else path not taken" >E</span>date = new Date().toISOString()
-  ): Promise&lt;Gateway.HashCreationResponse&gt; {
+  ): Promise&lt;HashCreationResponse&gt; {
     const transaction = await this.createTransaction(
       hash,
-      Gateway.TransactionType.HashCreation,
+      TransactionType.HashCreation,
       date
     );
     return this.api
@@ -467,7 +488,7 @@ export class SignatureIssuerService extends IssuerService {
 <span class="fstat-no" title="function not covered" >  async r</span>evokeFile(
     filePath: string,
 <span class="cstat-no" title="statement not covered" >    date = new Date().toISOString()</span>
-  ): Promise&lt;Gateway.HashRevocationResponse&gt; {
+  ): Promise&lt;HashRevocationResponse&gt; {
     const <span class="cstat-no" title="statement not covered" >hash = <span class="cstat-no" title="statement not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >await getHashFromFile(filePath);</span></span></span>
 <span class="cstat-no" title="statement not covered" >    return this.revoke(hash, date);</span>
   }
@@ -479,7 +500,7 @@ export class SignatureIssuerService extends IssuerService {
 <span class="fstat-no" title="function not covered" >  async r</span>evokeString(
     value: string,
 <span class="cstat-no" title="statement not covered" >    date = new Date().toISOString()</span>
-  ): Promise&lt;Gateway.HashRevocationResponse&gt; {
+  ): Promise&lt;HashRevocationResponse&gt; {
     const <span class="cstat-no" title="statement not covered" >hash = <span class="cstat-no" title="statement not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >await getHash(value);</span></span></span>
 <span class="cstat-no" title="statement not covered" >    return this.revoke(hash, date);</span>
   }
@@ -492,7 +513,7 @@ export class SignatureIssuerService extends IssuerService {
 <span class="fstat-no" title="function not covered" >  private async r</span>evoke(hash: string, date: string) {
     const <span class="cstat-no" title="statement not covered" >transaction = <span class="cstat-no" title="statement not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >await this.createTransaction(</span></span></span>
       hash,
-      Gateway.TransactionType.HashRevocation,
+      TransactionType.HashRevocation,
       date
     );
 <span class="cstat-no" title="statement not covered" >    return this.api</span>
@@ -519,10 +540,10 @@ export class SignatureIssuerService extends IssuerService {
    */
   private async createTransaction(
     hash: string,
-    type: Gateway.TransactionType,
+    type: TransactionType,
     date: string
   ) {
-    const transaction: Gateway.TransactionHashCreationDto = {
+    const transaction: HashCreationTransactionDto = {
       version: 1,
       metadata: {
         version: 1,
@@ -537,7 +558,7 @@ export class SignatureIssuerService extends IssuerService {
         },
       },
       signature: {
-        type: Gateway.SignatureInfoTypeEnum.Single,
+        type: SignatureInfoTypeEnum.Single,
         values: [],
       },
     };
@@ -562,7 +583,7 @@ export class SignatureIssuerService extends IssuerService {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Dec 15 2021 17:42:56 GMT+0100 (Central European Standard Time)
+                at Wed Dec 22 2021 18:31:03 GMT+0100 (Central European Standard Time)
             </div>
         </div>
         <script src="prettify.js"></script>
