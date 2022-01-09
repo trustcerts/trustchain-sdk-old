@@ -28,7 +28,6 @@ describe('vc', () => {
   let walletService: WalletService;
 
   beforeAll(async () => {
-
     const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
 
     DidNetworks.add('tc:dev', testValues.network);
@@ -47,7 +46,10 @@ describe('vc', () => {
     )[0];
   }, 10000);
 
-  // BBS+
+  /**
+   * Creates an example BBS+ signed verifiable credential for testing
+   * @returns A BBS+ signed verifiable credential with example data
+   */
   async function createVcBbs(): Promise<VerifiableCredentialBBS> {
     const bbsVcIssuerService = new BbsVerifiableCredentialIssuerService();
 

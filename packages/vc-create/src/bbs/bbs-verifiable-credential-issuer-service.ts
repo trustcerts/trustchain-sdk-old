@@ -4,7 +4,6 @@ import {
   Bls12381G2KeyPair,
 } from '@mattrglobal/jsonld-signatures-bbs';
 import { purposes, sign } from 'jsonld-signatures';
-// import { stringify } from 'ajv';
 import { DocumentLoader } from '@trustcerts/core';
 import {
   IVerifiableCredentialArguments,
@@ -15,16 +14,21 @@ import {
   DecryptedKeyPair,
 } from '@trustcerts/core';
 
-import { createList, createCredential } from '@transmute/vc-status-rl-2020';
 import { RevocationService } from '@trustcerts/vc-revocation';
 export class BbsVerifiableCredentialIssuerService {
+  /**
+   * Creates a verifiable credential signed with a BBS+ signature.
+   *
+   * @param vcArguments The arguments of the verifiable credential
+   * @param keyPair The Bls12381G2 keypair as JsonWebKeys
+   * @param revokable If true, a credentialStatus property is added to the verifiable credential
+   * @returns A BBS+ signed verifiable credential
+   */
   async createBBSVerifiableCredential(
     vcArguments: IVerifiableCredentialArguments,
     keyPair: DecryptedKeyPair,
     revokable = true
   ): Promise<VerifiableCredentialBBS> {
-    // nonce?!
-
     const issuanceDate = new Date();
 
     const bbsKeyPair = await Bls12381G2KeyPair.fromJwk({
@@ -97,7 +101,14 @@ export class BbsVerifiableCredentialIssuerService {
     return signedCredential;
   }
 
-  async createPresentation(
+  /**
+   * Creates a verifiable presentation signed with a BBS+ signature.
+   *
+   * @param vpArguments The arguments of the verifiable presentation
+   * @param keyPair The Bls12381G2 keypair as JsonWebKeys
+   * @returns A BBS+ signed verifiable presentation
+   */
+  async createVerifiablePresentation(
     vpArguments: IVerifiablePresentationArgumentsBBS,
     keyPair: DecryptedKeyPair
   ): Promise<IVerifiablePresentationBBS> {
@@ -134,30 +145,5 @@ export class BbsVerifiableCredentialIssuerService {
     logger.debug(signedPresentation);
 
     return signedPresentation;
-  }
-
-  async createRevocationListCredential(
-    id: string,
-    length: number,
-    issuer: string,
-    keyPair: DecryptedKeyPair
-  ): Promise<VerifiableCredentialBBS> {
-    // TODO: Möglichkeiten implementieren, Indices in einem bestehenden List-Credential zu verwalten
-    // TODO: Method entfernen, da Aufgaben von Revocation Service übernommen werden?
-    const list = await createList({ length: length });
-    const rlCredential = await createCredential({ id, list });
-
-    const bbsVcIssuerService = new BbsVerifiableCredentialIssuerService();
-
-    const vc = await bbsVcIssuerService.createBBSVerifiableCredential(
-      {
-        ...rlCredential,
-        issuer: issuer,
-      },
-      keyPair,
-      false
-    );
-
-    return vc;
   }
 }
