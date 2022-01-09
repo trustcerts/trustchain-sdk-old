@@ -11,6 +11,12 @@ import { JWT } from './jwt-service';
 import { RevocationService } from '@trustcerts/vc-revocation';
 
 export class JWTVerifiableCredentialVerifierService {
+  /**
+   * Verifies a given verifiable credential, e.g. by checking its signature and revocation status
+   *
+   * @param credential The verifiable credential to be verified
+   * @returns True if the verifiable credential is valid
+   */
   async verifyCredential(credential: string): Promise<boolean> {
     const jwt = new JWT(credential);
     const kid = jwt.getHeader().kid;
@@ -44,6 +50,12 @@ export class JWTVerifiableCredentialVerifierService {
   }
 
   // TODO: Code-Dopplung mit BBS
+  /**
+   * Checks whether the given credential status has been revoked
+   *
+   * @param credentialStatus The credential status to be checked
+   * @returns True if the given credential status has been revoked
+   */
   async isRevoked(credentialStatus: ICredentialStatus): Promise<boolean> {
     const revocationService = new RevocationService();
     await revocationService.init();
@@ -56,6 +68,12 @@ export class JWTVerifiableCredentialVerifierService {
     // return decodedList.isRevoked(Number(credentialStatus.revocationListIndex));
   }
 
+  /**
+   * Verifies a given verifiable presentation by verifying its signature and each of its credentials
+   *
+   * @param presentation The verifiable presentation to be verified
+   * @returns True if the verifiable presentation is valid
+   */
   async verifyPresentation(presentation: string): Promise<boolean> {
     const jwt = new JWT(presentation);
 
