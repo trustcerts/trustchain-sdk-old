@@ -13,6 +13,12 @@ import { RevocationService } from '@trustcerts/vc-revocation';
 export class BbsVerifiableCredentialVerifierService {
   private docLoader = new DocumentLoader().getLoader();
 
+  /**
+   * Verifies a given verifiable credential, e.g. by checking its signature and revocation status
+   *
+   * @param credential The verifiable credential to be verified
+   * @returns True if the verifiable credential is valid
+   */
   async verifyCredential(
     credential: VerifiableCredentialBBS
   ): Promise<boolean> {
@@ -41,6 +47,12 @@ export class BbsVerifiableCredentialVerifierService {
     return verified.verified;
   }
 
+  /**
+   * Checks whether the given credential status has been revoked
+   *
+   * @param credentialStatus The credential status to be checked
+   * @returns True if the given credential status has been revoked
+   */
   async isRevoked(credentialStatus: ICredentialStatus): Promise<boolean> {
     const revocationService = new RevocationService();
     await revocationService.init();
@@ -53,6 +65,12 @@ export class BbsVerifiableCredentialVerifierService {
     // return decodedList.isRevoked(Number(credentialStatus.revocationListIndex));
   }
 
+  /**
+   * Verifies a given verifiable presentation by verifying its signature and each of its credentials
+   *
+   * @param presentation The verifiable presentation to be verified
+   * @returns True if the verifiable presentation is valid
+   */
   async verifyPresentation(
     presentation: IVerifiablePresentationBBS
   ): Promise<boolean> {

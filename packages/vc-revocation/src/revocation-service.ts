@@ -64,6 +64,10 @@ export class RevocationService {
     // }
   }
 
+  /**
+   * Creates a new revocation list credential
+   * @returns A revocation list credential
+   */
   private async createNewRevocationListCredential(): Promise<
     IRevocationListCredential
   > {
@@ -94,6 +98,9 @@ export class RevocationService {
     // );
   }
 
+  /**
+   * Creates and saves a new config
+   */
   private async initConfig(): Promise<void> {
     this.revocationListConfig = this.defaultConfig;
     this.revocationListCredential = await this.createNewRevocationListCredential();
@@ -101,6 +108,9 @@ export class RevocationService {
     this.saveConfig();
   }
 
+  /**
+   * Loads the persisted config from storage (todo: blockchain)
+   */
   private async loadConfig(): Promise<void> {
     try {
       this.revocationListConfig = JSON.parse(
@@ -115,6 +125,9 @@ export class RevocationService {
     }
   }
 
+  /**
+   * Saves the persisted config to storage (todo: blockchain)
+   */
   private saveConfig(): void {
     write(
       this.revocationListConfigPath,
@@ -127,6 +140,10 @@ export class RevocationService {
     );
   }
 
+  /**
+   * Creates a new unrevoked credential status with the next free index on the revocation list
+   * @returns The credential status
+   */
   public async getNewCredentialStatus(): Promise<ICredentialStatus> {
     await this.reloadConfig();
     const index = this.revocationListConfig.nextIndex;
@@ -146,6 +163,12 @@ export class RevocationService {
     };
   }
 
+  /**
+   * Checks whether the given credential status has been revoked
+   *
+   * @param credentialStatus The credential status to be checked
+   * @returns True if the given credential status has been revoked
+   */
   public async isRevoked(
     credentialStatus: ICredentialStatus
   ): Promise<boolean> {
@@ -169,6 +192,11 @@ export class RevocationService {
     return list.isRevoked(index) as boolean;
   }
 
+  /**
+   * Revokes or unrevokes a given credential status
+   * @param credentialStatus The credential status to (un-)revoke
+   * @param revoked The revocation status to set it to
+   */
   public async setRevoked(
     credentialStatus: ICredentialStatus,
     revoked: boolean
@@ -200,6 +228,9 @@ export class RevocationService {
     this.saveConfig();
   }
 
+  /**
+   * Reloads the the persisted config from storage (todo: blockchain)
+   */
   private async reloadConfig(): Promise<void> {
     // method only needed as long as we cannot guarantee singleton (only *one* instance used across project)
     // TODO: reload config if file has been modified

@@ -38,7 +38,6 @@ describe('vc', () => {
   let walletService: WalletService;
 
   beforeAll(async () => {
-
     const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
 
     DidNetworks.add('tc:dev', testValues.network);
@@ -75,7 +74,10 @@ describe('vc', () => {
     }
   }, 10000);
 
-  // BBS+
+  /**
+   * Creates an example BBS+ signed verifiable credential for testing
+   * @returns A BBS+ signed verifiable credential with example data
+   */
   async function createVcBbs(): Promise<VerifiableCredentialBBS> {
     const bbsVcIssuerService = new BbsVerifiableCredentialIssuerService();
 
@@ -97,11 +99,15 @@ describe('vc', () => {
     );
   }
 
+  /**
+   * Creates an example BBS+ signed verifiable presentation for testing
+   * @returns A BBS+ signed verifiable presentation with example data
+   */
   async function createVpBbs() {
     const vcIssuerService = new BbsVerifiableCredentialIssuerService();
     const vc1 = await createVcBbs();
     const vc2 = await createVcBbs();
-    return await vcIssuerService.createPresentation(
+    return await vcIssuerService.createVerifiablePresentation(
       {
         '@context': [],
         type: [],
