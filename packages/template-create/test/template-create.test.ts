@@ -12,13 +12,17 @@ import { JSONSchemaType } from 'ajv';
 import { WalletService } from '@trustcerts/wallet';
 import { readFileSync } from 'fs';
 import { TemplateStructure, CompressionTypeEnum } from '@trustcerts/gateway';
+
+interface Name {
+  name: string;
+}
+
 describe('test template service', () => {
   let config: ConfigService;
 
   let cryptoService: CryptoService;
-
   //@ts-ignore
-  const schema: JSONSchemaType<any> = {
+  const schema: JSONSchemaType<Name> = {
     type: 'object',
     properties: {
       name: { type: 'string' },
