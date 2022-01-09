@@ -1,4 +1,4 @@
-import { DidTransaction } from '../../bc/observer';
+import { DidTransaction } from '@trustcerts/observer';
 
 export interface InitDidManagerConfigValues {
   validateChainOfTrust?: boolean;

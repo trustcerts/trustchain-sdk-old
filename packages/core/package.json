@@ -16,8 +16,7 @@
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "size": "size-limit",
-    "analyze": "size-limit --why",
-    "api:observer": "openapi-generator-cli generate -g typescript-axios -i https://api.observer1.dev.trustcerts.de/api-json -o src/bc/observer --api-name-suffix=ObserverApi --additional-properties=supportsES6=true"
+    "analyze": "size-limit --why"
   },
   "husky": {
     "hooks": {
