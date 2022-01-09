@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.6](https://github.com/trustcerts/sdk/compare/v0.4.5...v0.4.6) (2022-01-09)
+
+
+### Bug Fixes
+
+* remove local observer usage ([12babb1](https://github.com/trustcerts/sdk/commit/12babb145b3437c5d9668264db8e851b6bf10f8d))
+* set correct dependency versions ([c69622e](https://github.com/trustcerts/sdk/commit/c69622e72b904d8b49ebb28baaf5e767a907423d))
+* update deps ([1d71cd5](https://github.com/trustcerts/sdk/commit/1d71cd53c2afb405405ea4c998257ec28b2dc80b))
+* update template test ([6da7619](https://github.com/trustcerts/sdk/commit/6da7619ae6082be6e2694260e22c3bb3e5aa68b1))
+
+
+
+
+
 ## [0.4.5](https://github.com/trustcerts/sdk/compare/v0.4.4...v0.4.5) (2022-01-09)
 
 
