@@ -85,7 +85,8 @@
   },
   "dependencies": {
     "@trustcerts/core": "^0.4.4",
-    "@trustcerts/observer": "^0.4.4"
+    "@trustcerts/observer": "^0.4.4",
+    "ajv": "^8.8.2"
   },
   "gitHead": "9cc3c3d078fe46729a72961bc6bd241667d43309"
 }
