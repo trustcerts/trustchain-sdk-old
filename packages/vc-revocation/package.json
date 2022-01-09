@@ -1,5 +1,5 @@
 {
-  "version": "0.4.4",
+  "version": "0.4.5",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -74,8 +74,8 @@
   "devDependencies": {
     "@size-limit/preset-small-lib": "^6.0.3",
     "@trustcerts/config-local": "^0.4.3",
-    "@trustcerts/vc-create": "^0.4.3",
-    "@trustcerts/vc-verify": "^0.4.3",
+    "@trustcerts/vc-create": "^0.4.5",
+    "@trustcerts/vc-verify": "^0.4.5",
     "@trustcerts/wallet": "^0.4.3",
     "husky": "^7.0.4",
     "size-limit": "^6.0.3",
