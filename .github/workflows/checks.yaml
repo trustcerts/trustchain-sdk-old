@@ -1,8 +1,7 @@
 name: Checks
 
-on:
-  pull_request:
-    types: [opened, synchronize]
+on: push
+
 
 jobs:
   checks:
@@ -49,6 +48,6 @@ jobs:
         run: |
           npm i
           ./build.sh
-          
+
       - name: Run tests
         run: npm run test
