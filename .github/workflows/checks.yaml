@@ -28,7 +28,7 @@ jobs:
         run: npm install -g @trustcerts/cli
 
       - name: Init blockchain
-        run: trusty -h localhost -v 3 -g 1 -o 1 -t latest
+        run: trusty generate -h localhost -v 3 -g 1 -o 1 -t latest
 
       - name: "Setup npm"
         run: |
