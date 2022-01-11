@@ -29,7 +29,15 @@ jobs:
 
       - name: Init blockchain
         run: trusty generate -h localhost -v 3 -g 1 -o 1 -t latest
+      
+      - name: Start blockchain-nodes
+        run: |
+          docker network create test-network
+          cd ./config
+          ./all.sh up -d
+          ./initNodes.sh
 
+          
       - name: "Setup npm"
         run: |
           npm set "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}"
