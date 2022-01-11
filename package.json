@@ -5,6 +5,7 @@
     "install:clean": "npx lerna clean -y && rm -rf node_modules && npm i --force",
     "install:ci": "npm install --ignore-scripts && lerna link && lerna bootstrap --since origin/main --include-dependencies",
     "bootstrap": "lerna bootstrap",
+    "lerna":"lerna",
     "lint": "lerna run lint --stream",
     "test": "lerna run --concurrency=1 test --stream",
     "build": "./build.sh",

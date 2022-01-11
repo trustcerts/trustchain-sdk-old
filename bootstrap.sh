@@ -15,7 +15,7 @@ done
 count=1
 
 for package in "${build_order[@]}"; do    
-    if ! lerna bootstrap --force-local --scope=@trustcerts/$package; then
+    if ! npm run lerna bootstrap --force-local --scope=@trustcerts/$package; then
         echo "Aborting bootstrap process after $package [$count/${#build_order[*]}]"
         break
     fi
