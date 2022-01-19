@@ -91,7 +91,7 @@ describe('vc', () => {
     ).toBe(false);
 
     // Revoke credential
-    revocationService.setRevoked(vcJWTPayload.vc.credentialStatus!, true);
+    await revocationService.setRevoked(vcJWTPayload.vc.credentialStatus!, true);
 
     // Expect credential to be invalid
     expect(await vcVerifierService.verifyCredential(vc)).toBe(false);
