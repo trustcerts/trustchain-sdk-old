@@ -64,7 +64,11 @@ describe('test did', () => {
       cryptoService
     );
     await DidIdRegister.save(did, client);
-    await setTimeout(() => Promise.resolve(), 2000);
+    await new Promise(resolve =>
+      setTimeout(() => {
+        resolve(true);
+      }, 2000)
+    );
     const did1 = await DidIdResolver.load(did.id);
     expect(did.getDocument()).toEqual(did1.getDocument());
   }, 7000);

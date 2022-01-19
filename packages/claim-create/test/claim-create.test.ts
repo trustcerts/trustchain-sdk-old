@@ -83,7 +83,7 @@ describe('claim', () => {
     };
     await templateIssuer.create(template);
     const verifier = new TemplateVerifierService(testValues.network.observers);
-    await setTimeout(() => Promise.resolve(), 2000);
+    await new Promise((resolve)=> setTimeout(()=>{resolve(true)} , 2000));
     const loadedTemplate = await verifier.get(template.id);
 
     const claimIssuer = new ClaimIssuerService();
