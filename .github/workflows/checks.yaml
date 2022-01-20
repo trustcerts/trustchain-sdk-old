@@ -28,7 +28,7 @@ jobs:
         run: npm install -g @trustcerts/cli
 
       - name: Init blockchain
-        run: trusty generate -h localhost -v 3 -g 1 -o 1 -t latest
+        run: trusty generate -h localhost -v 2 -g 1 -o 1 -t latest
       
       - name: Start blockchain-nodes
         run: |
@@ -56,6 +56,12 @@ jobs:
         run: |
           npm i
           ./build.sh
+
+      - name: Start trustcreator and platform services
+        run: |
+          cd test
+          docker-compose up -d
+          sleep 20
 
       - name: Run tests
         run: npm run test

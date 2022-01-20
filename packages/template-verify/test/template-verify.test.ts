@@ -15,7 +15,6 @@ import { readFileSync } from 'fs';
 import { TemplateStructure, CompressionTypeEnum } from '@trustcerts/gateway';
 describe('test template service', () => {
   let config: ConfigService;
-
   let cryptoService: CryptoService;
 
   //@ts-ignore
@@ -66,7 +65,7 @@ describe('test template service', () => {
     };
     const transaction = await client.create(value);
     const verifier = new TemplateVerifierService(testValues.network.observers);
-    await setTimeout(() => Promise.resolve(), 2000);
+    await new Promise((resolve)=> setTimeout(()=>{resolve(true)} , 2000));
     const transaction2 = await verifier.get(
       transaction.transaction.body.value.id
     );

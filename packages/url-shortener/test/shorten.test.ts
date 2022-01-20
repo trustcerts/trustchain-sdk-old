@@ -1,7 +1,7 @@
 import { EncoderService } from '../src/encoder-service';
 import { ShortenerService } from '../src/shortener-service';
 describe('shorten', () => {
-  const url = 'https://creator.dev.trustcerts.de';
+  const url = 'http://localhost:3222'
 
   beforeAll(async () => {});
 
