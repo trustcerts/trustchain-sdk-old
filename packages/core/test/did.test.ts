@@ -13,7 +13,7 @@ import { WalletService } from '@trustcerts/wallet';
 import { readFileSync } from 'fs';
 import { RoleManageAddEnum } from '@trustcerts/observer';
 
-describe('test local config service', () => {
+describe('test did', () => {
   let config: ConfigService;
 
   let cryptoService: CryptoService;
@@ -39,20 +39,20 @@ describe('test local config service', () => {
     await cryptoService.init(key);
   }, 10000);
 
-  it('verify did chain of trust temporary test case', async () => {
-    const did = DidIdRegister.create({
-      controllers: [config.config.invite!.id],
-    });
-    did.addRole(RoleManageAddEnum.Client);
-    const client = new DidIdIssuerService(
-      testValues.network.gateways,
-      cryptoService
-    );
-    await DidIdRegister.save(did, client);
-    await setTimeout(() => Promise.resolve(), 2000);
-    const did1 = await DidIdResolver.load(did.id);
-    expect(did.getDocument()).toEqual(did1.getDocument());
-  }, 7000);
+  // it('verify did chain of trust temporary test case', async () => {
+  //   const did = DidIdRegister.create({
+  //     controllers: [config.config.invite!.id],
+  //   });
+  //   did.addRole(RoleManageAddEnum.Client);
+  //   const client = new DidIdIssuerService(
+  //     testValues.network.gateways,
+  //     cryptoService
+  //   );
+  //   await DidIdRegister.save(did, client);
+  //   await setTimeout(() => Promise.resolve(), 2000);
+  //   const did1 = await DidIdResolver.load(did.id);
+  //   expect(did.getDocument()).toEqual(did1.getDocument());
+  // }, 7000);
 
   it('read did', async () => {
     const did = DidIdRegister.create({

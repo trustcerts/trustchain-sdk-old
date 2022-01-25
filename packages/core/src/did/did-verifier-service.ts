@@ -22,7 +22,8 @@ export class DidVerifierService extends VerifierService {
 
   async getDidDocument(
     id: string,
-    config: DidManagerConfigValues
+    config: DidManagerConfigValues,
+    timeout = 2000
   ): Promise<DocResponse> {
     const responses: { amount: number; value: DocResponse }[] = [];
     for (const api of this.apis) {
@@ -30,7 +31,7 @@ export class DidVerifierService extends VerifierService {
         id,
         config.time,
         undefined,
-        { timeout: 2000 }
+        { timeout: timeout }
       );
       if (res.data.document) {
         let index = responses.findIndex(response => {
@@ -56,7 +57,8 @@ export class DidVerifierService extends VerifierService {
   async getDidTransactions(
     id: string,
     validate = true,
-    time: string
+    time: string,
+    timeout = 2000
   ): Promise<DidTransaction[]> {
     const responses: {
       amount: number;
@@ -67,7 +69,7 @@ export class DidVerifierService extends VerifierService {
         id,
         time,
         undefined,
-        { timeout: 2000 }
+        { timeout: timeout }
       );
       if (res.data.length > 0) {
         let index = responses.findIndex(response => {
