@@ -63,7 +63,7 @@ export interface Compression {
      * @type {string}
      * @memberof Compression
      */
-    'value'?: string;
+    'value': string;
 }
 
 /**
@@ -140,6 +140,73 @@ export interface DidDocumentMetaData {
 /**
  * 
  * @export
+ * @interface DidId
+ */
+export interface DidId {
+    /**
+     * Signature of the hash.
+     * @type {Array<SignatureDto>}
+     * @memberof DidId
+     */
+    'signature': Array<SignatureDto>;
+    /**
+     * Blockinformation
+     * @type {BlockInfo}
+     * @memberof DidId
+     */
+    'block': BlockInfo;
+    /**
+     * 
+     * @type {Array<Key>}
+     * @memberof DidId
+     */
+    'keys': Array<Key>;
+    /**
+     * 
+     * @type {Array<VerificationRelation>}
+     * @memberof DidId
+     */
+    'verificationRelationships': Array<VerificationRelation>;
+    /**
+     * 
+     * @type {Array<Service>}
+     * @memberof DidId
+     */
+    'services': Array<Service>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof DidId
+     */
+    'roles': Array<DidIdRolesEnum>;
+    /**
+     * 
+     * @type {string}
+     * @memberof DidId
+     */
+    'id': string;
+    /**
+     * 
+     * @type {Array<DidId>}
+     * @memberof DidId
+     */
+    'controllers': Array<DidId>;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum DidIdRolesEnum {
+    Validator = 'validator',
+    Gateway = 'gateway',
+    Observer = 'observer',
+    Client = 'client'
+}
+
+/**
+ * 
+ * @export
  * @interface DidIdDocument
  */
 export interface DidIdDocument {
@@ -207,6 +274,178 @@ export enum DidIdDocumentRoleEnum {
 /**
  * 
  * @export
+ * @interface DidIdStructure
+ */
+export interface DidIdStructure {
+    /**
+     * unique identifier of a did
+     * @type {string}
+     * @memberof DidIdStructure
+     */
+    'id': string;
+    /**
+     * Did that controls this did.
+     * @type {ControllerManage}
+     * @memberof DidIdStructure
+     */
+    'controller'?: ControllerManage;
+    /**
+     * 
+     * @type {RoleManage}
+     * @memberof DidIdStructure
+     */
+    'role'?: RoleManage;
+    /**
+     * 
+     * @type {VerificationMethod}
+     * @memberof DidIdStructure
+     */
+    'verificationMethod'?: VerificationMethod;
+    /**
+     * 
+     * @type {ServiceMange}
+     * @memberof DidIdStructure
+     */
+    'service'?: ServiceMange;
+    /**
+     * 
+     * @type {VerificationRelationshipManage}
+     * @memberof DidIdStructure
+     */
+    'authentication'?: VerificationRelationshipManage;
+    /**
+     * 
+     * @type {VerificationRelationshipManage}
+     * @memberof DidIdStructure
+     */
+    'assertionMethod'?: VerificationRelationshipManage;
+    /**
+     * 
+     * @type {VerificationRelationshipManage}
+     * @memberof DidIdStructure
+     */
+    'keyAgreement'?: VerificationRelationshipManage;
+    /**
+     * 
+     * @type {VerificationRelationshipManage}
+     * @memberof DidIdStructure
+     */
+    'modification'?: VerificationRelationshipManage;
+}
+/**
+ * 
+ * @export
+ * @interface DidIdTransaction
+ */
+export interface DidIdTransaction {
+    /**
+     * Signature of the hash.
+     * @type {Array<SignatureDto>}
+     * @memberof DidIdTransaction
+     */
+    'signature': Array<SignatureDto>;
+    /**
+     * Blockinformation
+     * @type {BlockInfo}
+     * @memberof DidIdTransaction
+     */
+    'block': BlockInfo;
+    /**
+     * Timestamp when the element was created.
+     * @type {string}
+     * @memberof DidIdTransaction
+     */
+    'createdAt': string;
+    /**
+     * Values of the transaction
+     * @type {DidIdStructure}
+     * @memberof DidIdTransaction
+     */
+    'values': DidIdStructure;
+    /**
+     * Signature of the hash.
+     * @type {Array<SignatureDto>}
+     * @memberof DidIdTransaction
+     */
+    'didDocumentSignature': Array<SignatureDto>;
+    /**
+     * 
+     * @type {string}
+     * @memberof DidIdTransaction
+     */
+    'id': string;
+}
+/**
+ * 
+ * @export
+ * @interface DidIdTransactionBody
+ */
+export interface DidIdTransactionBody {
+    /**
+     * Version number of the transaction.
+     * @type {number}
+     * @memberof DidIdTransactionBody
+     */
+    'version': number;
+    /**
+     * timestamp when transaction was created.
+     * @type {string}
+     * @memberof DidIdTransactionBody
+     */
+    'date': string;
+    /**
+     * 
+     * @type {TransactionType}
+     * @memberof DidIdTransactionBody
+     */
+    'type': TransactionType;
+    /**
+     * signature of the did document after applying the changes
+     * @type {SignatureInfo}
+     * @memberof DidIdTransactionBody
+     */
+    'didDocSignature': SignatureInfo;
+    /**
+     * elements of the did document
+     * @type {DidIdStructure}
+     * @memberof DidIdTransactionBody
+     */
+    'value': DidIdStructure;
+}
+/**
+ * 
+ * @export
+ * @interface DidIdTransactionDto
+ */
+export interface DidIdTransactionDto {
+    /**
+     * Version number of the base transaction.
+     * @type {number}
+     * @memberof DidIdTransactionDto
+     */
+    'version': number;
+    /**
+     * 
+     * @type {DidIdTransactionBody}
+     * @memberof DidIdTransactionDto
+     */
+    'body': DidIdTransactionBody;
+    /**
+     * 
+     * @type {TransactionMetadata}
+     * @memberof DidIdTransactionDto
+     */
+    'metadata': TransactionMetadata;
+    /**
+     * 
+     * @type {SignatureInfo}
+     * @memberof DidIdTransactionDto
+     */
+    'signature': SignatureInfo;
+}
+/**
+ * 
+ * @export
  * @interface DidPublicKey
  */
 export interface DidPublicKey {
@@ -247,6 +486,31 @@ export enum DidPublicKeyTypeEnum {
 /**
  * 
  * @export
+ * @interface DidSchemaDocument
+ */
+export interface DidSchemaDocument {
+    /**
+     * unique identifier of a did.
+     * @type {string}
+     * @memberof DidSchemaDocument
+     */
+    'id': string;
+    /**
+     * unique identifiers of the controller.
+     * @type {Array<string>}
+     * @memberof DidSchemaDocument
+     */
+    'controller': Array<string>;
+    /**
+     * array of keys that belong to the did document.
+     * @type {object}
+     * @memberof DidSchemaDocument
+     */
+    'value': object;
+}
+/**
+ * 
+ * @export
  * @interface DidService
  */
 export interface DidService {
@@ -268,215 +532,6 @@ export interface DidService {
      * @memberof DidService
      */
     'endpoint': string;
-}
-/**
- * 
- * @export
- * @interface DidStructure
- */
-export interface DidStructure {
-    /**
-     * unique identifier of a did
-     * @type {string}
-     * @memberof DidStructure
-     */
-    'id': string;
-    /**
-     * 
-     * @type {ControllerManage}
-     * @memberof DidStructure
-     */
-    'controller'?: ControllerManage;
-    /**
-     * 
-     * @type {RoleManage}
-     * @memberof DidStructure
-     */
-    'role'?: RoleManage;
-    /**
-     * 
-     * @type {VerificationMethod}
-     * @memberof DidStructure
-     */
-    'verificationMethod'?: VerificationMethod;
-    /**
-     * 
-     * @type {ServiceMange}
-     * @memberof DidStructure
-     */
-    'service'?: ServiceMange;
-    /**
-     * 
-     * @type {VerificationRelationshipManage}
-     * @memberof DidStructure
-     */
-    'authentication'?: VerificationRelationshipManage;
-    /**
-     * 
-     * @type {VerificationRelationshipManage}
-     * @memberof DidStructure
-     */
-    'assertionMethod'?: VerificationRelationshipManage;
-    /**
-     * 
-     * @type {VerificationRelationshipManage}
-     * @memberof DidStructure
-     */
-    'keyAgreement'?: VerificationRelationshipManage;
-    /**
-     * 
-     * @type {VerificationRelationshipManage}
-     * @memberof DidStructure
-     */
-    'modification'?: VerificationRelationshipManage;
-    /**
-     * 
-     * @type {VerificationRelationshipManage}
-     * @memberof DidStructure
-     */
-    'capabilityDelegation'?: VerificationRelationshipManage;
-    /**
-     * 
-     * @type {VerificationRelationshipManage}
-     * @memberof DidStructure
-     */
-    'capabilityInvocation'?: VerificationRelationshipManage;
-}
-/**
- * 
- * @export
- * @interface DidTransaction
- */
-export interface DidTransaction {
-    /**
-     * Signature of the hash.
-     * @type {Array<SignatureDto>}
-     * @memberof DidTransaction
-     */
-    'signature': Array<SignatureDto>;
-    /**
-     * Blockinformation
-     * @type {BlockInfo}
-     * @memberof DidTransaction
-     */
-    'block': BlockInfo;
-    /**
-     * Timestamp when the element was created.
-     * @type {string}
-     * @memberof DidTransaction
-     */
-    'createdAt': string;
-    /**
-     * Values of the transaction
-     * @type {DidStructure}
-     * @memberof DidTransaction
-     */
-    'values': DidStructure;
-    /**
-     * Signature of the hash.
-     * @type {Array<SignatureDto>}
-     * @memberof DidTransaction
-     */
-    'didDocumentSignature': Array<SignatureDto>;
-    /**
-     * 
-     * @type {string}
-     * @memberof DidTransaction
-     */
-    'id': string;
-}
-/**
- * 
- * @export
- * @interface DidTransactionBody
- */
-export interface DidTransactionBody {
-    /**
-     * Version number of the transaction.
-     * @type {number}
-     * @memberof DidTransactionBody
-     */
-    'version': number;
-    /**
-     * timestamp when transaction was created.
-     * @type {string}
-     * @memberof DidTransactionBody
-     */
-    'date': string;
-    /**
-     * 
-     * @type {TransactionType}
-     * @memberof DidTransactionBody
-     */
-    'type': TransactionType;
-    /**
-     * signature of the did document after applying the changes
-     * @type {SignatureInfo}
-     * @memberof DidTransactionBody
-     */
-    'didDocSignature': SignatureInfo;
-    /**
-     * 
-     * @type {DidStructure}
-     * @memberof DidTransactionBody
-     */
-    'value': DidStructure;
-}
-/**
- * 
- * @export
- * @interface DidTransactionDto
- */
-export interface DidTransactionDto {
-    /**
-     * Version number of the base transaction.
-     * @type {number}
-     * @memberof DidTransactionDto
-     */
-    'version': number;
-    /**
-     * 
-     * @type {DidTransactionBody}
-     * @memberof DidTransactionDto
-     */
-    'body': DidTransactionBody;
-    /**
-     * 
-     * @type {TransactionMetadata}
-     * @memberof DidTransactionDto
-     */
-    'metadata': TransactionMetadata;
-    /**
-     * 
-     * @type {SignatureInfo}
-     * @memberof DidTransactionDto
-     */
-    'signature': SignatureInfo;
-}
-/**
- * 
- * @export
- * @interface DocResponse
- */
-export interface DocResponse {
-    /**
-     * parsed did document
-     * @type {DidIdDocument}
-     * @memberof DocResponse
-     */
-    'document': DidIdDocument;
-    /**
-     * signatures of the parsed document
-     * @type {Array<SignatureDto>}
-     * @memberof DocResponse
-     */
-    'signatures': Array<SignatureDto>;
-    /**
-     * Metadata of the document
-     * @type {DidDocumentMetaData}
-     * @memberof DocResponse
-     */
-    'metaData': DidDocumentMetaData;
 }
 /**
  * 
@@ -510,10 +565,10 @@ export interface GenesisBlock {
     'timestamp': string;
     /**
      * transactions that are included in this block
-     * @type {Array<DidTransactionDto>}
+     * @type {Array<DidIdTransactionDto>}
      * @memberof GenesisBlock
      */
-    'transactions': Array<DidTransactionDto>;
+    'transactions': Array<DidIdTransactionDto>;
     /**
      * version of this block
      * @type {number}
@@ -556,7 +611,7 @@ export interface Hash {
      * @type {string}
      * @memberof Hash
      */
-    'hash': string;
+    'id': string;
     /**
      * Used algorithm for the hash.
      * @type {string}
@@ -575,25 +630,37 @@ export interface Hash {
      * @memberof Hash
      */
     'revokedAt'?: string;
+    /**
+     * 
+     * @type {Array<DidId>}
+     * @memberof Hash
+     */
+    'controllers': Array<DidId>;
 }
 /**
  * 
  * @export
- * @interface ImportedMetadata
+ * @interface IdDocResponse
  */
-export interface ImportedMetadata {
+export interface IdDocResponse {
     /**
-     * timestamp when transaction was persisted in the old blockchain.
-     * @type {string}
-     * @memberof ImportedMetadata
+     * parsed did document
+     * @type {DidIdDocument}
+     * @memberof IdDocResponse
      */
-    'date': string;
+    'document': DidIdDocument;
     /**
-     * 
-     * @type {SignatureInfo}
-     * @memberof ImportedMetadata
+     * signatures of the parsed document
+     * @type {Array<SignatureDto>}
+     * @memberof IdDocResponse
      */
-    'imported': SignatureInfo;
+    'signatures': Array<SignatureDto>;
+    /**
+     * Metadata of the document
+     * @type {DidDocumentMetaData}
+     * @memberof IdDocResponse
+     */
+    'metaData': DidDocumentMetaData;
 }
 /**
  * 
@@ -619,6 +686,37 @@ export interface InviteNode {
      * @memberof InviteNode
      */
     'url': string;
+}
+/**
+ * 
+ * @export
+ * @interface Key
+ */
+export interface Key {
+    /**
+     * 
+     * @type {string}
+     * @memberof Key
+     */
+    'id': string;
+    /**
+     * 
+     * @type {PublicKeyJwkDto}
+     * @memberof Key
+     */
+    'publicKeyJwk': PublicKeyJwkDto;
+    /**
+     * 
+     * @type {string}
+     * @memberof Key
+     */
+    'controller': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Key
+     */
+    'type': string;
 }
 /**
  * 
@@ -691,6 +789,56 @@ export enum RoleManageAddEnum {
 /**
  * 
  * @export
+ * @interface SchemaDocResponse
+ */
+export interface SchemaDocResponse {
+    /**
+     * parsed did document
+     * @type {DidSchemaDocument}
+     * @memberof SchemaDocResponse
+     */
+    'document': DidSchemaDocument;
+    /**
+     * signatures of the parsed document
+     * @type {Array<SignatureDto>}
+     * @memberof SchemaDocResponse
+     */
+    'signatures': Array<SignatureDto>;
+    /**
+     * Metadata of the document
+     * @type {DidDocumentMetaData}
+     * @memberof SchemaDocResponse
+     */
+    'metaData': DidDocumentMetaData;
+}
+/**
+ * 
+ * @export
+ * @interface Service
+ */
+export interface Service {
+    /**
+     * 
+     * @type {string}
+     * @memberof Service
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Service
+     */
+    'type': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Service
+     */
+    'endpoint': string;
+}
+/**
+ * 
+ * @export
  * @interface ServiceMange
  */
 export interface ServiceMange {
@@ -739,7 +887,7 @@ export interface SignatureInfo {
      */
     'type': SignatureInfoTypeEnum;
     /**
-     * signature of the document values.
+     * signature of the document values
      * @type {Array<SignatureDto>}
      * @memberof SignatureInfo
      */
@@ -774,12 +922,6 @@ export interface Template {
      */
     'block': BlockInfo;
     /**
-     * did of the template
-     * @type {string}
-     * @memberof Template
-     */
-    'id': string;
-    /**
      * information about the compression
      * @type {Compression}
      * @memberof Template
@@ -797,6 +939,18 @@ export interface Template {
      * @memberof Template
      */
     'schema': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Template
+     */
+    'id': string;
+    /**
+     * 
+     * @type {Array<DidId>}
+     * @memberof Template
+     */
+    'controllers': Array<DidId>;
 }
 /**
  * 
@@ -810,12 +964,6 @@ export interface TransactionMetadata {
      * @memberof TransactionMetadata
      */
     'version': number;
-    /**
-     * 
-     * @type {ImportedMetadata}
-     * @memberof TransactionMetadata
-     */
-    'imported'?: ImportedMetadata;
 }
 /**
  * 
@@ -826,13 +974,8 @@ export interface TransactionMetadata {
 export enum TransactionType {
     HashCreation = 'HashCreation',
     HashRevocation = 'HashRevocation',
-    SecurityLimit = 'SecurityLimit',
-    SecurityRecaptcha = 'SecurityRecaptcha',
     Did = 'Did',
-    SchemaCreation = 'SchemaCreation',
-    ClaimDefinition = 'ClaimDefinition',
-    RevocationRegistryCreation = 'RevocationRegistryCreation',
-    RevocationEntry = 'RevocationEntry',
+    Schema = 'Schema',
     Template = 'Template'
 }
 
@@ -854,6 +997,25 @@ export interface VerificationMethod {
      * @memberof VerificationMethod
      */
     'remove'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface VerificationRelation
+ */
+export interface VerificationRelation {
+    /**
+     * 
+     * @type {object}
+     * @memberof VerificationRelation
+     */
+    'method': object;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof VerificationRelation
+     */
+    'keyIds': Array<string>;
 }
 /**
  * 
@@ -1009,7 +1171,7 @@ export const DidObserverApiAxiosParamCreator = function (configuration?: Configu
          * 
          * @summary returns the did document to a did.
          * @param {string} id identifier of the did.
-         * @param {string} [versionTime] return the did document that was present to 2021-12-20T11:29:27.588Z
+         * @param {string} [versionTime] return the did document that was present to 2022-01-24T16:09:46.690Z
          * @param {number} [versionId] return the did document with this version
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1053,7 +1215,7 @@ export const DidObserverApiAxiosParamCreator = function (configuration?: Configu
          * 
          * @summary returns the transaction to assemble a did document.
          * @param {string} id identifier of the did.
-         * @param {string} [versionTime] only request transactions that are less than the given timestamp like 2021-12-20T11:29:27.587Z
+         * @param {string} [versionTime] only request transactions that are less than the given timestamp like 2022-01-24T16:09:46.684Z
          * @param {number} [versionId] only request transactions that belong to reach the version
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1097,7 +1259,7 @@ export const DidObserverApiAxiosParamCreator = function (configuration?: Configu
          * 
          * @summary returns the did document metadata to a did.
          * @param {string} id identifier of the did.
-         * @param {string} [versionTime] only request transactions that are less than the given timestamp 2021-12-20T11:29:27.589Z
+         * @param {string} [versionTime] only request transactions that are less than the given timestamp 2022-01-24T16:09:46.693Z
          * @param {number} [versionId] only request transactions that belong to reach the version
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1161,12 +1323,12 @@ export const DidObserverApiFp = function(configuration?: Configuration) {
          * 
          * @summary returns the did document to a did.
          * @param {string} id identifier of the did.
-         * @param {string} [versionTime] return the did document that was present to 2021-12-20T11:29:27.588Z
+         * @param {string} [versionTime] return the did document that was present to 2022-01-24T16:09:46.690Z
          * @param {number} [versionId] return the did document with this version
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async observerDidControllerGetDoc(id: string, versionTime?: string, versionId?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DocResponse>> {
+        async observerDidControllerGetDoc(id: string, versionTime?: string, versionId?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IdDocResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.observerDidControllerGetDoc(id, versionTime, versionId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1174,12 +1336,12 @@ export const DidObserverApiFp = function(configuration?: Configuration) {
          * 
          * @summary returns the transaction to assemble a did document.
          * @param {string} id identifier of the did.
-         * @param {string} [versionTime] only request transactions that are less than the given timestamp like 2021-12-20T11:29:27.587Z
+         * @param {string} [versionTime] only request transactions that are less than the given timestamp like 2022-01-24T16:09:46.684Z
          * @param {number} [versionId] only request transactions that belong to reach the version
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async observerDidControllerGetTransactions(id: string, versionTime?: string, versionId?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DidTransaction>>> {
+        async observerDidControllerGetTransactions(id: string, versionTime?: string, versionId?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DidIdTransaction>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.observerDidControllerGetTransactions(id, versionTime, versionId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1187,7 +1349,7 @@ export const DidObserverApiFp = function(configuration?: Configuration) {
          * 
          * @summary returns the did document metadata to a did.
          * @param {string} id identifier of the did.
-         * @param {string} [versionTime] only request transactions that are less than the given timestamp 2021-12-20T11:29:27.589Z
+         * @param {string} [versionTime] only request transactions that are less than the given timestamp 2022-01-24T16:09:46.693Z
          * @param {number} [versionId] only request transactions that belong to reach the version
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1219,31 +1381,31 @@ export const DidObserverApiFactory = function (configuration?: Configuration, ba
          * 
          * @summary returns the did document to a did.
          * @param {string} id identifier of the did.
-         * @param {string} [versionTime] return the did document that was present to 2021-12-20T11:29:27.588Z
+         * @param {string} [versionTime] return the did document that was present to 2022-01-24T16:09:46.690Z
          * @param {number} [versionId] return the did document with this version
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        observerDidControllerGetDoc(id: string, versionTime?: string, versionId?: number, options?: any): AxiosPromise<DocResponse> {
+        observerDidControllerGetDoc(id: string, versionTime?: string, versionId?: number, options?: any): AxiosPromise<IdDocResponse> {
             return localVarFp.observerDidControllerGetDoc(id, versionTime, versionId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary returns the transaction to assemble a did document.
          * @param {string} id identifier of the did.
-         * @param {string} [versionTime] only request transactions that are less than the given timestamp like 2021-12-20T11:29:27.587Z
+         * @param {string} [versionTime] only request transactions that are less than the given timestamp like 2022-01-24T16:09:46.684Z
          * @param {number} [versionId] only request transactions that belong to reach the version
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        observerDidControllerGetTransactions(id: string, versionTime?: string, versionId?: number, options?: any): AxiosPromise<Array<DidTransaction>> {
+        observerDidControllerGetTransactions(id: string, versionTime?: string, versionId?: number, options?: any): AxiosPromise<Array<DidIdTransaction>> {
             return localVarFp.observerDidControllerGetTransactions(id, versionTime, versionId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary returns the did document metadata to a did.
          * @param {string} id identifier of the did.
-         * @param {string} [versionTime] only request transactions that are less than the given timestamp 2021-12-20T11:29:27.589Z
+         * @param {string} [versionTime] only request transactions that are less than the given timestamp 2022-01-24T16:09:46.693Z
          * @param {number} [versionId] only request transactions that belong to reach the version
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1276,7 +1438,7 @@ export class DidObserverApi extends BaseAPI {
      * 
      * @summary returns the did document to a did.
      * @param {string} id identifier of the did.
-     * @param {string} [versionTime] return the did document that was present to 2021-12-20T11:29:27.588Z
+     * @param {string} [versionTime] return the did document that was present to 2022-01-24T16:09:46.690Z
      * @param {number} [versionId] return the did document with this version
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1290,7 +1452,7 @@ export class DidObserverApi extends BaseAPI {
      * 
      * @summary returns the transaction to assemble a did document.
      * @param {string} id identifier of the did.
-     * @param {string} [versionTime] only request transactions that are less than the given timestamp like 2021-12-20T11:29:27.587Z
+     * @param {string} [versionTime] only request transactions that are less than the given timestamp like 2022-01-24T16:09:46.684Z
      * @param {number} [versionId] only request transactions that belong to reach the version
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1304,7 +1466,7 @@ export class DidObserverApi extends BaseAPI {
      * 
      * @summary returns the did document metadata to a did.
      * @param {string} id identifier of the did.
-     * @param {string} [versionTime] only request transactions that are less than the given timestamp 2021-12-20T11:29:27.589Z
+     * @param {string} [versionTime] only request transactions that are less than the given timestamp 2022-01-24T16:09:46.693Z
      * @param {number} [versionId] only request transactions that belong to reach the version
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1716,6 +1878,127 @@ export class NodeObserverApi extends BaseAPI {
      */
     public httpObserverControllerReset(options?: AxiosRequestConfig) {
         return NodeObserverApiFp(this.configuration).httpObserverControllerReset(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * SchemaObserverApi - axios parameter creator
+ * @export
+ */
+export const SchemaObserverApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary returns the did document to a did.
+         * @param {string} id identifier of the did.
+         * @param {string} [versionTime] return the did document that was present to 2022-01-24T16:09:46.769Z
+         * @param {number} [versionId] return the did document with this version
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        observerSchemaControllerGetDoc: async (id: string, versionTime?: string, versionId?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('observerSchemaControllerGetDoc', 'id', id)
+            const localVarPath = `/schema/{id}/doc`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (versionTime !== undefined) {
+                localVarQueryParameter['versionTime'] = versionTime;
+            }
+
+            if (versionId !== undefined) {
+                localVarQueryParameter['versionId'] = versionId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * SchemaObserverApi - functional programming interface
+ * @export
+ */
+export const SchemaObserverApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = SchemaObserverApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary returns the did document to a did.
+         * @param {string} id identifier of the did.
+         * @param {string} [versionTime] return the did document that was present to 2022-01-24T16:09:46.769Z
+         * @param {number} [versionId] return the did document with this version
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async observerSchemaControllerGetDoc(id: string, versionTime?: string, versionId?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SchemaDocResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.observerSchemaControllerGetDoc(id, versionTime, versionId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * SchemaObserverApi - factory interface
+ * @export
+ */
+export const SchemaObserverApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = SchemaObserverApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary returns the did document to a did.
+         * @param {string} id identifier of the did.
+         * @param {string} [versionTime] return the did document that was present to 2022-01-24T16:09:46.769Z
+         * @param {number} [versionId] return the did document with this version
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        observerSchemaControllerGetDoc(id: string, versionTime?: string, versionId?: number, options?: any): AxiosPromise<SchemaDocResponse> {
+            return localVarFp.observerSchemaControllerGetDoc(id, versionTime, versionId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * SchemaObserverApi - object-oriented interface
+ * @export
+ * @class SchemaObserverApi
+ * @extends {BaseAPI}
+ */
+export class SchemaObserverApi extends BaseAPI {
+    /**
+     * 
+     * @summary returns the did document to a did.
+     * @param {string} id identifier of the did.
+     * @param {string} [versionTime] return the did document that was present to 2022-01-24T16:09:46.769Z
+     * @param {number} [versionId] return the did document with this version
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SchemaObserverApi
+     */
+    public observerSchemaControllerGetDoc(id: string, versionTime?: string, versionId?: number, options?: AxiosRequestConfig) {
+        return SchemaObserverApiFp(this.configuration).observerSchemaControllerGetDoc(id, versionTime, versionId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

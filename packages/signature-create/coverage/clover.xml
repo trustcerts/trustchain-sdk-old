@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1640194263119" clover="3.2.0">
-  <project timestamp="1640194263119" name="All files">
+<coverage generated="1643043473758" clover="3.2.0">
+  <project timestamp="1643043473758" name="All files">
     <metrics statements="43" coveredstatements="28" conditionals="18" coveredconditionals="6" methods="13" coveredmethods="7" elements="74" coveredelements="41" complexity="0" loc="43" ncloc="43" packages="1" files="2" classes="2"/>
     <file name="index.ts" path="/root/ssi/packages/signature-create/src/index.ts">
       <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>

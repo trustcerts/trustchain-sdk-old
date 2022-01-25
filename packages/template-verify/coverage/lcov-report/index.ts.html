@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">70% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>24/30</span>
+                <span class='fraction'>21/30</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">63.63% </span>
+                <span class="strong">54.54% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>7/11</span>
+                <span class='fraction'>6/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/6</span>
+                <span class='fraction'>5/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">62.5% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>18/24</span>
+                <span class='fraction'>15/24</span>
             </div>
         
             
@@ -111,28 +111,28 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { logger, VerifierService } from '@trustcerts/core';
@@ -150,28 +150,28 @@ export class TemplateVerifierService extends VerifierService {
 &nbsp;
   async get(id: string): Promise&lt;Template&gt; {
     const responses: { amount: number; value: Template }[] = [];
-    for (const api of <span class="missing-if-branch" title="if path not taken" >I</span>this.apis) {
+    for (const api of this.apis) {
       const res = await api
         .observerTemplateControllerGetTemplate(id, { timeout: 2000 })
-        .catch(<span class="fstat-no" title="function not covered" >err </span>=&gt; <span class="cstat-no" title="statement not covered" >logger.warn(err));</span>
-      if (res) {
-        const index = responses.findIndex(<span class="fstat-no" title="function not covered" >response </span>=&gt; {
+        .catch(err =&gt; logger.warn(err));
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (res) {
+        const <span class="cstat-no" title="statement not covered" >index = responses.findIndex(<span class="fstat-no" title="function not covered" >response </span>=&gt; {</span>
 <span class="cstat-no" title="statement not covered" >          return JSON.stringify(response.value) === JSON.stringify(res.data);</span>
         });
-        <span class="missing-if-branch" title="if path not taken" >I</span>if (index &gt;= 0) {
+<span class="cstat-no" title="statement not covered" >        if (index &gt;= 0) {</span>
 <span class="cstat-no" title="statement not covered" >          responses[index].amount++;</span>
 <span class="cstat-no" title="statement not covered" >          <span class="missing-if-branch" title="if path not taken" >I</span>if (responses[index].amount === this.equalMin) {</span>
             return <span class="cstat-no" title="statement not covered" >Promise.resolve(responses[index].value);</span>
           }
         } else {
-          responses.push({ value: res.data, amount: 1 });
-          if (this.equalMin === 1) {
-            return Promise.resolve(responses[0].value);
+<span class="cstat-no" title="statement not covered" >          responses.push({ value: res.data, amount: 1 });</span>
+<span class="cstat-no" title="statement not covered" >          <span class="missing-if-branch" title="if path not taken" >I</span>if (this.equalMin === 1) {</span>
+            return <span class="cstat-no" title="statement not covered" >Promise.resolve(responses[0].value);</span>
           }
         }
       }
     }
-<span class="cstat-no" title="statement not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >    return Promise.reject('not enough matches');</span></span>
+    return Promise.reject('not enough matches');
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -181,7 +181,7 @@ export class TemplateVerifierService extends VerifierService {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Dec 22 2021 18:31:38 GMT+0100 (Central European Standard Time)
+                at Mon Jan 24 2022 17:59:04 GMT+0100 (Central European Standard Time)
             </div>
         </div>
         <script src="prettify.js"></script>

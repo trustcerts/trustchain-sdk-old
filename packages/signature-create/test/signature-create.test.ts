@@ -5,7 +5,7 @@ import {
   getRandomValues,
   VerificationRelationshipType,
   DidNetworks,
-  Identifier,  
+  Identifier,
   logger,
   write,
   SignatureType,
@@ -53,7 +53,7 @@ describe('test signature service', () => {
       .signString(value)
       .catch(err => logger.error(err));
     expect(transaction).toBeDefined();
-  });
+  }, 7000);
 
   it('sign file', async () => {
     const client = new SignatureIssuerService(

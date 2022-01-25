@@ -1,0 +1,16 @@
+{
+  "configValues": {
+    "invite": {
+      "id": "did:trust:tc:dev:id:XLzBJ69tqEgq7oqqCLiEnT",
+      "secret": "client",
+      "endpoint": "http://localhost:3530"
+    },
+    "name": "client",
+    "keyPairs": []
+  },
+  "filePath": "../../tmp/testFile.json",
+  "network": {
+    "gateways": ["http://localhost:3530"],
+    "observers": ["http://localhost:3540"]
+  }
+}

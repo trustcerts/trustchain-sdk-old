@@ -2,10 +2,10 @@ import {
   DidPublicKey,
   DidPublicKeyTypeEnum,
   DidService,
-  DidStructure,
-  DidTransaction,
-  DocResponse,
+  DidIdStructure,
   RoleManageAddEnum,
+  IdDocResponse,
+  DidIdTransaction,
 } from '@trustcerts/observer';
 import { Did } from '../did';
 import { Management } from '../management';
@@ -251,8 +251,8 @@ export class DidId extends Did {
     );
   }
 
-  getChanges(): DidStructure {
-    const changes: DidStructure = {
+  getChanges(): DidIdStructure {
+    const changes: DidIdStructure = {
       id: this.id,
     };
 
@@ -350,7 +350,7 @@ export class DidId extends Did {
     });
   }
 
-  parseDocument(docResponse: DocResponse): void {
+  parseDocument(docResponse: IdDocResponse): void {
     this.version = docResponse.metaData.versionId;
     docResponse.document.controller.forEach(controller =>
       this.addController(controller)
@@ -375,7 +375,7 @@ export class DidId extends Did {
     this.resetChanges();
   }
 
-  parseTransaction(transactions: DidTransaction[]): void {
+  parseTransaction(transactions: DidIdTransaction[]): void {
     for (const transaction of transactions) {
       this.version++;
       // validate signature of transaction
