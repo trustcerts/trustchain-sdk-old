@@ -28,14 +28,16 @@ export class WalletService {
       this.configService.config.invite.id
     ).catch(async () => {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      return DidIdRegister.createByInvite(
-        this.configService.config.invite!
-      ).then(async values => {
-        // save the key that way used.
-        this.configService.config.keyPairs.push(values.keyPair);
-        await this.configService.saveConfig();
-        return values.did;
-      });
+      return DidIdRegister.createByInvite(this.configService.config.invite!)
+        .then(async values => {
+          // save the key that way used.
+          this.configService.config.keyPairs.push(values.keyPair);
+          await this.configService.saveConfig();
+          return values.did;
+        })
+        .catch((err: Error) => {
+          throw new Error(`Could not create DID by invite: ${err.message}`);
+        });
     });
   }
 
