@@ -15,7 +15,10 @@ import { LocalConfigService } from '@trustcerts/config-local';
 
 import { readFileSync } from 'fs';
 
-import { JWT, JWTVerifiableCredentialVerifierService} from '@trustcerts/vc-verify';
+import {
+  JWT,
+  JWTVerifiableCredentialVerifierService,
+} from '@trustcerts/vc-verify';
 import { VerifiableCredentialIssuerService } from '@trustcerts/vc-create';
 
 /**
@@ -29,7 +32,6 @@ describe('vc', () => {
   let walletService: WalletService;
 
   beforeAll(async () => {
-
     const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
 
     DidNetworks.add('tc:dev', testValues.network);
@@ -53,6 +55,10 @@ describe('vc', () => {
     }
   }, 10000);
 
+  /**
+   * Creates an example JWT-encoded verifiable credential for testing
+   * @returns A JWT-encoded verifiable credential with example data
+   */
   async function createVc(): Promise<string> {
     const vcIssuerService = new VerifiableCredentialIssuerService();
 
@@ -85,7 +91,7 @@ describe('vc', () => {
     ).toBe(false);
 
     // Revoke credential
-    revocationService.setRevoked(vcJWTPayload.vc.credentialStatus!, true);
+    await revocationService.setRevoked(vcJWTPayload.vc.credentialStatus!, true);
 
     // Expect credential to be invalid
     expect(await vcVerifierService.verifyCredential(vc)).toBe(false);

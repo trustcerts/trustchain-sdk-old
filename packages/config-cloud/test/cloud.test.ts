@@ -1,21 +1,22 @@
 import { CloudService, CloudConfigService } from '../src';
 import { logger } from '@trustcerts/core';
-import { AuthorizePlatformApi, Configuration } from '@trustcerts/platform';
 
 describe('test cloud functions', () => {
-  const url = 'https://platform.dev.trustcerts.de';
-  const username = 'root';
-  const password = 'foo';
+  const url = 'http://localhost:3223';
+  const username = (Math.random() + 1).toString(36).substring(7);
+  const password = 'test';
 
   it('register user', async () => {
-    const api = new AuthorizePlatformApi(new Configuration({ basePath: url }));
+    //register user
+    const cloud = new CloudService(url, 'tmp/login');
+    const response = await cloud.register(username);
+    const token = (response.data as any).token;
+    // verify user and add password
+    await cloud.verify(username , password , token);
+    await cloud.login(username , password);
 
-    await expect(api.authControllerRegister({ username })).rejects.toThrow(
-      'Request failed with status code 422'
-    );
-
-    //const cloud = new CloudService(url);
-    // TODO normally the token will be send via email. Pass a parameter so this can be tested too.
+    // const cloud = new CloudService(url);
+    // // TODO normally the token will be send via email. Pass a parameter so this can be tested too.
     // const token = res.data.token;
     // await cloud.register(username, password, token).catch((err) => logger.error(err));
   });

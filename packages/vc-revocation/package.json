@@ -1,5 +1,5 @@
 {
-  "version": "0.4.2",
+  "version": "0.4.7",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -72,20 +72,20 @@
     ]
   },
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^6.0.3",
-    "@trustcerts/config-local": "^0.4.3",
-    "@trustcerts/vc-create": "^0.4.3",
-    "@trustcerts/vc-verify": "^0.4.3",
-    "@trustcerts/wallet": "^0.4.3",
+    "@size-limit/preset-small-lib": "^7.0.5",
+    "@trustcerts/config-local": "^0.4.7",
+    "@trustcerts/vc-create": "^0.4.7",
+    "@trustcerts/vc-verify": "^0.4.7",
+    "@trustcerts/wallet": "^0.4.7",
     "husky": "^7.0.4",
-    "size-limit": "^6.0.3",
+    "size-limit": "^7.0.5",
     "tsdx": "^0.14.1",
     "tslib": "^2.3.1",
-    "typescript": "^3.9.10"
+    "typescript": "^4.5.4"
   },
   "dependencies": {
-    "@transmute/vc-status-rl-2020": "^0.7.0-unstable.12",
-    "@trustcerts/core": "^0.4.3"
+    "@transmute/vc-status-rl-2020": "^0.7.0-unstable.32",
+    "@trustcerts/core": "^0.4.7"
   },
   "gitHead": "9cc3c3d078fe46729a72961bc6bd241667d43309"
 }

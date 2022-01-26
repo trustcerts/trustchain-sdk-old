@@ -9,6 +9,14 @@ import {
 import { RevocationService } from '@trustcerts/vc-revocation';
 
 export class VerifiableCredentialIssuerService {
+  /**
+   * Creates a JWT-encoded verifiable credential
+   *
+   * @param vcArguments The arguments of the verifiable credential
+   * @param cryptoService The Bls12381G2 keypair as JsonWebKeys
+   * @param revokable If true, a credentialStatus property is added to the verifiable credential
+   * @returns A JWT-encoded verifiable credential
+   */
   async createVerifiableCredential(
     vcArguments: IVerifiableCredentialArguments,
     cryptoService: CryptoService,
@@ -79,7 +87,7 @@ export class VerifiableCredentialIssuerService {
     const jwt = new SignJWT({ vc: vcPayload, nonce: nonce })
       // map to https://datatracker.ietf.org/doc/html/rfc7518#section-3.1
       .setProtectedHeader({
-        alg: this.getJwTAlgorithm(cryptoService.keyPair.privateKey!.algorithm),
+        alg: this.getJWTAlgorithm(cryptoService.keyPair.privateKey!.algorithm),
         kid: cryptoService.fingerPrint,
       })
       .setIssuedAt(Math.floor(issuanceDate.getTime() / 1000))
@@ -94,7 +102,14 @@ export class VerifiableCredentialIssuerService {
     return await jwt.sign(cryptoService.keyPair.privateKey!);
   }
 
-  async createPresentation(
+  /**
+   * Creates a JWT-encoded verifiable presentation
+   *
+   * @param vpArguments The arguments of the verifiable presentation
+   * @param cryptoService The Bls12381G2 keypair as JsonWebKeys
+   * @returns A JWT-encoded verifiable presentation
+   */
+  async createVerifiablePresentation(
     vpArguments: IVerifiablePresentationArguments,
     cryptoService: CryptoService
   ): Promise<string> {
@@ -140,7 +155,7 @@ export class VerifiableCredentialIssuerService {
     const jwt = new SignJWT({ vp: vpPayload, nonce: nonce })
       // map to https://datatracker.ietf.org/doc/html/rfc7518#section-3.1
       .setProtectedHeader({
-        alg: this.getJwTAlgorithm(cryptoService.keyPair.privateKey!.algorithm),
+        alg: this.getJWTAlgorithm(cryptoService.keyPair.privateKey!.algorithm),
         kid: cryptoService.fingerPrint,
       })
       .setJti(vpArguments.challenge)
@@ -156,8 +171,13 @@ export class VerifiableCredentialIssuerService {
     return await jwt.sign(cryptoService.keyPair.privateKey!);
   }
 
-  getJwTAlgorithm(key: KeyAlgorithm): string {
-    if (key.name === 'ECDSA') {
+  /**
+   * Returns the corresponding key algorithm of a key for use in the JWT header
+   * @param keyAlgorithm The key algorithm
+   * @returns The key algorithm of the key for use in the JWT header
+   */
+  getJWTAlgorithm(keyAlgorithm: KeyAlgorithm): string {
+    if (keyAlgorithm.name === 'ECDSA') {
       return 'ES256';
     } else {
       return 'RS256';

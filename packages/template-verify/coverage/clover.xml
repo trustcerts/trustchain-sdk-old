@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1640194298904" clover="3.2.0">
-  <project timestamp="1640194298904" name="All files">
+<coverage generated="1642611137243" clover="3.2.0">
+  <project timestamp="1642611137244" name="All files">
     <metrics statements="24" coveredstatements="18" conditionals="11" coveredconditionals="7" methods="6" coveredmethods="4" elements="41" coveredelements="29" complexity="0" loc="24" ncloc="24" packages="1" files="1" classes="1"/>
-    <file name="index.ts" path="/root/ssi/packages/template-verify/src/index.ts">
+    <file name="index.ts" path="/root/trustcerts/trustchain-sdk/packages/template-verify/src/index.ts">
       <metrics statements="24" coveredstatements="18" conditionals="11" coveredconditionals="7" methods="6" coveredmethods="4"/>
       <line num="1" count="1" type="stmt"/>
       <line num="2" count="1" type="stmt"/>

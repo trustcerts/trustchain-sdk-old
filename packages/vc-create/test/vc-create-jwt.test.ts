@@ -25,7 +25,6 @@ describe('vc', () => {
   let walletService: WalletService;
 
   beforeAll(async () => {
-
     const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
 
     DidNetworks.add('tc:dev', testValues.network);
@@ -49,6 +48,10 @@ describe('vc', () => {
     }
   }, 10000);
 
+  /**
+   * Creates an example JWT-encoded verifiable credential for testing
+   * @returns A JWT-encoded verifiable credential with example data
+   */
   async function createVc(): Promise<string> {
     const vcIssuerService = new VerifiableCredentialIssuerService();
 
@@ -65,11 +68,15 @@ describe('vc', () => {
     );
   }
 
+  /**
+   * Creates an example JWT-encoded verifiable presentation for testing
+   * @returns A JWT-encoded verifiable presentation with example data
+   */
   async function createVp(): Promise<string> {
     const vcIssuerService = new VerifiableCredentialIssuerService();
     const vc1 = await createVc();
     const vc2 = await createVc();
-    return await vcIssuerService.createPresentation(
+    return await vcIssuerService.createVerifiablePresentation(
       {
         '@context': [],
         type: ['TestPresentation'],

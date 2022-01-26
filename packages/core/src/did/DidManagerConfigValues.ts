@@ -1,4 +1,4 @@
-import { DidTransaction } from '../bc/observer';
+import { DidTransaction } from '@trustcerts/observer';
 import { InitDidManagerConfigValues } from './InitDidManagerConfigValues';
 
 export interface DidManagerConfigValues extends InitDidManagerConfigValues {

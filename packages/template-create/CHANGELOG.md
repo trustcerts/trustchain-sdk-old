@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.7](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.6...v0.4.7) (2022-01-20)
+
+**Note:** Version bump only for package @trustcerts/template-create
+
+
+
+
+
+## [0.4.6](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.5...v0.4.6) (2022-01-09)
+
+
+### Bug Fixes
+
+* update deps ([1d71cd5](https://github.com/trustcerts/trustchain-sdk/commit/1d71cd53c2afb405405ea4c998257ec28b2dc80b))
+* update template test ([6da7619](https://github.com/trustcerts/trustchain-sdk/commit/6da7619ae6082be6e2694260e22c3bb3e5aa68b1))
+
+
+
+
+
+## [0.4.4](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.3...v0.4.4) (2022-01-09)
+
+
+### Bug Fixes
+
+* mode open api deps to an own package ([ba7f0ff](https://github.com/trustcerts/trustchain-sdk/commit/ba7f0ffa9af23fb1cdef6427edf4bf8de5db9958))
+
+
+
+
+
 ## [0.4.3](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.2...v0.4.3) (2021-12-22)
 
 **Note:** Version bump only for package @trustcerts/template-create
