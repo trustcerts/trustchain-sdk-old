@@ -6,7 +6,7 @@ import { InitDidManagerConfigValues } from './InitDidManagerConfigValues';
 import { DidNetworks } from './network/did-networks';
 import { Network } from './network/network';
 
-export class DidResolver {
+export abstract class DidResolver {
   constructor() {
     // TODO do not load it here
     DidCachedService.load();
@@ -59,4 +59,9 @@ export class DidResolver {
       doc: values?.doc ?? true,
     };
   }
+
+  abstract load(
+    id: string,
+    values?: InitDidManagerConfigValues<any>
+  ): Promise<Did>;
 }

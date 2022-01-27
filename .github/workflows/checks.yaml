@@ -54,5 +54,5 @@ jobs:
         run: |
           npm i
           ./build.sh
-      # - name: Run tests
-      #   run: npm run test
+      - name: Run tests
+        run: npm run test
