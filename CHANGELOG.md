@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.9](https://github.com/trustcerts/sdk/compare/v0.4.8...v0.4.9) (2022-01-27)
+
+
+### Bug Fixes
+
+* make load function abstract ([6843613](https://github.com/trustcerts/sdk/commit/6843613d3dc7ba767454fa5e41646a51a8218985))
+
+
+
+
+
 ## [0.4.8](https://github.com/trustcerts/sdk/compare/v0.4.6...v0.4.8) (2022-01-27)
 
 
