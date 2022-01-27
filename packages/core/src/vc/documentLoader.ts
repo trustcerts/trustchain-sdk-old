@@ -88,6 +88,7 @@ export class DocumentLoader {
   // TODO: is not async, but uses await. Problem?
   getLoader(): (url: string) => any {
     const docLoader = async (url: string): Promise<LoaderResponse> => {
+      const resolver = new DidIdResolver();
       if (url.startsWith('did:')) {
         // TODO: check if TC did key id
         logger.debug('Resolving DID ' + url);
@@ -104,7 +105,7 @@ export class DocumentLoader {
         if (url.indexOf('#') !== -1) {
           const did = await this.loadResourceWithTimeout(
             url,
-            DidIdResolver.load(url.split('#')[0])
+            resolver.load(url.split('#')[0])
           );
           const doc = did.getKey(url);
           // Import as blsKey to extract publicKey as base58
@@ -129,7 +130,7 @@ export class DocumentLoader {
           // is DID doc
           const did = await this.loadResourceWithTimeout(
             url,
-            DidIdResolver.load(url)
+            resolver.load(url)
           );
           return {
             contextUrl: null,

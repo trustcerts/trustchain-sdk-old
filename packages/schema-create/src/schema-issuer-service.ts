@@ -1,33 +1,35 @@
-import { AxiosError } from 'axios';
-
 import {
-  CryptoService,
-  sortKeys,
-  SignatureContent,
   IssuerService,
+  CryptoService,
+  SignatureContent,
+  sortKeys,
 } from '@trustcerts/core';
 import {
-  DidGatewayApi,
-  DidIdTransactionDto,
+  AxiosError,
+  SchemaCreationResponse,
+  SchemaGatewayApi,
+  SchemaStructure,
+  SchemaTransaction,
   SignatureInfoTypeEnum,
   TransactionType,
 } from '@trustcerts/gateway';
-import { DidIdStructure } from '@trustcerts/observer';
-export class DidIdIssuerService extends IssuerService {
-  protected api: DidGatewayApi;
+
+export class SchemaIssuerService extends IssuerService {
+  protected api: SchemaGatewayApi;
 
   constructor(gateways: string[], cryptoService: CryptoService) {
     super(gateways, cryptoService);
-    this.api = new DidGatewayApi(this.apiConfiguration);
+    this.api = new SchemaGatewayApi(this.apiConfiguration);
   }
 
-  async persistDid(value: DidIdStructure): Promise<void> {
-    const transaction: DidIdTransactionDto = {
+  async persistSchema(value: SchemaStructure): Promise<SchemaCreationResponse> {
+    // TODO outsource this to the issuer service since the transaction schema of dids are equal
+    const transaction: SchemaTransaction = {
       version: 1,
       body: {
         date: new Date().toISOString(),
         value,
-        type: TransactionType.Did,
+        type: TransactionType.Schema,
         version: 1,
       },
       metadata: {
@@ -50,7 +52,7 @@ export class DidIdIssuerService extends IssuerService {
       identifier: this.cryptoService.fingerPrint,
     });
 
-    return await this.api.gatewayDidControllerStore(transaction).then(
+    return await this.api.gatewaySchemaControllerCreate(transaction).then(
       res => res.data,
       (err: AxiosError) => {
         if (err.response) {

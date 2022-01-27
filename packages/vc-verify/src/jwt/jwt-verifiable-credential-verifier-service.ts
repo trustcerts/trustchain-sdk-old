@@ -5,12 +5,15 @@ import {
   ICredentialStatus,
   JWTPayloadVC,
   JWTPayloadVP,
+  DidId,
 } from '@trustcerts/core';
 import { jwtVerify } from 'jose';
 import { JWT } from './jwt-service';
 import { RevocationService } from '@trustcerts/vc-revocation';
 
 export class JWTVerifiableCredentialVerifierService {
+  private resolver = new DidIdResolver();
+
   /**
    * Verifies a given verifiable credential, e.g. by checking its signature and revocation status
    *
@@ -21,7 +24,7 @@ export class JWTVerifiableCredentialVerifierService {
     const jwt = new JWT(credential);
     const kid = jwt.getHeader().kid;
 
-    const did = await DidIdResolver.load(kid);
+    const did = await this.resolver.load(kid);
 
     const key = await importKey(did.getKey(kid).publicKeyJwk, 'jwk', [
       'verify',
@@ -81,7 +84,7 @@ export class JWTVerifiableCredentialVerifierService {
 
     const kid = jwt.getHeader().kid;
 
-    const did = await DidIdResolver.load(kid);
+    const did = await this.resolver.load(kid);
 
     const key = await importKey(did.getKey(kid).publicKeyJwk, 'jwk', [
       'verify',

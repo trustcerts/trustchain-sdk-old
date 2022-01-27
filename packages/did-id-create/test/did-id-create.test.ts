@@ -61,7 +61,8 @@ describe('test local config service', () => {
 
     await DidIdRegister.save(did, client);
     await new Promise(res => setTimeout(res, 2000));
-    const did1 = await DidIdResolver.load(did.id);
+    const resolver = new DidIdResolver();
+    const did1 = await resolver.load(did.id);
     expect(did1).toEqual(did);
   }, 7000);
 

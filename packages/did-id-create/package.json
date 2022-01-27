@@ -86,8 +86,7 @@
   "dependencies": {
     "@trustcerts/core": "^0.4.6",
     "@trustcerts/gateway": "^0.4.6",
-    "@trustcerts/observer": "^0.4.6",
-    "axios": "^0.24.0"
+    "@trustcerts/observer": "^0.4.6"
   },
   "gitHead": "9cc3c3d078fe46729a72961bc6bd241667d43309"
 }

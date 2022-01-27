@@ -13,6 +13,9 @@ import {
 import { DidIdIssuerService, DidIdRegister } from '@trustcerts/did-id-create';
 export class WalletService {
   public did!: DidId;
+
+  protected resolver = new DidIdResolver();
+
   // give my id to get public keys (and to update it)
   // give my private keys for signing
   constructor(public configService: ConfigService) {}
@@ -24,19 +27,19 @@ export class WalletService {
     if (!this.configService.config.invite) {
       throw new Error('no id found');
     }
-    this.did = await DidIdResolver.load(
-      this.configService.config.invite.id
-    ).catch(async () => {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      return DidIdRegister.createByInvite(
-        this.configService.config.invite!
-      ).then(async values => {
-        // save the key that way used.
-        this.configService.config.keyPairs.push(values.keyPair);
-        await this.configService.saveConfig();
-        return values.did;
+    this.did = await this.resolver
+      .load(this.configService.config.invite.id)
+      .catch(async () => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        return DidIdRegister.createByInvite(
+          this.configService.config.invite!
+        ).then(async values => {
+          // save the key that way used.
+          this.configService.config.keyPairs.push(values.keyPair);
+          await this.configService.saveConfig();
+          return values.did;
+        });
       });
-    });
   }
 
   /**
@@ -243,7 +246,7 @@ export class WalletService {
    * @returns True if it is present in the DID document
    */
   private async validateKey(keyPair: DecryptedKeyPair) {
-    return DidIdResolver.load(keyPair.identifier).then(
+    return this.resolver.load(keyPair.identifier).then(
       did => {
         if (!did.hasKey(keyPair.identifier)) {
           return Promise.reject('Key not found in remote DID document');

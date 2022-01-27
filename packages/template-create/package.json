@@ -85,8 +85,7 @@
   "dependencies": {
     "@trustcerts/core": "^0.4.6",
     "@trustcerts/gateway": "^0.4.6",
-    "ajv": "^8.8.2",
-    "axios": "^0.24.0"
+    "ajv": "^8.8.2"
   },
   "gitHead": "9cc3c3d078fe46729a72961bc6bd241667d43309"
 }

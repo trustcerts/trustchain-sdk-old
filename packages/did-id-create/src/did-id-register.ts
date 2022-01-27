@@ -59,8 +59,9 @@ export class DidIdRegister {
         }
       });
     // load own did document.
+    const resolver = new DidIdResolver();
     return {
-      did: await DidIdResolver.load(invite.id),
+      did: await resolver.load(invite.id),
       keyPair: newKey,
     };
   }
@@ -68,9 +69,9 @@ export class DidIdRegister {
   public static save(did: DidId, client: DidIdIssuerService): Promise<void> {
     const value = did.getChanges();
 
-    const document = did.getDocument();
-    did.version++;
-    did.resetChanges();
-    return client.persistDid(value, document, did.version);
+    // const document = did.getDocument();
+    // did.version++;
+    // did.resetChanges();
+    return client.persistDid(value);
   }
 }

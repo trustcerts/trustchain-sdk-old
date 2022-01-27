@@ -199,12 +199,6 @@ export interface DidIdTransactionBody {
      */
     'type': TransactionType;
     /**
-     * signature of the did document after applying the changes
-     * @type {SignatureInfo}
-     * @memberof DidIdTransactionBody
-     */
-    'didDocSignature': SignatureInfo;
-    /**
      * elements of the did document
      * @type {DidIdStructure}
      * @memberof DidIdTransactionBody
@@ -696,6 +690,31 @@ export interface SchemaCreationResponse {
 /**
  * 
  * @export
+ * @interface SchemaStructure
+ */
+export interface SchemaStructure {
+    /**
+     * unique identifier of a did
+     * @type {string}
+     * @memberof SchemaStructure
+     */
+    'id': string;
+    /**
+     * Did that controls this did.
+     * @type {ControllerManage}
+     * @memberof SchemaStructure
+     */
+    'controller'?: ControllerManage;
+    /**
+     * json schema to validate the data that should be parsed into the
+     * @type {string}
+     * @memberof SchemaStructure
+     */
+    'schema'?: string;
+}
+/**
+ * 
+ * @export
  * @interface SchemaTransaction
  */
 export interface SchemaTransaction {
@@ -748,6 +767,12 @@ export interface SchemaTransactionBody {
      * @memberof SchemaTransactionBody
      */
     'type': TransactionType;
+    /**
+     * 
+     * @type {SchemaStructure}
+     * @memberof SchemaTransactionBody
+     */
+    'value': SchemaStructure;
 }
 /**
  * 

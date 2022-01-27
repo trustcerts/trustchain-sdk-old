@@ -35,7 +35,8 @@ export class SignatureVerifierService extends VerifierService {
     const hash = await this.getHash(checksum);
     const usedKey = hash.signature[0].identifier;
     const time = hash.block.imported ? hash.block.createdAt : hash.createdAt;
-    const did = await DidIdResolver.load(usedKey, { time });
+    const resolver = new DidIdResolver();
+    const did = await resolver.load(usedKey, { time });
     const key = did.getKey(usedKey);
     if (
       await verifySignature(

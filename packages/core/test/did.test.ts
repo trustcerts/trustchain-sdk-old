@@ -18,6 +18,8 @@ describe('test local config service', () => {
 
   let cryptoService: CryptoService;
 
+  let resolver = new DidIdResolver();
+
   const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
 
   beforeAll(async () => {
@@ -50,7 +52,7 @@ describe('test local config service', () => {
     );
     await DidIdRegister.save(did, client);
     await new Promise(res => setTimeout(res, 2000));
-    const did1 = await DidIdResolver.load(did.id);
+    const did1 = await resolver.load(did.id);
     expect(did.getDocument()).toEqual(did1.getDocument());
   }, 7000);
 
@@ -65,13 +67,13 @@ describe('test local config service', () => {
     );
     await DidIdRegister.save(did, client);
     await new Promise(res => setTimeout(res, 2000));
-    const did1 = await DidIdResolver.load(did.id);
+    const did1 = await resolver.load(did.id);
     expect(did.getDocument()).toEqual(did1.getDocument());
   }, 7000);
 
   it('read non existing did', async () => {
     const id = 'did:trust:tc:dev:id:QQQQQQQQQQQQQQQQQQQQQQ';
-    const did = DidIdResolver.load(id, { doc: false });
+    const did = resolver.load(id, { doc: false });
     await expect(did).rejects.toEqual(new Error(`${id} not found`));
   }, 7000);
 
