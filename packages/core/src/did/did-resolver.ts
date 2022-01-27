@@ -2,6 +2,7 @@ import { DidCachedService } from './cache/did-cached-service';
 import { Did } from './did';
 import { DidVerifierService } from './did-verifier-service';
 import { DidManagerConfigValues } from './id/DidManagerConfigValues';
+import { InitDidManagerConfigValues } from './InitDidManagerConfigValues';
 import { DidNetworks } from './network/did-networks';
 import { Network } from './network/network';
 
@@ -44,5 +45,18 @@ export class DidResolver {
 
     // TODO also add the version number and more information from the metadata that the cache needs to find suitable cached entries
     DidCachedService.add(did, config.time);
+  }
+
+  protected setConfig<T>(
+    values?: InitDidManagerConfigValues<T>
+  ): DidManagerConfigValues<T> {
+    return {
+      validateChainOfTrust: values?.validateChainOfTrust ?? true,
+      // TODO check if empty array is correct
+      transactions: values?.transactions ?? [],
+      time: values?.time ?? new Date().toISOString(),
+      version: values?.version ?? undefined,
+      doc: values?.doc ?? true,
+    };
   }
 }
