@@ -237,18 +237,6 @@ export class DidId extends Did {
       changes.role.remove = Array.from(this.role.remove.values());
     }
 
-    if (this.controller.add.size > 0) {
-      changes.controller = {
-        add: Array.from(this.controller.add.values()),
-      };
-    }
-    if (this.controller.remove.size > 0) {
-      if (!changes.controller) {
-        changes.controller = {};
-      }
-      changes.controller.remove = Array.from(this.controller.remove.values());
-    }
-
     if (this.service.add.size > 0) {
       changes.service = {
         add: Array.from(this.service.add.values()),

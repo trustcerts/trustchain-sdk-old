@@ -5,7 +5,6 @@ import {
   ICredentialStatus,
   JWTPayloadVC,
   JWTPayloadVP,
-  DidId,
 } from '@trustcerts/core';
 import { jwtVerify } from 'jose';
 import { JWT } from './jwt-service';

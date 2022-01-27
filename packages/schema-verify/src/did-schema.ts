@@ -20,6 +20,7 @@ export class DidSchema extends Did {
   parseDocument(_document: SchemaDocResponse): void {
     throw new Error('Method not implemented.');
   }
+
   getDocument(): IDidSchemaDocument {
     return {
       '@context': this.context,

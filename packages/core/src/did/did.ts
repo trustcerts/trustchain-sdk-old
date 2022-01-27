@@ -54,4 +54,25 @@ export abstract class Did {
   abstract getDocument(): IDidDocument;
   abstract resetChanges(): void;
   abstract getChanges(): any;
+
+  protected getBasicChanges<T>(): T {
+    // TODO set DIDStrucutre
+    const changes: any = {
+      id: this.id,
+    };
+
+    if (this.controller.add.size > 0) {
+      changes.controller = {
+        add: Array.from(this.controller.add.values()),
+      };
+    }
+    if (this.controller.remove.size > 0) {
+      if (!changes.controller) {
+        changes.controller = {};
+      }
+      changes.controller.remove = Array.from(this.controller.remove.values());
+    }
+
+    return changes;
+  }
 }
