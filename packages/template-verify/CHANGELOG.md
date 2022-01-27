@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.7](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.6...v0.4.7) (2022-01-27)
+
+
+### Bug Fixes
+
+* fix tests ([02839c1](https://github.com/trustcerts/trustchain-sdk/commit/02839c10a61e74b471aa4fb65ade006763d9456d))
+* tmp push ([bec3b89](https://github.com/trustcerts/trustchain-sdk/commit/bec3b890137d5ac20693d2a7c57068c9905b0b56))
+
+
+
+
+
 ## [0.4.6](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.5...v0.4.6) (2022-01-09)
 
 
