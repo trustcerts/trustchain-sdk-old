@@ -23,17 +23,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}   
-
-      - name: generate config folder
-        run:  npm run trusty-generate
-
-      - name: Start blockchain-nodes
-        run: |
-          docker network create test-network
-          cd ./config
-          ./all.sh up -d
-          ./initNodes.sh
-
           
       - name: "Setup npm"
         run: |
@@ -53,6 +42,17 @@ jobs:
         run: |
           npm i
           ./build.sh
+
+          
+      - name: generate config folder
+        run:  npm run trusty-generate
+
+      - name: Start blockchain-nodes
+        run: |
+          docker network create test-network
+          cd ./config
+          ./all.sh up -d
+          ./initNodes.sh
 
       - name: Start trustcreator and platform services
         run: |
