@@ -24,12 +24,9 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}   
 
-      - name: Install trustcerts cli
-        run: npm install -g @trustcerts/cli
+      - name: generate config folder
+        run:  npm run trusty-generate
 
-      - name: Init blockchain
-        run: trusty generate -h localhost -v 2 -g 1 -o 1 -t latest
-      
       - name: Start blockchain-nodes
         run: |
           docker network create test-network
