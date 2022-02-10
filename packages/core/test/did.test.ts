@@ -72,7 +72,9 @@ describe('test did', () => {
   it('read non existing did', async () => {
     const id = 'did:trust:tc:dev:id:QQQQQQQQQQQQQQQQQQQQQQ';
     const did = DidIdResolver.load(id, { doc: false });
-    await expect(did).rejects.toEqual(new Error(`${id} not found`));
+    await expect(did).rejects.toEqual(
+      new Error(`Could not resolve DID: no transactions found (${id})`)
+    );
   }, 7000);
 
   it('test did resolver', () => {
