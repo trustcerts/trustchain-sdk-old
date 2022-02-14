@@ -1,8 +1,6 @@
-import { DidTransaction } from '@trustcerts/observer';
-
-export interface InitDidManagerConfigValues {
+export interface InitDidManagerConfigValues<Type> {
   validateChainOfTrust?: boolean;
-  transactions?: DidTransaction[];
+  transactions?: Type[];
   time?: string;
   version?: number;
   doc?: boolean;

@@ -6,14 +6,15 @@ import { DidNetworks } from './network/did-networks';
 import { Network } from './network/network';
 
 export class DidResolver {
-  public static init() {
+  constructor() {
     // TODO do not load it here
     DidCachedService.load();
   }
 
-  protected static async loadDid(
+  protected async loadDid(
     did: Did,
-    config: DidManagerConfigValues
+    // TODO any is not the best type
+    config: DidManagerConfigValues<any>
   ): Promise<void> {
     if (config.transactions?.length > 0) {
       did.parseTransaction(config.transactions);

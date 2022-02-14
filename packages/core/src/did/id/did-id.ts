@@ -39,16 +39,6 @@ export class DidId extends Did {
 
   constructor(public id: string) {
     super(id);
-    // if the passed id value already has a prefix remove it.
-    // TODO set correct regexp, normal did should have no type
-    // TODO use method from Identifier.method
-    const result = new RegExp(/did:trust:[:a-z]*[1-9A-HJ-NP-Za-km-z]{22}/).test(
-      id
-    );
-    if (!result) {
-      throw Error('wrong format for did: ' + id);
-    }
-
     Object.values(VerificationRelationshipType).forEach(vrType => {
       this.verificationRelationships.set(vrType, new Management<string>());
     });
@@ -147,27 +137,6 @@ export class DidId extends Did {
 
     this.role.current.delete(value);
     this.role.remove.add(value);
-  }
-
-  hasController(value: string): boolean {
-    return this.controller.current.has(value);
-  }
-
-  addController(value: string): void {
-    if (this.hasController(value)) {
-      throw Error('controller already set');
-    }
-    this.controller.current.set(value, value);
-    this.controller.add.set(value, value);
-  }
-
-  removeController(value: string): void {
-    if (!this.hasController(value)) {
-      throw Error('controller not found');
-    }
-
-    this.controller.current.delete(value);
-    this.controller.remove.add(value);
   }
 
   addVerificationRelationship(
@@ -451,6 +420,7 @@ export class DidId extends Did {
       role: Array.from(this.role.current.values()),
     };
 
+    // TODO move them before initing the didDoc to remove the Partial call
     // Add all vrTypes from Enum VerificationRelationshipType (should also be present in blockchain / IDidIdDocument)
     Object.values(VerificationRelationshipType).forEach(vrType => {
       const vrTypeManagement = this.verificationRelationships.get(vrType);

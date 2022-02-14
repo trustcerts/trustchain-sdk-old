@@ -1,5 +1,4 @@
-import { Configuration } from '@trustcerts/gateway';
-import { BaseAPI } from '@trustcerts/gateway/dist/base';
+import { Configuration, BaseAPI } from '@trustcerts/gateway';
 import { CryptoService } from './crypto-service';
 
 /**
