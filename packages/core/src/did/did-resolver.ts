@@ -29,15 +29,15 @@ export abstract class DidResolver {
       if (config.doc) {
         const document = await verifier
           .getDidDocument(did.id, config)
-          .catch(err => {
-            throw new Error(`${did.id} not found: ${err}`);
+          .catch((err: Error) => {
+            throw new Error(`Could not resolve DID: ${err} (${did.id})`);
           });
         did.parseDocument(document);
       } else {
         config.transactions = await verifier
           .getDidTransactions(did.id, config.validateChainOfTrust, config.time)
-          .catch(() => {
-            throw new Error(`${did.id} not found`);
+          .catch((err: Error) => {
+            throw new Error(`Could not resolve DID: ${err} (${did.id})`);
           });
         did.parseTransaction(config.transactions);
       }

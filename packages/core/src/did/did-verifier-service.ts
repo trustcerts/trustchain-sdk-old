@@ -21,6 +21,13 @@ export class DidVerifierService extends VerifierService {
     );
   }
 
+  /**
+   * Resolve a DID document by returning the first valid response of a observer of the network
+   * @param id The DID of the DID document
+   * @param config The config for the DID request
+   * @param timeout Timeout for each observer that is queried
+   * @returns The resolved DID document
+   */
   async getDidDocument(
     id: string,
     config: DidManagerConfigValues<DidIdTransaction>
@@ -51,6 +58,14 @@ export class DidVerifierService extends VerifierService {
     return Promise.reject('no transactions found');
   }
 
+  /**
+   * Resolve a DID document's transactions by returning the first valid response of a observer of the network
+   * @param id The DID of the DID document
+   * @param validate Whether to validate the response
+   * @param time The time of the DID document that shall be queried
+   * @param timeout Timeout for each observer that is queried
+   * @returns The DID document's transactions
+   */
   async getDidTransactions(
     id: string,
     validate = true,
@@ -65,26 +80,15 @@ export class DidVerifierService extends VerifierService {
         id,
         time,
         undefined,
-        { timeout: 2000 }
+        { timeout: timeout }
       );
       if (res.data.length > 0) {
-        let index = responses.findIndex(response => {
-          return JSON.stringify(response.value) === JSON.stringify(res.data);
-        });
-        if (index >= 0) {
-          responses[index].amount++;
-        } else {
-          responses.push({ value: res.data, amount: 1 });
-          index = responses.length - 1;
-        }
-        if (responses[index].amount === this.equalMin) {
-          if (validate) {
-            for (const transaction of responses[index].value) {
-              await this.validate(transaction);
-            }
+        if (validate) {
+          for (const transaction of res.data) {
+            await this.validate(transaction);
           }
-          return Promise.resolve(responses[index].value);
         }
+        return Promise.resolve(res.data);
       }
     }
     return Promise.reject('no transactions found');

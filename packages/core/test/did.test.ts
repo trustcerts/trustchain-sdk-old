@@ -13,7 +13,7 @@ import { WalletService } from '@trustcerts/wallet';
 import { readFileSync } from 'fs';
 import { RoleManageAddEnum } from '@trustcerts/observer';
 
-describe('test local config service', () => {
+describe('test did', () => {
   let config: ConfigService;
 
   let cryptoService: CryptoService;
