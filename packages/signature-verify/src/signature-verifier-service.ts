@@ -7,9 +7,17 @@ import {
   DidIdResolver,
   SignatureContent,
   VerifierService,
-  logger,
+  DidManagerConfigValues,
 } from '@trustcerts/core';
-import { Hash, HashObserverApi } from '@trustcerts/observer';
+import { HashTransactionDto } from '@trustcerts/core/node_modules/@trustcerts/gateway';
+import {
+  AxiosError,
+  DidHashDocument,
+  HashDocResponse,
+  HashObserverApi,
+  HashTransaction,
+  TransactionType,
+} from '@trustcerts/observer';
 
 export class SignatureVerifierService extends VerifierService {
   protected apis: HashObserverApi[];
@@ -21,74 +29,79 @@ export class SignatureVerifierService extends VerifierService {
     );
   }
 
-  public async verifyString(value: string): Promise<Hash> {
+  public async verifyString(
+    value: string,
+    config: DidManagerConfigValues<HashTransactionDto>
+  ): Promise<DidHashDocument> {
     const hash = await getHash(value);
-    return this.verify(hash);
+    return this.verify(hash, config);
   }
 
-  public async verifyFile(file: string | File): Promise<Hash> {
+  public async verifyFile(
+    file: string | File,
+    config: DidManagerConfigValues<HashTransactionDto>
+  ): Promise<DidHashDocument> {
     const hash = await getHashFromFile(file);
-    return this.verify(hash);
+    return this.verify(hash, config);
   }
 
-  public async verify(checksum: string): Promise<Hash> {
-    const hash = await this.getHash(checksum);
-    const usedKey = hash.signature[0].identifier;
-    const time = hash.block.imported ? hash.block.createdAt : hash.createdAt;
-    const did = await DidIdResolver.load(usedKey, { time });
+  public async verify(
+    checksum: string,
+    config: DidManagerConfigValues<HashTransactionDto>
+  ): Promise<DidHashDocument> {
+    const hashDocument = await this.getDidDocument(checksum, config);
+    const usedKey = hashDocument.signatures[0].identifier;
+    const time = hashDocument.block.imported
+      ? hashDocument.block.createdAt
+      : hashDocument.createdAt;
+    const resolver = new DidIdResolver();
+    const did = await resolver.load(usedKey, { time });
     const key = did.getKey(usedKey);
     if (
       await verifySignature(
-        SignatureVerifierService.hash(hash),
-        hash.signature[0].signature,
+        SignatureVerifierService.hash(hashDocument),
+        hashDocument.signature[0].signature,
         await importKey(key.publicKeyJwk, 'jwk', ['verify'])
       )
     ) {
-      return Promise.resolve(hash);
+      return Promise.resolve(hashDocument);
     } else {
       return Promise.reject('signature does not match');
     }
   }
 
-  /**
-   * Request status from all urls. Timeout if there is no response.
-   * @param hash
-   */
-  public async getHash(hash: string): Promise<Hash> {
-    const responses: { amount: number; value: Hash }[] = [];
-    // TODO refactor this! only request the endpoint if there is a timeout. Since the chain of trust is build a wrong response is not the problem.
+  async getDidDocument(
+    id: string,
+    config: DidManagerConfigValues<HashTransactionDto>
+  ): Promise<HashDocResponse> {
     for (const api of this.apis) {
-      const res = await api
-        .observerHashControllerGetHash(hash, { timeout: 2000 })
-        .catch(err => logger.warn(err));
-      if (res) {
-        const index = responses.findIndex(response => {
-          return JSON.stringify(response.value) === JSON.stringify(res.data);
-        });
-        if (index >= 0) {
-          responses[index].amount++;
-          if (responses[index].amount === this.equalMin) {
-            return Promise.resolve(responses[index].value);
+      await api
+        .observerHashControllerGetDoc(id, config.time, undefined, {
+          timeout: 2000,
+        })
+        .then(
+          res => Promise.resolve(res.data),
+          (err: AxiosError) => {
+            // TODO evaluate the error
+            // got a response, validate it
+            if (err.response) {
+            } else {
+              // got no response maybe a timeout
+            }
           }
-        } else {
-          responses.push({ value: res.data, amount: 1 });
-          if (this.equalMin === 1) {
-            return Promise.resolve(responses[0].value);
-          }
-        }
-      }
+        );
     }
-    return Promise.reject('not enough matches');
+    return Promise.reject('no transactions found');
   }
 
   private static hash(hash: Hash): string {
     const content: SignatureContent = {
       date: hash.createdAt,
       // TODO TransactionType.HashCreation,
-      type: 'HashCreation',
+      type: TransactionType.Hash,
       value: {
         algorithm: hash.hashAlgorithm,
-        hash: hash.hash,
+        hash: hash.id,
       },
     };
     return JSON.stringify(sortKeys(content));

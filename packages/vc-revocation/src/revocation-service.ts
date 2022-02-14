@@ -12,10 +12,10 @@ import {
 
 export class RevocationService {
   // TODO: better persistence than just a local file
-  private revocationListConfigPath = './revocationListConfig.json';
+  private revocationListConfigPath = './tmp/revocationListConfig.json';
 
   // temporarily store Credential locally instead of blockchain (until blockchain support is implemented)
-  private revocationListCredentialPath = './revocationListCredential.json';
+  private revocationListCredentialPath = './tmp/revocationListCredential.json';
 
   private revocationListConfig!: IRevocationListConfig;
 

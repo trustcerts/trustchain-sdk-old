@@ -66,6 +66,7 @@ export class DocumentLoader {
   // TODO: is not async, but uses await. Problem?
   getLoader(): (url: string) => any {
     const docLoader = async (url: string): Promise<LoaderResponse> => {
+      const resolver = new DidIdResolver();
       if (url.startsWith('did:')) {
         // TODO: check if TC did key id
         logger.debug('Resolving DID ' + url);
@@ -80,7 +81,7 @@ export class DocumentLoader {
 
         // is key? (Can you reference other parts via #?)
         if (url.indexOf('#') !== -1) {
-          const did = await DidIdResolver.load(url.split('#')[0]);
+          const did = await resolver.load(url.split('#')[0]);
           const doc = did.getKey(url) as any;
 
           if (!doc.publicKeyJwk.x) {
@@ -89,7 +90,6 @@ export class DocumentLoader {
               `${url} does not contain a Bls12381G2KeyPair: ${doc.publicKeyJwk}`
             );
           }
-
           return {
             contextUrl: null,
             document: {
@@ -103,7 +103,7 @@ export class DocumentLoader {
           };
         } else {
           // is DID doc
-          const did = await DidIdResolver.load(url);
+          const did = await resolver.load(url);          
           return {
             contextUrl: null,
             document: did.getDocument(),

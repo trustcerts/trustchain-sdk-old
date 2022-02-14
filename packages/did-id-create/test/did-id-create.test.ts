@@ -36,7 +36,7 @@ describe('test local config service', () => {
         SignatureType.Rsa
       )
     )[0];
-    await cryptoService.init(key);
+    await cryptoService.init(key).catch(console.log);
   }, 10000);
 
   it('add did', async () => {
@@ -60,7 +60,11 @@ describe('test local config service', () => {
     );
 
     await DidIdRegister.save(did, client);
-    await new Promise((resolve)=> setTimeout(()=>{resolve(true)} , 2000));
+    await new Promise(resolve =>
+      setTimeout(() => {
+        resolve(true);
+      }, 2000)
+    );
     const did1 = await DidIdResolver.load(did.id);
     expect(did1).toEqual(did);
   }, 7000);

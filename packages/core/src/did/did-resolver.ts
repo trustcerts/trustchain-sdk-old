@@ -2,18 +2,20 @@ import { DidCachedService } from './cache/did-cached-service';
 import { Did } from './did';
 import { DidVerifierService } from './did-verifier-service';
 import { DidManagerConfigValues } from './id/DidManagerConfigValues';
+import { InitDidManagerConfigValues } from './InitDidManagerConfigValues';
 import { DidNetworks } from './network/did-networks';
 import { Network } from './network/network';
 
-export class DidResolver {
-  public static init() {
+export abstract class DidResolver {
+  constructor() {
     // TODO do not load it here
     DidCachedService.load();
   }
 
-  protected static async loadDid(
+  protected async loadDid(
     did: Did,
-    config: DidManagerConfigValues
+    // TODO any is not the best type
+    config: DidManagerConfigValues<any>
   ): Promise<void> {
     if (config.transactions?.length > 0) {
       did.parseTransaction(config.transactions);
@@ -44,4 +46,22 @@ export class DidResolver {
     // TODO also add the version number and more information from the metadata that the cache needs to find suitable cached entries
     DidCachedService.add(did, config.time);
   }
+
+  protected setConfig<T>(
+    values?: InitDidManagerConfigValues<T>
+  ): DidManagerConfigValues<T> {
+    return {
+      validateChainOfTrust: values?.validateChainOfTrust ?? true,
+      // TODO check if empty array is correct
+      transactions: values?.transactions ?? [],
+      time: values?.time ?? new Date().toISOString(),
+      version: values?.version ?? undefined,
+      doc: values?.doc ?? true,
+    };
+  }
+
+  abstract load(
+    id: string,
+    values?: InitDidManagerConfigValues<any>
+  ): Promise<Did>;
 }

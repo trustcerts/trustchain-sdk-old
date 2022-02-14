@@ -6,7 +6,7 @@ import {
   Identifier,
   VerificationRelationshipType,
   SignatureType,
-} from '..';
+} from '../';
 import { LocalConfigService } from '@trustcerts/config-local';
 import { DidIdIssuerService, DidIdRegister } from '@trustcerts/did-id-create';
 import { WalletService } from '@trustcerts/wallet';
@@ -18,9 +18,12 @@ describe('test did', () => {
 
   let cryptoService: CryptoService;
 
+  let resolver = new DidIdResolver();
+
   const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
 
   beforeAll(async () => {
+    // console.log(bar());
     DidNetworks.add('tc:dev', testValues.network);
     Identifier.setNetwork('tc:dev');
     config = new LocalConfigService(testValues.filePath);
@@ -39,22 +42,7 @@ describe('test did', () => {
     await cryptoService.init(key);
   }, 10000);
 
-  // it('verify did chain of trust temporary test case', async () => {
-  //   const did = DidIdRegister.create({
-  //     controllers: [config.config.invite!.id],
-  //   });
-  //   did.addRole(RoleManageAddEnum.Client);
-  //   const client = new DidIdIssuerService(
-  //     testValues.network.gateways,
-  //     cryptoService
-  //   );
-  //   await DidIdRegister.save(did, client);
-  //   await setTimeout(() => Promise.resolve(), 2000);
-  //   const did1 = await DidIdResolver.load(did.id);
-  //   expect(did.getDocument()).toEqual(did1.getDocument());
-  // }, 7000);
-
-  it('read did', async () => {
+  it('verify did chain of trust temporary test case', async () => {
     const did = DidIdRegister.create({
       controllers: [config.config.invite!.id],
     });
@@ -73,12 +61,29 @@ describe('test did', () => {
     expect(did.getDocument()).toEqual(did1.getDocument());
   }, 7000);
 
+  it('read did', async () => {
+    const did = DidIdRegister.create({
+      controllers: [config.config.invite!.id],
+    });
+    did.addRole(RoleManageAddEnum.Client);
+    const client = new DidIdIssuerService(
+      testValues.network.gateways,
+      cryptoService
+    );
+    await DidIdRegister.save(did, client);
+    await new Promise(resolve =>
+      setTimeout(() => {
+        resolve(true);
+      }, 2000)
+    );
+    const did1 = await resolver.load(did.id);
+    expect(did.getDocument()).toEqual(did1.getDocument());
+  }, 7000);
+
   it('read non existing did', async () => {
     const id = 'did:trust:tc:dev:id:QQQQQQQQQQQQQQQQQQQQQQ';
-    const did = DidIdResolver.load(id, { doc: false });
-    await expect(did).rejects.toEqual(
-      new Error(`Could not resolve DID: no transactions found (${id})`)
-    );
+    const did = resolver.load(id, { doc: false });
+    await expect(did).rejects.toEqual(new Error(`${id} not found`));
   }, 7000);
 
   it('test did resolver', () => {

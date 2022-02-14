@@ -2,8 +2,9 @@ import { DidManagerConfigValues } from './DidManagerConfigValues';
 import { VerifierService } from '../verifierService';
 import {
   DidObserverApi,
-  DidTransaction,
-  DocResponse,
+  DidIdTransaction,
+  IdDocResponse,
+  AxiosError,
 } from '@trustcerts/observer';
 import { sortKeys } from '../crypto/hash';
 import { verifySignature } from '../crypto/sign';
@@ -29,22 +30,30 @@ export class DidVerifierService extends VerifierService {
    */
   async getDidDocument(
     id: string,
-    config: DidManagerConfigValues,
-    timeout = 2000
-  ): Promise<DocResponse> {
+    config: DidManagerConfigValues<DidIdTransaction>
+  ): Promise<IdDocResponse> {
     for (const api of this.apis) {
-      const res = await api.observerDidControllerGetDoc(
-        id,
-        config.time,
-        undefined,
-        { timeout: timeout }
-      );
-      if (res.data.document) {
-        if (config.validateChainOfTrust) {
-          await this.validateDoc(res.data, config);
-        }
-        return Promise.resolve(res.data);
-      }
+      await api
+        .observerDidControllerGetDoc(id, config.time, undefined, {
+          timeout: 2000,
+        })
+        .then(
+          async res => {
+            console.log('got res');
+            await this.validateDoc(res.data, config);
+            Promise.resolve(res.data);
+          },
+          (err: AxiosError) => {
+            console.log('error');
+            console.log(err);
+            // TODO evaluate the error
+            // got a response, validate it
+            if (err.response) {
+            } else {
+              // got no response maybe a timeout
+            }
+          }
+        );
     }
     return Promise.reject('no transactions found');
   }
@@ -60,9 +69,12 @@ export class DidVerifierService extends VerifierService {
   async getDidTransactions(
     id: string,
     validate = true,
-    time: string,
-    timeout = 2000
-  ): Promise<DidTransaction[]> {
+    time: string
+  ): Promise<DidIdTransaction[]> {
+    const responses: {
+      amount: number;
+      value: DidIdTransaction[];
+    }[] = [];
     for (const api of this.apis) {
       const res = await api.observerDidControllerGetTransactions(
         id,
@@ -83,8 +95,8 @@ export class DidVerifierService extends VerifierService {
   }
 
   private async validateDoc(
-    document: DocResponse,
-    config: DidManagerConfigValues
+    document: IdDocResponse,
+    config: DidManagerConfigValues<DidIdTransaction>
   ) {
     //TODO implement validation of a document with recursive approach
     const issuer = document.signatures[0].identifier;
@@ -94,7 +106,8 @@ export class DidVerifierService extends VerifierService {
       if (document.metaData) {
         config.time = document.metaData.updated ?? document.metaData.created;
       }
-      const did = await DidIdResolver.load(issuer, config);
+      const resolver = new DidIdResolver();
+      const did = await resolver.load(issuer, config);
       const key = did.getKey(issuer).publicKeyJwk;
       const value = JSON.stringify(
         sortKeys({
@@ -118,7 +131,7 @@ export class DidVerifierService extends VerifierService {
    * @param transaction
    * @private
    */
-  private async validate(transaction: DidTransaction) {
+  private async validate(transaction: DidIdTransaction) {
     const key: JsonWebKey = await this.getKey(transaction);
     const value = JSON.stringify(
       sortKeys({
@@ -136,7 +149,7 @@ export class DidVerifierService extends VerifierService {
     }
   }
 
-  private async getKey(transaction: DidTransaction): Promise<JsonWebKey> {
+  private async getKey(transaction: DidIdTransaction): Promise<JsonWebKey> {
     if (
       transaction.signature[0].identifier.split('#')[0] ===
       transaction.values.id
@@ -159,7 +172,8 @@ export class DidVerifierService extends VerifierService {
       }
     } else {
       // TODO design how the system will load and validate the information. Since newer transactions are based on older a client can not validate before having all information.
-      const did = await DidIdResolver.load(transaction.signature[0].identifier);
+      const resolver = new DidIdResolver();
+      const did = await resolver.load(transaction.signature[0].identifier);
       return did.getKey(transaction.signature[0].identifier).publicKeyJwk;
     }
   }

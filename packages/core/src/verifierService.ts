@@ -1,5 +1,4 @@
-import { Configuration } from '@trustcerts/observer';
-import { BaseAPI } from '@trustcerts/observer/dist/base';
+import { Configuration, BaseAPI } from '@trustcerts/observer';
 
 export abstract class VerifierService {
   protected apis!: BaseAPI[];
