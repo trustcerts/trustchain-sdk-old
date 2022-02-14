@@ -304,162 +304,106 @@ export interface DidService {
 /**
  * 
  * @export
- * @interface HashCreationResponse
+ * @interface HashResponse
  */
-export interface HashCreationResponse {
+export interface HashResponse {
     /**
      * additional metadata to the transaction
      * @type {PersistedTransaction}
-     * @memberof HashCreationResponse
+     * @memberof HashResponse
      */
     'metaData': PersistedTransaction;
     /**
      * transaction that was persisted.
-     * @type {HashCreationTransactionDto}
-     * @memberof HashCreationResponse
+     * @type {HashTransactionDto}
+     * @memberof HashResponse
      */
-    'transaction': HashCreationTransactionDto;
+    'transaction': HashTransactionDto;
 }
 /**
  * 
  * @export
- * @interface HashCreationTransactionBody
+ * @interface HashStructure
  */
-export interface HashCreationTransactionBody {
+export interface HashStructure {
+    /**
+     * unique identifier of a did
+     * @type {string}
+     * @memberof HashStructure
+     */
+    'id': string;
+    /**
+     * Did that controls this did.
+     * @type {ControllerManage}
+     * @memberof HashStructure
+     */
+    'controller'?: ControllerManage;
+    /**
+     * Used algorithm for the hash.
+     * @type {string}
+     * @memberof HashStructure
+     */
+    'algorithm': string;
+    /**
+     * if set to true it will revoke a signed hash.
+     * @type {boolean}
+     * @memberof HashStructure
+     */
+    'revoked'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface HashTransactionBody
+ */
+export interface HashTransactionBody {
     /**
      * Version number of the transaction.
      * @type {number}
-     * @memberof HashCreationTransactionBody
+     * @memberof HashTransactionBody
      */
     'version': number;
     /**
      * timestamp when transaction was created.
      * @type {string}
-     * @memberof HashCreationTransactionBody
+     * @memberof HashTransactionBody
      */
     'date': string;
     /**
      * 
-     * @type {TransactionType}
-     * @memberof HashCreationTransactionBody
+     * @type {HashStructure}
+     * @memberof HashTransactionBody
      */
-    'type': TransactionType;
-    /**
-     * 
-     * @type {TransactionHashValue}
-     * @memberof HashCreationTransactionBody
-     */
-    'value': TransactionHashValue;
+    'value': HashStructure;
 }
 /**
  * 
  * @export
- * @interface HashCreationTransactionDto
+ * @interface HashTransactionDto
  */
-export interface HashCreationTransactionDto {
+export interface HashTransactionDto {
     /**
      * Version number of the base transaction.
      * @type {number}
-     * @memberof HashCreationTransactionDto
+     * @memberof HashTransactionDto
      */
     'version': number;
     /**
      * 
-     * @type {HashCreationTransactionBody}
-     * @memberof HashCreationTransactionDto
+     * @type {HashTransactionBody}
+     * @memberof HashTransactionDto
      */
-    'body': HashCreationTransactionBody;
+    'body': HashTransactionBody;
     /**
      * 
      * @type {TransactionMetadata}
-     * @memberof HashCreationTransactionDto
+     * @memberof HashTransactionDto
      */
     'metadata': TransactionMetadata;
     /**
      * 
      * @type {SignatureInfo}
-     * @memberof HashCreationTransactionDto
-     */
-    'signature': SignatureInfo;
-}
-/**
- * 
- * @export
- * @interface HashRevocationResponse
- */
-export interface HashRevocationResponse {
-    /**
-     * additional metadata to the transaction
-     * @type {PersistedTransaction}
-     * @memberof HashRevocationResponse
-     */
-    'metaData': PersistedTransaction;
-    /**
-     * transaction that was persisted.
-     * @type {HashRevocationTransactionDto}
-     * @memberof HashRevocationResponse
-     */
-    'transaction': HashRevocationTransactionDto;
-}
-/**
- * 
- * @export
- * @interface HashRevocationTransactionBody
- */
-export interface HashRevocationTransactionBody {
-    /**
-     * Version number of the transaction.
-     * @type {number}
-     * @memberof HashRevocationTransactionBody
-     */
-    'version': number;
-    /**
-     * timestamp when transaction was created.
-     * @type {string}
-     * @memberof HashRevocationTransactionBody
-     */
-    'date': string;
-    /**
-     * 
-     * @type {TransactionType}
-     * @memberof HashRevocationTransactionBody
-     */
-    'type': TransactionType;
-    /**
-     * 
-     * @type {TransactionHashValue}
-     * @memberof HashRevocationTransactionBody
-     */
-    'value': TransactionHashValue;
-}
-/**
- * 
- * @export
- * @interface HashRevocationTransactionDto
- */
-export interface HashRevocationTransactionDto {
-    /**
-     * Version number of the base transaction.
-     * @type {number}
-     * @memberof HashRevocationTransactionDto
-     */
-    'version': number;
-    /**
-     * 
-     * @type {HashRevocationTransactionBody}
-     * @memberof HashRevocationTransactionDto
-     */
-    'body': HashRevocationTransactionBody;
-    /**
-     * 
-     * @type {TransactionMetadata}
-     * @memberof HashRevocationTransactionDto
-     */
-    'metadata': TransactionMetadata;
-    /**
-     * 
-     * @type {SignatureInfo}
-     * @memberof HashRevocationTransactionDto
+     * @memberof HashTransactionDto
      */
     'signature': SignatureInfo;
 }
@@ -682,10 +626,10 @@ export interface SchemaCreationResponse {
     'metaData': PersistedTransaction;
     /**
      * transaction that was persisted.
-     * @type {SchemaTransaction}
+     * @type {SchemaTransactionDto}
      * @memberof SchemaCreationResponse
      */
-    'transaction': SchemaTransaction;
+    'transaction': SchemaTransactionDto;
 }
 /**
  * 
@@ -711,37 +655,6 @@ export interface SchemaStructure {
      * @memberof SchemaStructure
      */
     'schema'?: string;
-}
-/**
- * 
- * @export
- * @interface SchemaTransaction
- */
-export interface SchemaTransaction {
-    /**
-     * Version number of the base transaction.
-     * @type {number}
-     * @memberof SchemaTransaction
-     */
-    'version': number;
-    /**
-     * 
-     * @type {SchemaTransactionBody}
-     * @memberof SchemaTransaction
-     */
-    'body': SchemaTransactionBody;
-    /**
-     * 
-     * @type {TransactionMetadata}
-     * @memberof SchemaTransaction
-     */
-    'metadata': TransactionMetadata;
-    /**
-     * 
-     * @type {SignatureInfo}
-     * @memberof SchemaTransaction
-     */
-    'signature': SignatureInfo;
 }
 /**
  * 
@@ -773,6 +686,37 @@ export interface SchemaTransactionBody {
      * @memberof SchemaTransactionBody
      */
     'value': SchemaStructure;
+}
+/**
+ * 
+ * @export
+ * @interface SchemaTransactionDto
+ */
+export interface SchemaTransactionDto {
+    /**
+     * Version number of the base transaction.
+     * @type {number}
+     * @memberof SchemaTransactionDto
+     */
+    'version': number;
+    /**
+     * 
+     * @type {SchemaTransactionBody}
+     * @memberof SchemaTransactionDto
+     */
+    'body': SchemaTransactionBody;
+    /**
+     * 
+     * @type {TransactionMetadata}
+     * @memberof SchemaTransactionDto
+     */
+    'metadata': TransactionMetadata;
+    /**
+     * 
+     * @type {SignatureInfo}
+     * @memberof SchemaTransactionDto
+     */
+    'signature': SignatureInfo;
 }
 /**
  * 
@@ -956,25 +900,6 @@ export interface TemplateTransactionDto {
 /**
  * 
  * @export
- * @interface TransactionHashValue
- */
-export interface TransactionHashValue {
-    /**
-     * hashBlock of the hash
-     * @type {string}
-     * @memberof TransactionHashValue
-     */
-    'hash': string;
-    /**
-     * Used algorithm for the hash.
-     * @type {string}
-     * @memberof TransactionHashValue
-     */
-    'algorithm': string;
-}
-/**
- * 
- * @export
  * @interface TransactionMetadata
  */
 export interface TransactionMetadata {
@@ -992,8 +917,7 @@ export interface TransactionMetadata {
  */
 
 export enum TransactionType {
-    HashCreation = 'HashCreation',
-    HashRevocation = 'HashRevocation',
+    Hash = 'Hash',
     Did = 'Did',
     Schema = 'Schema',
     Template = 'Template'
@@ -1457,13 +1381,13 @@ export const HashGatewayApiAxiosParamCreator = function (configuration?: Configu
         /**
          * 
          * @summary Adds new hash to the chain.
-         * @param {HashCreationTransactionDto} hashCreationTransactionDto 
+         * @param {HashTransactionDto} hashTransactionDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        gatewayHashControllerCreate: async (hashCreationTransactionDto: HashCreationTransactionDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'hashCreationTransactionDto' is not null or undefined
-            assertParamExists('gatewayHashControllerCreate', 'hashCreationTransactionDto', hashCreationTransactionDto)
+        gatewayHashControllerCreate: async (hashTransactionDto: HashTransactionDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'hashTransactionDto' is not null or undefined
+            assertParamExists('gatewayHashControllerCreate', 'hashTransactionDto', hashTransactionDto)
             const localVarPath = `/hash/create`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1483,43 +1407,7 @@ export const HashGatewayApiAxiosParamCreator = function (configuration?: Configu
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(hashCreationTransactionDto, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Revokes a hash.
-         * @param {HashRevocationTransactionDto} hashRevocationTransactionDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        gatewayHashControllerRevoke: async (hashRevocationTransactionDto: HashRevocationTransactionDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'hashRevocationTransactionDto' is not null or undefined
-            assertParamExists('gatewayHashControllerRevoke', 'hashRevocationTransactionDto', hashRevocationTransactionDto)
-            const localVarPath = `/hash/revoke`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(hashRevocationTransactionDto, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(hashTransactionDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1539,23 +1427,12 @@ export const HashGatewayApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Adds new hash to the chain.
-         * @param {HashCreationTransactionDto} hashCreationTransactionDto 
+         * @param {HashTransactionDto} hashTransactionDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async gatewayHashControllerCreate(hashCreationTransactionDto: HashCreationTransactionDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HashCreationResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.gatewayHashControllerCreate(hashCreationTransactionDto, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Revokes a hash.
-         * @param {HashRevocationTransactionDto} hashRevocationTransactionDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async gatewayHashControllerRevoke(hashRevocationTransactionDto: HashRevocationTransactionDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HashRevocationResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.gatewayHashControllerRevoke(hashRevocationTransactionDto, options);
+        async gatewayHashControllerCreate(hashTransactionDto: HashTransactionDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HashResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.gatewayHashControllerCreate(hashTransactionDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1571,22 +1448,12 @@ export const HashGatewayApiFactory = function (configuration?: Configuration, ba
         /**
          * 
          * @summary Adds new hash to the chain.
-         * @param {HashCreationTransactionDto} hashCreationTransactionDto 
+         * @param {HashTransactionDto} hashTransactionDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        gatewayHashControllerCreate(hashCreationTransactionDto: HashCreationTransactionDto, options?: any): AxiosPromise<HashCreationResponse> {
-            return localVarFp.gatewayHashControllerCreate(hashCreationTransactionDto, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Revokes a hash.
-         * @param {HashRevocationTransactionDto} hashRevocationTransactionDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        gatewayHashControllerRevoke(hashRevocationTransactionDto: HashRevocationTransactionDto, options?: any): AxiosPromise<HashRevocationResponse> {
-            return localVarFp.gatewayHashControllerRevoke(hashRevocationTransactionDto, options).then((request) => request(axios, basePath));
+        gatewayHashControllerCreate(hashTransactionDto: HashTransactionDto, options?: any): AxiosPromise<HashResponse> {
+            return localVarFp.gatewayHashControllerCreate(hashTransactionDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1601,25 +1468,13 @@ export class HashGatewayApi extends BaseAPI {
     /**
      * 
      * @summary Adds new hash to the chain.
-     * @param {HashCreationTransactionDto} hashCreationTransactionDto 
+     * @param {HashTransactionDto} hashTransactionDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof HashGatewayApi
      */
-    public gatewayHashControllerCreate(hashCreationTransactionDto: HashCreationTransactionDto, options?: AxiosRequestConfig) {
-        return HashGatewayApiFp(this.configuration).gatewayHashControllerCreate(hashCreationTransactionDto, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Revokes a hash.
-     * @param {HashRevocationTransactionDto} hashRevocationTransactionDto 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof HashGatewayApi
-     */
-    public gatewayHashControllerRevoke(hashRevocationTransactionDto: HashRevocationTransactionDto, options?: AxiosRequestConfig) {
-        return HashGatewayApiFp(this.configuration).gatewayHashControllerRevoke(hashRevocationTransactionDto, options).then((request) => request(this.axios, this.basePath));
+    public gatewayHashControllerCreate(hashTransactionDto: HashTransactionDto, options?: AxiosRequestConfig) {
+        return HashGatewayApiFp(this.configuration).gatewayHashControllerCreate(hashTransactionDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -1932,13 +1787,13 @@ export const SchemaGatewayApiAxiosParamCreator = function (configuration?: Confi
         /**
          * 
          * @summary Adds new schema to the chain.
-         * @param {SchemaTransaction} schemaTransaction 
+         * @param {SchemaTransactionDto} schemaTransactionDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        gatewaySchemaControllerCreate: async (schemaTransaction: SchemaTransaction, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'schemaTransaction' is not null or undefined
-            assertParamExists('gatewaySchemaControllerCreate', 'schemaTransaction', schemaTransaction)
+        gatewaySchemaControllerCreate: async (schemaTransactionDto: SchemaTransactionDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'schemaTransactionDto' is not null or undefined
+            assertParamExists('gatewaySchemaControllerCreate', 'schemaTransactionDto', schemaTransactionDto)
             const localVarPath = `/schema`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1958,7 +1813,7 @@ export const SchemaGatewayApiAxiosParamCreator = function (configuration?: Confi
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(schemaTransaction, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(schemaTransactionDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1978,12 +1833,12 @@ export const SchemaGatewayApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Adds new schema to the chain.
-         * @param {SchemaTransaction} schemaTransaction 
+         * @param {SchemaTransactionDto} schemaTransactionDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async gatewaySchemaControllerCreate(schemaTransaction: SchemaTransaction, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SchemaCreationResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.gatewaySchemaControllerCreate(schemaTransaction, options);
+        async gatewaySchemaControllerCreate(schemaTransactionDto: SchemaTransactionDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SchemaCreationResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.gatewaySchemaControllerCreate(schemaTransactionDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1999,12 +1854,12 @@ export const SchemaGatewayApiFactory = function (configuration?: Configuration, 
         /**
          * 
          * @summary Adds new schema to the chain.
-         * @param {SchemaTransaction} schemaTransaction 
+         * @param {SchemaTransactionDto} schemaTransactionDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        gatewaySchemaControllerCreate(schemaTransaction: SchemaTransaction, options?: any): AxiosPromise<SchemaCreationResponse> {
-            return localVarFp.gatewaySchemaControllerCreate(schemaTransaction, options).then((request) => request(axios, basePath));
+        gatewaySchemaControllerCreate(schemaTransactionDto: SchemaTransactionDto, options?: any): AxiosPromise<SchemaCreationResponse> {
+            return localVarFp.gatewaySchemaControllerCreate(schemaTransactionDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2019,13 +1874,13 @@ export class SchemaGatewayApi extends BaseAPI {
     /**
      * 
      * @summary Adds new schema to the chain.
-     * @param {SchemaTransaction} schemaTransaction 
+     * @param {SchemaTransactionDto} schemaTransactionDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SchemaGatewayApi
      */
-    public gatewaySchemaControllerCreate(schemaTransaction: SchemaTransaction, options?: AxiosRequestConfig) {
-        return SchemaGatewayApiFp(this.configuration).gatewaySchemaControllerCreate(schemaTransaction, options).then((request) => request(this.axios, this.basePath));
+    public gatewaySchemaControllerCreate(schemaTransactionDto: SchemaTransactionDto, options?: AxiosRequestConfig) {
+        return SchemaGatewayApiFp(this.configuration).gatewaySchemaControllerCreate(schemaTransactionDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -9,7 +9,7 @@ import {
   SchemaCreationResponse,
   SchemaGatewayApi,
   SchemaStructure,
-  SchemaTransaction,
+  SchemaTransactionDto,
   SignatureInfoTypeEnum,
   TransactionType,
 } from '@trustcerts/gateway';
@@ -24,7 +24,7 @@ export class SchemaIssuerService extends IssuerService {
 
   async persistSchema(value: SchemaStructure): Promise<SchemaCreationResponse> {
     // TODO outsource this to the issuer service since the transaction schema of dids are equal
-    const transaction: SchemaTransaction = {
+    const transaction: SchemaTransactionDto = {
       version: 1,
       body: {
         date: new Date().toISOString(),

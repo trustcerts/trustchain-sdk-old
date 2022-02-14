@@ -1,6 +1,6 @@
 import { Did } from '@trustcerts/core';
 import { SchemaDocResponse, SchemaStructure } from '@trustcerts/observer';
-import { SchemaTransaction } from '../../core/node_modules/@trustcerts/gateway/dist';
+import { SchemaTransactionDto } from '@trustcerts/gateway';
 import { IDidSchemaDocument } from './did-schema-document';
 
 export class DidSchema extends Did {
@@ -14,7 +14,7 @@ export class DidSchema extends Did {
     // TODO use method from Identifier.method
   }
 
-  parseTransaction(_transactions: SchemaTransaction[]): void {
+  parseTransaction(_transactions: SchemaTransactionDto[]): void {
     throw new Error('Method not implemented.');
   }
   parseDocument(_document: SchemaDocResponse): void {

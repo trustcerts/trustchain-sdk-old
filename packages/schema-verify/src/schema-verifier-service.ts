@@ -5,6 +5,7 @@ import {
   SchemaObserverApi,
   SchemaTransaction,
 } from '@trustcerts/observer';
+import {} from '@trustcerts/gateway';
 
 export class SchemaVerifierService extends VerifierService {
   protected apis: SchemaObserverApi[];

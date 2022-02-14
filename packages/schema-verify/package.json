@@ -53,6 +53,7 @@
   },
   "dependencies": {
     "@trustcerts/core": "^0.4.9",
+    "@trustcerts/gateway": "^0.4.8",
     "@trustcerts/observer": "^0.4.8"
   }
 }
