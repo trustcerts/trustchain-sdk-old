@@ -88,7 +88,7 @@ export class SignatureVerifierService extends VerifierService {
       type: 'HashCreation',
       value: {
         algorithm: hash.hashAlgorithm,
-        hash: hash.hash,
+        hash: hash.id,
       },
     };
     return JSON.stringify(sortKeys(content));

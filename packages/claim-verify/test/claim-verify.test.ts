@@ -106,7 +106,11 @@ describe('claim', () => {
       verifier,
       'localhost'
     );
-    await new Promise((resolve)=> setTimeout(()=>{resolve(true)} , 2000));
+    await new Promise(resolve =>
+      setTimeout(() => {
+        resolve(true);
+      }, 2000)
+    );
     const claimLoaded = await service.get(
       claim
         .getUrl()

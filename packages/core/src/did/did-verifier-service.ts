@@ -2,8 +2,8 @@ import { DidManagerConfigValues } from './DidManagerConfigValues';
 import { VerifierService } from '../verifierService';
 import {
   DidObserverApi,
-  DidTransaction,
-  DocResponse,
+  IdDocResponse,
+  DidIdTransaction,
 } from '@trustcerts/observer';
 import { sortKeys } from '../crypto/hash';
 import { verifySignature } from '../crypto/sign';
@@ -23,8 +23,8 @@ export class DidVerifierService extends VerifierService {
   async getDidDocument(
     id: string,
     config: DidManagerConfigValues
-  ): Promise<DocResponse> {
-    const responses: { amount: number; value: DocResponse }[] = [];
+  ): Promise<IdDocResponse> {
+    const responses: { amount: number; value: IdDocResponse }[] = [];
     for (const api of this.apis) {
       const res = await api.observerDidControllerGetDoc(
         id,
@@ -57,10 +57,10 @@ export class DidVerifierService extends VerifierService {
     id: string,
     validate = true,
     time: string
-  ): Promise<DidTransaction[]> {
+  ): Promise<DidIdTransaction[]> {
     const responses: {
       amount: number;
-      value: DidTransaction[];
+      value: DidIdTransaction[];
     }[] = [];
     for (const api of this.apis) {
       const res = await api.observerDidControllerGetTransactions(
@@ -93,7 +93,7 @@ export class DidVerifierService extends VerifierService {
   }
 
   private async validateDoc(
-    document: DocResponse,
+    document: IdDocResponse,
     config: DidManagerConfigValues
   ) {
     //TODO implement validation of a document with recursive approach
@@ -128,7 +128,7 @@ export class DidVerifierService extends VerifierService {
    * @param transaction
    * @private
    */
-  private async validate(transaction: DidTransaction) {
+  private async validate(transaction: DidIdTransaction) {
     const key: JsonWebKey = await this.getKey(transaction);
     const value = JSON.stringify(
       sortKeys({
@@ -146,7 +146,7 @@ export class DidVerifierService extends VerifierService {
     }
   }
 
-  private async getKey(transaction: DidTransaction): Promise<JsonWebKey> {
+  private async getKey(transaction: DidIdTransaction): Promise<JsonWebKey> {
     if (
       transaction.signature[0].identifier.split('#')[0] ===
       transaction.values.id

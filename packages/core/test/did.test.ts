@@ -64,7 +64,11 @@ describe('test local config service', () => {
       cryptoService
     );
     await DidIdRegister.save(did, client);
+<<<<<<< HEAD
     await new Promise((resolve)=> setTimeout(()=>{resolve(true)} , 2000));
+=======
+    await new Promise(res => setTimeout(res, 2000));
+>>>>>>> bec3b89 (fix: tmp push)
     const did1 = await DidIdResolver.load(did.id);
     expect(did.getDocument()).toEqual(did1.getDocument());
   }, 7000);

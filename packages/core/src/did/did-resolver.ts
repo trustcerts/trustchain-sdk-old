@@ -27,8 +27,8 @@ export class DidResolver {
       if (config.doc) {
         const document = await verifier
           .getDidDocument(did.id, config)
-          .catch(() => {
-            throw new Error(`${did.id} not found`);
+          .catch(err => {
+            throw new Error(`${did.id} not found: ${err}`);
           });
         did.parseDocument(document);
       } else {

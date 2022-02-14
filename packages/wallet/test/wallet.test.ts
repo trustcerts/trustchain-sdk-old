@@ -29,7 +29,6 @@ describe('wallet', () => {
   it('add key', async () => {
     const walletService = new WalletService(config);
     await walletService.init();
-
     // Add a key for each SignatureType
     for (const signatureType of Object.values(SignatureType)) {
       // Add a key for each verification relationship
