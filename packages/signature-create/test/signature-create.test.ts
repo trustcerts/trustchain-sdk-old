@@ -55,6 +55,23 @@ describe('test signature service', () => {
     expect(transaction).toBeDefined();
   }, 7000);
 
+  it('sign string double', async () => {
+    const client = new SignatureIssuerService(
+      testValues.network.gateways,
+      cryptoService
+    );
+    const value = getRandomValues(new Uint8Array(200)).toString();
+    const transaction = await client
+      .signString(value)
+      .catch(err => logger.error(err));
+    expect(transaction).toBeDefined();
+    await client
+      .signString(value)
+      .catch(err =>
+        expect(err.message.includes('hash already signed')).toBeTruthy()
+      );
+  }, 7000);
+
   it('sign file', async () => {
     const client = new SignatureIssuerService(
       testValues.network.gateways,
