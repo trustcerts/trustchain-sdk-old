@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.10](https://github.com/trustcerts/sdk/compare/v0.4.7...v0.4.10) (2022-02-15)
+
+
+### Bug Fixes
+
+* 🐛 add cli as dev dep ([385afca](https://github.com/trustcerts/sdk/commit/385afca6d4258661b6f56209e9c262952da087e6))
+* 🐛 sort checks ([d107f23](https://github.com/trustcerts/sdk/commit/d107f23c305b1767e0441bc91522c22adf0a43df))
+* correct builds ([79eb644](https://github.com/trustcerts/sdk/commit/79eb644c43058bb47af4000db6ec02d7619c0ba1))
+* fix tests ([2cb94a9](https://github.com/trustcerts/sdk/commit/2cb94a9279225dba3f235866c272c70abe5da52e))
+* make load function abstract ([0132627](https://github.com/trustcerts/sdk/commit/013262760b8fc233f3fda0bb1e39b5e361384461))
+* refactor to dids ([e151507](https://github.com/trustcerts/sdk/commit/e15150757f0f090cf76f33f2ef3fecdc4b43baac))
+* refactoring for did update ([029f98f](https://github.com/trustcerts/sdk/commit/029f98f8da2577bc1dce6224b8068a3d7ae624f5))
+* remove local observer usage ([fde9904](https://github.com/trustcerts/sdk/commit/fde99045923b3922cda9f56f3b279f4dbe999f8c))
+* remove unused import ([d2c0d8a](https://github.com/trustcerts/sdk/commit/d2c0d8abf4f7120025fc8280195e3a2a1e95b653))
+* set correct dependency versions ([eca9fe6](https://github.com/trustcerts/sdk/commit/eca9fe6943e0c5c14e3263af86df6efb116183a4))
+* skipping test since its a breaking change ([0d9417d](https://github.com/trustcerts/sdk/commit/0d9417dfa06b52205b02593dea11bf89eef0c24c))
+* tmp push ([e35999f](https://github.com/trustcerts/sdk/commit/e35999faf5247374f0f4c7378d96ba8408ccc750))
+* update deps ([0ad6156](https://github.com/trustcerts/sdk/commit/0ad615683ea95f66015e6fb18a27222bdf86d4a3))
+* update deps ([3d53c7b](https://github.com/trustcerts/sdk/commit/3d53c7b9846cdfcc43cb32fef8e7829698de99ff))
+* update template test ([af97774](https://github.com/trustcerts/sdk/commit/af97774432e4f77968f4ac69555cbcaa337f8763))
+
+
+
+
+
 ## [0.4.7](https://github.com/trustcerts/sdk/compare/v0.4.6...v0.4.7) (2022-01-20)
 
 **Note:** Version bump only for package root

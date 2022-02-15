@@ -1,5 +1,5 @@
 {
-  "version": "0.4.9",
+  "version": "0.4.10",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -73,9 +73,9 @@
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^7.0.8",
-    "@trustcerts/config-local": "^0.4.9",
-    "@trustcerts/signature-create": "^0.4.9",
-    "@trustcerts/wallet": "^0.4.9",
+    "@trustcerts/config-local": "^0.4.10",
+    "@trustcerts/signature-create": "^0.4.10",
+    "@trustcerts/wallet": "^0.4.10",
     "husky": "^7.0.4",
     "size-limit": "^7.0.8",
     "tsdx": "^0.14.1",
@@ -83,9 +83,9 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@trustcerts/core": "^0.4.9",
-    "@trustcerts/gateway": "^0.4.8",
-    "@trustcerts/observer": "^0.4.8"
+    "@trustcerts/core": "^0.4.10",
+    "@trustcerts/gateway": "^0.4.10",
+    "@trustcerts/observer": "^0.4.10"
   },
   "gitHead": "9cc3c3d078fe46729a72961bc6bd241667d43309"
 }
