@@ -3,7 +3,7 @@ import {
   AxiosError,
   SchemaDocResponse,
   SchemaObserverApi,
-  SchemaTransaction,
+  DidSchemaTransaction,
 } from '@trustcerts/observer';
 import {} from '@trustcerts/gateway';
 
@@ -19,7 +19,7 @@ export class SchemaVerifierService extends VerifierService {
 
   async getDidDocument(
     id: string,
-    config: DidManagerConfigValues<SchemaTransaction>
+    config: DidManagerConfigValues<DidSchemaTransaction>
   ): Promise<SchemaDocResponse> {
     for (const api of this.apis) {
       await api

@@ -1,18 +1,21 @@
-import { DidManagerConfigValues } from './DidManagerConfigValues';
-import { VerifierService } from '../verifierService';
+import { DidManagerConfigValues } from '../DidManagerConfigValues';
+import { VerifierService } from '../../verifierService';
 import {
   DidObserverApi,
   DidIdTransaction,
   IdDocResponse,
   AxiosError,
 } from '@trustcerts/observer';
-import { sortKeys } from '../crypto/hash';
-import { verifySignature } from '../crypto/sign';
-import { importKey } from '../crypto/key';
-import { DidIdResolver } from './id/did-id-resolver';
+import { sortKeys } from '../../crypto/hash';
+import { verifySignature } from '../../crypto/sign';
+import { importKey } from '../../crypto/key';
+import { DidIdResolver } from './did-id-resolver';
+import { logger } from '../../logger';
 
-export class DidVerifierService extends VerifierService {
+export class DidIdVerifierService extends VerifierService {
   protected apis: DidObserverApi[];
+
+  private resolver = new DidIdResolver();
 
   constructor(protected observerUrls: string[], equalMin = 2) {
     super(observerUrls, equalMin);
@@ -32,30 +35,31 @@ export class DidVerifierService extends VerifierService {
     id: string,
     config: DidManagerConfigValues<DidIdTransaction>
   ): Promise<IdDocResponse> {
-    for (const api of this.apis) {
-      await api
-        .observerDidControllerGetDoc(id, config.time, undefined, {
-          timeout: 2000,
-        })
-        .then(
-          async res => {
-            console.log('got res');
-            await this.validateDoc(res.data, config);
-            Promise.resolve(res.data);
-          },
-          (err: AxiosError) => {
-            console.log('error');
-            console.log(err);
-            // TODO evaluate the error
-            // got a response, validate it
-            if (err.response) {
-            } else {
-              // got no response maybe a timeout
+    return new Promise(async (resolve, reject) => {
+      for (const api of this.apis) {
+        await api
+          .observerDidControllerGetDoc(id, config.time, undefined, {
+            timeout: this.timeout,
+          })
+          .then(
+            async res =>
+              await this.validateDoc(res.data, config).then(
+                () => resolve(res.data),
+                err => logger.warn(err)
+              ),
+            (err: AxiosError) => {
+              logger.log(err);
+              // TODO evaluate the error
+              // got a response, validate it
+              if (err.response) {
+              } else {
+                // got no response maybe a timeout
+              }
             }
-          }
-        );
-    }
-    return Promise.reject('no transactions found');
+          );
+      }
+      reject('no did doc found');
+    });
   }
 
   /**
@@ -71,27 +75,25 @@ export class DidVerifierService extends VerifierService {
     validate = true,
     time: string
   ): Promise<DidIdTransaction[]> {
-    const responses: {
-      amount: number;
-      value: DidIdTransaction[];
-    }[] = [];
-    for (const api of this.apis) {
-      const res = await api.observerDidControllerGetTransactions(
-        id,
-        time,
-        undefined,
-        { timeout: timeout }
-      );
-      if (res.data.length > 0) {
-        if (validate) {
-          for (const transaction of res.data) {
-            await this.validate(transaction);
-          }
-        }
-        return Promise.resolve(res.data);
+    return new Promise(async (resolve, reject) => {
+      for (const api of this.apis) {
+        await api
+          .observerDidControllerGetTransactions(id, time, undefined, {
+            timeout: this.timeout,
+          })
+          .then(async res => {
+            if (validate) {
+              for (const transaction of res.data) {
+                await this.validateTransaction(transaction).catch(err =>
+                  logger.warn(err)
+                );
+              }
+              resolve(res.data);
+            }
+          });
       }
-    }
-    return Promise.reject('no transactions found');
+      reject('no transactions founds');
+    });
   }
 
   private async validateDoc(
@@ -99,15 +101,15 @@ export class DidVerifierService extends VerifierService {
     config: DidManagerConfigValues<DidIdTransaction>
   ) {
     //TODO implement validation of a document with recursive approach
-    const issuer = document.signatures[0].identifier;
+    // TODO validate if signatureinfo is better than signaturedto to store more information
+    const issuer = document.signatures[0].values[0].identifier;
     if (document.document.id === issuer.split('#')[0]) {
       // TODO instead of self certified use the genesis block to build the chain of trust
     } else {
       if (document.metaData) {
         config.time = document.metaData.updated ?? document.metaData.created;
       }
-      const resolver = new DidIdResolver();
-      const did = await resolver.load(issuer, config);
+      const did = await this.resolver.load(issuer, config);
       const key = did.getKey(issuer).publicKeyJwk;
       const value = JSON.stringify(
         sortKeys({
@@ -115,9 +117,11 @@ export class DidVerifierService extends VerifierService {
           version: document.metaData.versionId,
         })
       );
+      console.log(value);
+      // TODO validate all signatures
       const valid = await verifySignature(
         value,
-        document.signatures[0].signature,
+        document.signatures[0].values[0].signature,
         await importKey(key, 'jwk', ['verify'])
       );
       if (!valid) {
@@ -131,7 +135,7 @@ export class DidVerifierService extends VerifierService {
    * @param transaction
    * @private
    */
-  private async validate(transaction: DidIdTransaction) {
+  private async validateTransaction(transaction: DidIdTransaction) {
     const key: JsonWebKey = await this.getKey(transaction);
     const value = JSON.stringify(
       sortKeys({
@@ -172,8 +176,7 @@ export class DidVerifierService extends VerifierService {
       }
     } else {
       // TODO design how the system will load and validate the information. Since newer transactions are based on older a client can not validate before having all information.
-      const resolver = new DidIdResolver();
-      const did = await resolver.load(transaction.signature[0].identifier);
+      const did = await this.resolver.load(transaction.signature[0].identifier);
       return did.getKey(transaction.signature[0].identifier).publicKeyJwk;
     }
   }

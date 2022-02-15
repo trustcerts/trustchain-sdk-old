@@ -3,7 +3,7 @@ export * from './helpers';
 export * from './logger';
 export * from './config';
 
-export * from './did/did-verifier-service';
+export * from './did/id/did-id-verifier-service';
 export * from './did/did-resolver';
 export * from './did/did-document';
 export * from './did/identity';

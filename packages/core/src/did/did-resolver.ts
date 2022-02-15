@@ -1,7 +1,7 @@
 import { DidCachedService } from './cache/did-cached-service';
 import { Did } from './did';
-import { DidVerifierService } from './did-verifier-service';
-import { DidManagerConfigValues } from './id/DidManagerConfigValues';
+import { DidIdVerifierService } from './id/did-id-verifier-service';
+import { DidManagerConfigValues } from './DidManagerConfigValues';
 import { InitDidManagerConfigValues } from './InitDidManagerConfigValues';
 import { DidNetworks } from './network/did-networks';
 import { Network } from './network/network';
@@ -25,7 +25,7 @@ export abstract class DidResolver {
       if (!network) {
         throw new Error(`no networks found for ${did.id}`);
       }
-      const verifier = new DidVerifierService(network.observers);
+      const verifier = new DidIdVerifierService(network.observers);
       if (config.doc) {
         const document = await verifier
           .getDidDocument(did.id, config)

@@ -1,5 +1,6 @@
 import { IDidDocument } from './did-document';
 import { Management } from './management';
+import { ControllerManage, DidTransaction } from '@trustcerts/observer';
 
 export abstract class Did {
   public version = 0;
@@ -74,5 +75,39 @@ export abstract class Did {
     }
 
     return changes;
+  }
+
+  /**
+   * parse the controllers
+   */
+  protected parseTransactionControllers(transaction: DidTransaction) {
+    if (transaction.values.controller?.remove) {
+      transaction.values.controller.remove.forEach(id =>
+        this.controller.current.delete(id)
+      );
+    }
+    if (transaction.values.controller?.add) {
+      transaction.values.controller.add.forEach(controller =>
+        this.controller.current.set(controller, controller)
+      );
+    }
+  }
+
+  /**
+   * Get the changes for the controllers.
+   */
+  protected getChangesController(): ControllerManage | undefined {
+    if (this.controller.add.size > 0 && this.controller.remove.size > 0) return;
+
+    return {
+      add:
+        this.controller.add.size > 0
+          ? Array.from(this.controller.add.values())
+          : undefined,
+      remove:
+        this.controller.remove.size > 0
+          ? Array.from(this.controller.remove.values())
+          : undefined,
+    };
   }
 }

@@ -74,10 +74,10 @@
   "devDependencies": {
     "@size-limit/preset-small-lib": "^7.0.5",
     "@trustcerts/claim-create": "^0.4.7",
-    "@trustcerts/config-local": "^0.4.7",
-    "@trustcerts/gateway": "^0.4.6",
-    "@trustcerts/signature-create": "^0.4.7",
-    "@trustcerts/wallet": "^0.4.7",
+    "@trustcerts/config-local": "^0.4.9",
+    "@trustcerts/gateway": "^0.4.8",
+    "@trustcerts/signature-create": "^0.4.9",
+    "@trustcerts/wallet": "^0.4.9",
     "@types/mustache": "^4.1.2",
     "@types/node": "^17.0.8",
     "@types/protobufjs": "^6.0.0",
@@ -89,9 +89,9 @@
     "typescript": "^4.5.4"
   },
   "dependencies": {
-    "@trustcerts/core": "^0.4.7",
-    "@trustcerts/observer": "^0.4.6",
-    "@trustcerts/signature-verify": "^0.4.7",
+    "@trustcerts/core": "^0.4.9",
+    "@trustcerts/observer": "^0.4.8",
+    "@trustcerts/signature-verify": "^0.4.9",
     "@trustcerts/template-create": "^0.4.7",
     "@trustcerts/template-verify": "^0.4.7",
     "ajv": "^8.8.2",

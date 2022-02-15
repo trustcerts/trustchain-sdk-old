@@ -9,13 +9,12 @@ import {
   VerifierService,
   DidManagerConfigValues,
 } from '@trustcerts/core';
-import { HashTransactionDto } from '@trustcerts/core/node_modules/@trustcerts/gateway';
 import {
   AxiosError,
   DidHashDocument,
   HashDocResponse,
   HashObserverApi,
-  HashTransaction,
+  DidHashTransaction,
   TransactionType,
 } from '@trustcerts/observer';
 
@@ -31,7 +30,7 @@ export class SignatureVerifierService extends VerifierService {
 
   public async verifyString(
     value: string,
-    config: DidManagerConfigValues<HashTransactionDto>
+    config: DidManagerConfigValues<DidHashTransaction>
   ): Promise<DidHashDocument> {
     const hash = await getHash(value);
     return this.verify(hash, config);
@@ -39,7 +38,7 @@ export class SignatureVerifierService extends VerifierService {
 
   public async verifyFile(
     file: string | File,
-    config: DidManagerConfigValues<HashTransactionDto>
+    config: DidManagerConfigValues<DidHashTransaction>
   ): Promise<DidHashDocument> {
     const hash = await getHashFromFile(file);
     return this.verify(hash, config);
@@ -47,24 +46,22 @@ export class SignatureVerifierService extends VerifierService {
 
   public async verify(
     checksum: string,
-    config: DidManagerConfigValues<HashTransactionDto>
+    config: DidManagerConfigValues<DidHashTransaction>
   ): Promise<DidHashDocument> {
     const hashDocument = await this.getDidDocument(checksum, config);
-    const usedKey = hashDocument.signatures[0].identifier;
-    const time = hashDocument.block.imported
-      ? hashDocument.block.createdAt
-      : hashDocument.createdAt;
+    const usedKey = hashDocument.signatures[0].values[0].identifier;
+    const time = hashDocument.metaData.created;
     const resolver = new DidIdResolver();
     const did = await resolver.load(usedKey, { time });
     const key = did.getKey(usedKey);
     if (
       await verifySignature(
         SignatureVerifierService.hash(hashDocument),
-        hashDocument.signature[0].signature,
+        hashDocument.signatures[0].values[0].signature,
         await importKey(key.publicKeyJwk, 'jwk', ['verify'])
       )
     ) {
-      return Promise.resolve(hashDocument);
+      return Promise.resolve(hashDocument.document);
     } else {
       return Promise.reject('signature does not match');
     }
@@ -72,7 +69,7 @@ export class SignatureVerifierService extends VerifierService {
 
   async getDidDocument(
     id: string,
-    config: DidManagerConfigValues<HashTransactionDto>
+    config: DidManagerConfigValues<DidHashTransaction>
   ): Promise<HashDocResponse> {
     for (const api of this.apis) {
       await api
@@ -94,14 +91,13 @@ export class SignatureVerifierService extends VerifierService {
     return Promise.reject('no transactions found');
   }
 
-  private static hash(hash: Hash): string {
+  private static hash(hash: HashDocResponse): string {
     const content: SignatureContent = {
-      date: hash.createdAt,
-      // TODO TransactionType.HashCreation,
+      date: hash.metaData.created,
       type: TransactionType.Hash,
       value: {
-        algorithm: hash.hashAlgorithm,
-        hash: hash.id,
+        algorithm: hash.document.algorithm,
+        hash: hash.document.id,
       },
     };
     return JSON.stringify(sortKeys(content));

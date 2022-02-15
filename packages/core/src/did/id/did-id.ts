@@ -225,6 +225,8 @@ export class DidId extends Did {
       id: this.id,
     };
 
+    changes.controller = this.getChangesController();
+
     if (this.role.add.size > 0) {
       changes.role = {
         add: Array.from(this.role.add.values()),
@@ -337,17 +339,7 @@ export class DidId extends Did {
       this.version++;
       // validate signature of transaction
       // parse it into the existing document
-
-      if (transaction.values.controller?.remove) {
-        transaction.values.controller.remove.forEach(id =>
-          this.controller.current.delete(id)
-        );
-      }
-      if (transaction.values.controller?.add) {
-        transaction.values.controller.add.forEach(controller =>
-          this.controller.current.set(controller, controller)
-        );
-      }
+      this.parseTransactionControllers(transaction);
 
       if (transaction.values.service?.remove) {
         transaction.values.service.remove.forEach(id =>

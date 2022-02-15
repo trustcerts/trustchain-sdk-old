@@ -36,7 +36,7 @@ export class Identifier {
    * @param type
    * @param id
    */
-  public static generate(type: string, id: string): string {
+  public static generate(type: string, id?: string): string {
     id = id ?? encode(getRandomValues()).slice(0, 22);
     return `did:${this.method}:${this.tcNamespace}:${
       type ? type + ':' : ''

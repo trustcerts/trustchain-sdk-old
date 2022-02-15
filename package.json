@@ -24,7 +24,6 @@
     "url": "git@github.com:trustcerts/sdk.git"
   },
   "devDependencies": {
-    "@trustcerts/cli": "^1.0.18",
     "husky": "^7.0.2",
     "lerna": "^4.0.0",
     "lerna-update-wizard": "^1.1.0"

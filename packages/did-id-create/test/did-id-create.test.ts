@@ -19,17 +19,20 @@ describe('test local config service', () => {
 
   let cryptoService: CryptoService;
 
+  let didIdResolver: DidIdResolver;
+
   const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
 
   beforeAll(async () => {
-    DidNetworks.add('tc:dev', testValues.network);
-    Identifier.setNetwork('tc:dev');
+    DidNetworks.add(testValues.network.namespace, testValues.network);
+    Identifier.setNetwork(testValues.network.namespace);
     config = new LocalConfigService(testValues.filePath);
     await config.init(testValues.configValues);
 
     const wallet = new WalletService(config);
     await wallet.init();
     cryptoService = new CryptoService();
+    didIdResolver = new DidIdResolver();
     let key = (
       await wallet.findOrCreate(
         VerificationRelationshipType.assertionMethod,
@@ -65,7 +68,7 @@ describe('test local config service', () => {
         resolve(true);
       }, 2000)
     );
-    const did1 = await DidIdResolver.load(did.id);
+    const did1 = await didIdResolver.load(did.id);
     expect(did1).toEqual(did);
   }, 7000);
 

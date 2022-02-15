@@ -73,12 +73,12 @@
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^7.0.5",
-    "@trustcerts/config-local": "^0.4.7",
-    "@trustcerts/gateway": "^0.4.6",
-    "@trustcerts/signature-verify": "^0.4.7",
+    "@trustcerts/config-local": "^0.4.9",
+    "@trustcerts/gateway": "^0.4.8",
+    "@trustcerts/signature-verify": "^0.4.9",
     "@trustcerts/template-create": "^0.4.7",
     "@trustcerts/template-verify": "^0.4.7",
-    "@trustcerts/wallet": "^0.4.7",
+    "@trustcerts/wallet": "^0.4.9",
     "husky": "^7.0.4",
     "size-limit": "^7.0.5",
     "tsdx": "^0.14.1",
@@ -87,9 +87,9 @@
   },
   "dependencies": {
     "@trustcerts/claim-verify": "^0.4.7",
-    "@trustcerts/core": "^0.4.7",
-    "@trustcerts/observer": "^0.4.6",
-    "@trustcerts/signature-create": "^0.4.7"
+    "@trustcerts/core": "^0.4.9",
+    "@trustcerts/observer": "^0.4.8",
+    "@trustcerts/signature-create": "^0.4.9"
   },
   "gitHead": "5b6d6c645f256b5b4d8ba37343f091e6fdcda803"
 }

@@ -23,9 +23,8 @@ describe('test did', () => {
   const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
 
   beforeAll(async () => {
-    // console.log(bar());
-    DidNetworks.add('tc:dev', testValues.network);
-    Identifier.setNetwork('tc:dev');
+    DidNetworks.add(testValues.network.namespace, testValues.network);
+    Identifier.setNetwork(testValues.network.namespace);
     config = new LocalConfigService(testValues.filePath);
     await config.init(testValues.configValues);
 
@@ -57,7 +56,8 @@ describe('test did', () => {
         resolve(true);
       }, 2000)
     );
-    const did1 = await DidIdResolver.load(did.id);
+    const resolver = new DidIdResolver();
+    const did1 = await resolver.load(did.id);
     expect(did.getDocument()).toEqual(did1.getDocument());
   }, 7000);
 

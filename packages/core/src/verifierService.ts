@@ -5,6 +5,8 @@ export abstract class VerifierService {
 
   protected apiConfigurations: Configuration[];
 
+  protected timeout = 2000;
+
   constructor(
     protected observerUrls: string[],
     protected equalMin: number = 2

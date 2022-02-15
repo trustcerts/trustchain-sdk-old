@@ -345,11 +345,11 @@ export interface HashStructure {
      */
     'algorithm': string;
     /**
-     * if set to true it will revoke a signed hash.
-     * @type {boolean}
+     * if set to a date it will revoke the hash
+     * @type {string}
      * @memberof HashStructure
      */
-    'revoked'?: boolean;
+    'revoked'?: string;
 }
 /**
  * 
@@ -817,17 +817,23 @@ export interface TemplateStructure {
      */
     'id': string;
     /**
+     * Did that controls this did.
+     * @type {ControllerManage}
+     * @memberof TemplateStructure
+     */
+    'controller'?: ControllerManage;
+    /**
      * template that should be used.
      * @type {string}
      * @memberof TemplateStructure
      */
     'template': string;
     /**
-     * json schema to validate the data that should be parsed into the
+     * did of the schema the template is based on
      * @type {string}
      * @memberof TemplateStructure
      */
-    'schema': string;
+    'schemaId': string;
     /**
      * 
      * @type {Compression}
@@ -1388,7 +1394,7 @@ export const HashGatewayApiAxiosParamCreator = function (configuration?: Configu
         gatewayHashControllerCreate: async (hashTransactionDto: HashTransactionDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'hashTransactionDto' is not null or undefined
             assertParamExists('gatewayHashControllerCreate', 'hashTransactionDto', hashTransactionDto)
-            const localVarPath = `/hash/create`;
+            const localVarPath = `/hash`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
