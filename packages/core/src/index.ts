@@ -1,9 +1,9 @@
-export * from './verifierService';
 export * from './helpers';
 export * from './logger';
 export * from './config';
 
 export * from './did/id/did-id-verifier-service';
+export * from './verifierService';
 export * from './did/did-resolver';
 export * from './did/identity';
 export * from './did/did';
