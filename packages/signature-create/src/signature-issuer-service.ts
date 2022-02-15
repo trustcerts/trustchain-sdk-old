@@ -55,8 +55,7 @@ export class SignatureIssuerService extends IssuerService {
   ): Promise<HashResponse> {
     const transaction = await this.createTransaction(
       hash,
-      TransactionType.Hash,
-      date
+      TransactionType.Hash
     );
     return this.api
       .gatewayHashControllerCreate(transaction, {
@@ -105,11 +104,7 @@ export class SignatureIssuerService extends IssuerService {
    * @private
    */
   private async revoke(hash: string, date: string) {
-    const transaction = await this.createTransaction(
-      hash,
-      TransactionType.Hash,
-      date
-    );
+    const transaction = await this.createTransaction(hash, date, true);
     return this.api
       .gatewayHashControllerCreate(transaction, {
         timeout: this.timeout,
@@ -132,22 +127,20 @@ export class SignatureIssuerService extends IssuerService {
    * @param type
    * @private
    */
-  private async createTransaction(
-    hash: string,
-    type: TransactionType,
-    date: string
-  ) {
+  private async createTransaction(hash: string, date: string, revoke = false) {
     const transaction: HashTransactionDto = {
       version: 1,
       metadata: {
         version: 1,
-      },
+      },      
       body: {
         version: 1,
-        date,
-        type,
+        date,        
+        type: TransactionType.Hash,
         value: {
           algorithm: 'sha256',
+          id: hash,
+          revoked: revoke ? new Date().toISOString(),
         },
       },
       signature: {
