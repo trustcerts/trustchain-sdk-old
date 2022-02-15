@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.11](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.10...v0.4.11) (2022-02-15)
+
+
+### Bug Fixes
+
+* core export ([0eda5b6](https://github.com/trustcerts/trustchain-sdk/commit/0eda5b6737ae7c667315d4f0fa59dc21480fa3c9))
+
+
+
+
+
 ## [0.4.10](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.7...v0.4.10) (2022-02-15)
 
 
