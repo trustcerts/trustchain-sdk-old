@@ -1,9 +1,10 @@
 import { ClaimValues } from './claim-values';
 import { Compress, JsonCompressor, Proto } from './compress';
-import { TemplateVerifierService } from '@trustcerts/template-verify';
-import { SignatureVerifierService } from '@trustcerts/signature-verify';
-import { getHash, sortKeys } from '@trustcerts/core';
+import { DidTemplateResolver } from '@trustcerts/template-verify';
+import { DidSignatureResolver } from '@trustcerts/signature-verify';
+import { getHash, Identifier, sortKeys } from '@trustcerts/core';
 import { CompressionTypeEnum } from '@trustcerts/observer';
+import { DidSchemaResolver } from '@trustcerts/schema-verify';
 import { Claim } from './claim';
 import Ajv from 'ajv';
 
@@ -11,11 +12,11 @@ import Ajv from 'ajv';
  * Verifier to validate claims
  */
 export class ClaimVerifierService {
-  constructor(
-    private templateEngine: TemplateVerifierService,
-    private signatureVerifier: SignatureVerifierService,
-    private host: string
-  ) {}
+  private didTemplateResolver = new DidTemplateResolver();
+  private didSchemaResolver = new DidSchemaResolver();
+  private didSignatureResolver = new DidSignatureResolver();
+
+  constructor(private host: string) {}
 
   /**
    * Builds a claim object based on the given url and the template engine and verifier endpoints.
@@ -28,7 +29,7 @@ export class ClaimVerifierService {
     // TODO right now the url only includes the parameter but not the host. evaluate if the whole url should be passed.
     const data = url.split('#');
     const did = data[0];
-    const template = await this.templateEngine.get(did);
+    const template = await this.didTemplateResolver.load(did);
     let compressor: Compress;
     if (
       template.compression.type === CompressionTypeEnum.Proto &&
@@ -43,16 +44,17 @@ export class ClaimVerifierService {
       decodeURIComponent(data[1])
     );
 
+    const schema = await this.didSchemaResolver.load(template.schemaId);
     // validate schema
     const avj = new Ajv();
-    if (!avj.validate(JSON.parse(template.schema), values)) {
+    if (!avj.validate(JSON.parse(schema.schema), values)) {
       throw new Error('values do not match with schema');
     }
 
     // verify
     const hashValue = await ClaimVerifierService.getHash(values, did);
-    const hash = await this.signatureVerifier
-      .verifyString(hashValue)
+    const hash = await this.didSignatureResolver
+      .load(Identifier.generate('hash', hashValue))
       .catch(() => {
         throw Error('failed to verify');
       });

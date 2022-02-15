@@ -1258,28 +1258,28 @@
   dependencies:
     "type-detect" "4.0.8"
 
-"@size-limit/esbuild@7.0.5":
-  "integrity" "sha512-ec/XfgTHcfXFflEDgs83gs3XMfB8sn4BISZM7CPHCS72tNkcjVwNRxrKWisb11JZ2kN4glBgCmsXZpoSaEGzXg=="
-  "resolved" "https://registry.npmjs.org/@size-limit/esbuild/-/esbuild-7.0.5.tgz"
-  "version" "7.0.5"
+"@size-limit/esbuild@7.0.8":
+  "integrity" "sha512-AzCrxJJThDvHrBNoolebYVgXu46c6HuS3fOxoXr3V0YWNM0qz81z5F3j7RruzboZnls8ZgME4WrH6GM5rB9gtA=="
+  "resolved" "https://registry.npmjs.org/@size-limit/esbuild/-/esbuild-7.0.8.tgz"
+  "version" "7.0.8"
   dependencies:
-    "esbuild" "^0.14.8"
-    "nanoid" "^3.1.30"
+    "esbuild" "^0.14.18"
+    "nanoid" "^3.2.0"
 
-"@size-limit/file@7.0.5":
-  "integrity" "sha512-DqyuUkmCSHwML6GVmeRr0v6Ih/P3pwmCu6RDWh2QxdDSec1ZnShmFUmcC6rLQDX7KW5aCjK3cs5FNd22Eaqapw=="
-  "resolved" "https://registry.npmjs.org/@size-limit/file/-/file-7.0.5.tgz"
-  "version" "7.0.5"
+"@size-limit/file@7.0.8":
+  "integrity" "sha512-1KeFQuMXIXAH/iELqIX7x+YNYDFvzIvmxcp9PrdwEoSNL0dXdaDIo9WE/yz8xvOmUcKaLfqbWkL75DM0k91WHQ=="
+  "resolved" "https://registry.npmjs.org/@size-limit/file/-/file-7.0.8.tgz"
+  "version" "7.0.8"
   dependencies:
     "semver" "7.3.5"
 
-"@size-limit/preset-small-lib@^7.0.5":
-  "integrity" "sha512-cWwXDCx9BEpHIjbpHlhpS0JBt+J1U5LCaHHyBhAxevOX7W0aX7nCJwPUmd5liGHq9ui5VyWOtV3lhxce96Qd8A=="
-  "resolved" "https://registry.npmjs.org/@size-limit/preset-small-lib/-/preset-small-lib-7.0.5.tgz"
-  "version" "7.0.5"
+"@size-limit/preset-small-lib@^7.0.8":
+  "integrity" "sha512-CT8nIYA/c2CSD+X4rAUgwqYccQMahJ6rBnaZxvi3YKFdkXIbuGNXHNjHsYaFksgwG9P4UjG/unyO5L73f3zQBw=="
+  "resolved" "https://registry.npmjs.org/@size-limit/preset-small-lib/-/preset-small-lib-7.0.8.tgz"
+  "version" "7.0.8"
   dependencies:
-    "@size-limit/esbuild" "7.0.5"
-    "@size-limit/file" "7.0.5"
+    "@size-limit/esbuild" "7.0.8"
+    "@size-limit/file" "7.0.8"
 
 "@types/babel__core@^7.1.7", "@types/babel__core@^7.1.9":
   "integrity" "sha512-6zzkezS9QEIL8yCBvXWxPTJPNuMeECJVxSOhxNY/jfq9LxOTHivaYTqr37n9LknWWRTIkzqH2UilS5QFvfa90A=="
@@ -2109,10 +2109,10 @@
   "resolved" "https://registry.npmjs.org/chardet/-/chardet-0.7.0.tgz"
   "version" "0.7.0"
 
-"chokidar@^3.5.2":
-  "integrity" "sha512-ekGhOnNVPgT77r4K/U3GDhu+FQ2S8TnK/s2KbIGXi0SZWuwkZ2QNyfWdZW+TVfn84DpEP7rLeCt2UI6bJ8GwbQ=="
-  "resolved" "https://registry.npmjs.org/chokidar/-/chokidar-3.5.2.tgz"
-  "version" "3.5.2"
+"chokidar@^3.5.3":
+  "integrity" "sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw=="
+  "resolved" "https://registry.npmjs.org/chokidar/-/chokidar-3.5.3.tgz"
+  "version" "3.5.3"
   dependencies:
     "anymatch" "~3.1.2"
     "braces" "~3.0.2"
@@ -2640,34 +2640,35 @@
     "is-date-object" "^1.0.1"
     "is-symbol" "^1.0.2"
 
-"esbuild-windows-64@0.14.11":
-  "integrity" "sha512-h9FmMskMuGeN/9G9+LlHPAoiQk9jlKDUn9yA0MpiGzwLa82E7r1b1u+h2a+InprbSnSLxDq/7p5YGtYVO85Mlg=="
-  "resolved" "https://registry.npmjs.org/esbuild-windows-64/-/esbuild-windows-64-0.14.11.tgz"
-  "version" "0.14.11"
+"esbuild-linux-64@0.14.21":
+  "integrity" "sha512-edZyNOv1ql+kpmlzdqzzDjRQYls+tSyi4QFi+PdBhATJFUqHsnNELWA9vMSzAaInPOEaVUTA5Ml28XFChcy4DA=="
+  "resolved" "https://registry.npmjs.org/esbuild-linux-64/-/esbuild-linux-64-0.14.21.tgz"
+  "version" "0.14.21"
 
-"esbuild@^0.14.8":
-  "integrity" "sha512-xZvPtVj6yecnDeFb3KjjCM6i7B5TCAQZT77kkW/CpXTMnd6VLnRPKrUB1XHI1pSq6a4Zcy3BGueQ8VljqjDGCg=="
-  "resolved" "https://registry.npmjs.org/esbuild/-/esbuild-0.14.11.tgz"
-  "version" "0.14.11"
+"esbuild@^0.14.18":
+  "integrity" "sha512-7WEoNMBJdLN993dr9h0CpFHPRc3yFZD+EAVY9lg6syJJ12gc5fHq8d75QRExuhnMkT2DaRiIKFThRvDWP+fO+A=="
+  "resolved" "https://registry.npmjs.org/esbuild/-/esbuild-0.14.21.tgz"
+  "version" "0.14.21"
   optionalDependencies:
-    "esbuild-android-arm64" "0.14.11"
-    "esbuild-darwin-64" "0.14.11"
-    "esbuild-darwin-arm64" "0.14.11"
-    "esbuild-freebsd-64" "0.14.11"
-    "esbuild-freebsd-arm64" "0.14.11"
-    "esbuild-linux-32" "0.14.11"
-    "esbuild-linux-64" "0.14.11"
-    "esbuild-linux-arm" "0.14.11"
-    "esbuild-linux-arm64" "0.14.11"
-    "esbuild-linux-mips64le" "0.14.11"
-    "esbuild-linux-ppc64le" "0.14.11"
-    "esbuild-linux-s390x" "0.14.11"
-    "esbuild-netbsd-64" "0.14.11"
-    "esbuild-openbsd-64" "0.14.11"
-    "esbuild-sunos-64" "0.14.11"
-    "esbuild-windows-32" "0.14.11"
-    "esbuild-windows-64" "0.14.11"
-    "esbuild-windows-arm64" "0.14.11"
+    "esbuild-android-arm64" "0.14.21"
+    "esbuild-darwin-64" "0.14.21"
+    "esbuild-darwin-arm64" "0.14.21"
+    "esbuild-freebsd-64" "0.14.21"
+    "esbuild-freebsd-arm64" "0.14.21"
+    "esbuild-linux-32" "0.14.21"
+    "esbuild-linux-64" "0.14.21"
+    "esbuild-linux-arm" "0.14.21"
+    "esbuild-linux-arm64" "0.14.21"
+    "esbuild-linux-mips64le" "0.14.21"
+    "esbuild-linux-ppc64le" "0.14.21"
+    "esbuild-linux-riscv64" "0.14.21"
+    "esbuild-linux-s390x" "0.14.21"
+    "esbuild-netbsd-64" "0.14.21"
+    "esbuild-openbsd-64" "0.14.21"
+    "esbuild-sunos-64" "0.14.21"
+    "esbuild-windows-32" "0.14.21"
+    "esbuild-windows-64" "0.14.21"
+    "esbuild-windows-arm64" "0.14.21"
 
 "escalade@^3.1.1":
   "integrity" "sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw=="
@@ -3375,7 +3376,7 @@
   "resolved" "https://registry.npmjs.org/globalyzer/-/globalyzer-0.1.0.tgz"
   "version" "0.1.0"
 
-"globby@^11.0.4":
+"globby@^11.1.0":
   "integrity" "sha512-jhIXaOzy1sb8IyocaruWSn1TjmnBVs8Ayhcy83rmxNJ8q2uWKCAj3CnJY+KpGSXCueAPc0i05kVvVKtP1t9S3g=="
   "resolved" "https://registry.npmjs.org/globby/-/globby-11.1.0.tgz"
   "version" "11.1.0"
@@ -4563,7 +4564,7 @@
     "prelude-ls" "~1.1.2"
     "type-check" "~0.3.2"
 
-"lilconfig@^2.0.3":
+"lilconfig@^2.0.4":
   "integrity" "sha512-bfTIN7lEsiooCocSISTWXkiWJkRqtL9wYtYy+8EK3Y41qh3mpwPU0ycTOgjdY9ErwXCc8QyrQp82bdL0Xkm9yA=="
   "resolved" "https://registry.npmjs.org/lilconfig/-/lilconfig-2.0.4.tgz"
   "version" "2.0.4"
@@ -4819,10 +4820,10 @@
   "resolved" "https://registry.npmjs.org/mute-stream/-/mute-stream-0.0.8.tgz"
   "version" "0.0.8"
 
-"nanoid@^3.1.30":
-  "integrity" "sha512-zJpuPDwOv8D2zq2WRoMe1HsfZthVewpel9CAvTfc/2mBD1uUT/agc5f7GHGWXlYkFvi1mVxe4IjvP2HNrop7nQ=="
-  "resolved" "https://registry.npmjs.org/nanoid/-/nanoid-3.1.30.tgz"
-  "version" "3.1.30"
+"nanoid@^3.2.0":
+  "integrity" "sha512-JzxqqT5u/x+/KOFSd7JP15DOo9nOoHpx6DYatqIHUW2+flybkm+mdcraotSQR5WcnZr+qhGVh8Ted0KdfSMxlg=="
+  "resolved" "https://registry.npmjs.org/nanoid/-/nanoid-3.3.0.tgz"
+  "version" "3.3.0"
 
 "nanomatch@^1.2.9":
   "integrity" "sha512-fpoe2T0RbHwBTBUOftAfBPaDEi06ufaUai0mE6Yn1kacc3SnTErfb/h+X94VXzI64rKFHYImXSvdwGGCmwOqCA=="
@@ -4841,10 +4842,10 @@
     "snapdragon" "^0.8.1"
     "to-regex" "^3.0.1"
 
-"nanospinner@^0.6.0":
-  "integrity" "sha512-G2QQwVJListXbtsBW5r5kJs8WXybsO9/SQxzcvSmPRSIOQOeR0v/ETI9hncOna0tzWscdjjcCZUVCJoR4eJlag=="
-  "resolved" "https://registry.npmjs.org/nanospinner/-/nanospinner-0.6.0.tgz"
-  "version" "0.6.0"
+"nanospinner@^1.0.0":
+  "integrity" "sha512-14c2r2QQ9xfTmdbqdF51FKCNvww+0ZON9GeEHur+pBdOufoFvxD4CZQRaYWmFrGH3Nuv7PZ/9Q+wsV+hFSp32g=="
+  "resolved" "https://registry.npmjs.org/nanospinner/-/nanospinner-1.0.0.tgz"
+  "version" "1.0.0"
   dependencies:
     "picocolors" "^1.0.0"
 
@@ -5907,18 +5908,18 @@
   "resolved" "https://registry.npmjs.org/sisteransi/-/sisteransi-1.0.5.tgz"
   "version" "1.0.5"
 
-"size-limit@^7.0.5", "size-limit@7.0.5":
-  "integrity" "sha512-dve+Vaq/a6H7QZhFbozAUBKNO9ZnZkPX3EF1ETI8yv3YCMdC7e63HmVZDXKB//o3FCTHqtZQ0p3ZtOwN/PSiqQ=="
-  "resolved" "https://registry.npmjs.org/size-limit/-/size-limit-7.0.5.tgz"
-  "version" "7.0.5"
+"size-limit@^7.0.8", "size-limit@7.0.8":
+  "integrity" "sha512-3h76c9E0e/nNhYLSR7IBI/bSoXICeo7EYkYjlyVqNIsu7KvN/PQmMbIXeyd2QKIF8iZKhaiZQoXLkGWbyPDtvQ=="
+  "resolved" "https://registry.npmjs.org/size-limit/-/size-limit-7.0.8.tgz"
+  "version" "7.0.8"
   dependencies:
     "bytes-iec" "^3.1.1"
-    "chokidar" "^3.5.2"
+    "chokidar" "^3.5.3"
     "ci-job-number" "^1.2.2"
-    "globby" "^11.0.4"
-    "lilconfig" "^2.0.3"
+    "globby" "^11.1.0"
+    "lilconfig" "^2.0.4"
     "mkdirp" "^1.0.4"
-    "nanospinner" "^0.6.0"
+    "nanospinner" "^1.0.0"
     "picocolors" "^1.0.0"
 
 "slash@^3.0.0":
@@ -6593,13 +6594,10 @@
   "resolved" "https://registry.npmjs.org/typescript/-/typescript-3.9.10.tgz"
   "version" "3.9.10"
 
-"typescript@^4.5.4":
-  "integrity" "sha512-VgYs2A2QIRuGphtzFV7aQJduJ2gyfTljngLzjpfW9FoYZF6xuw1W0vW9ghCKLfcWrCFxK81CSGRAvS1pn4fIUg=="
-  "resolved" "https://registry.npmjs.org/typescript/-/typescript-4.5.4.tgz"
-  "version" "4.5.4"
-
-"typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta":
-  "version" "3.9.10"
+"typescript@^4.5.5", "typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta":
+  "integrity" "sha512-TCTIul70LyWe6IJWT8QSYeA54WQe8EjQFU4wY52Fasj5UKx88LNYKCgBEHcOMOrFF1rKGbD8v/xcNWVUq9SymA=="
+  "resolved" "https://registry.npmjs.org/typescript/-/typescript-4.5.5.tgz"
+  "version" "4.5.5"
 
 "unbox-primitive@^1.0.1":
   "integrity" "sha512-tZU/3NqK3dA5gpE1KtyiJUrEB0lxnGkMFHptJ7q6ewdZ8s12QrODwNbhIJStmJkd1QDXa1NRA8aF2A1zk/Ypyw=="

@@ -11,7 +11,7 @@ import { LocalConfigService } from '@trustcerts/config-local';
 import { DidIdIssuerService, DidIdRegister } from '@trustcerts/did-id-create';
 import { WalletService } from '@trustcerts/wallet';
 import { readFileSync } from 'fs';
-import { RoleManageAddEnum } from '@trustcerts/observer';
+import { RoleManageType } from '@trustcerts/observer';
 
 describe('test did', () => {
   let config: ConfigService;
@@ -45,7 +45,7 @@ describe('test did', () => {
     const did = DidIdRegister.create({
       controllers: [config.config.invite!.id],
     });
-    did.addRole(RoleManageAddEnum.Client);
+    did.addRole(RoleManageType.Client);
     const client = new DidIdIssuerService(
       testValues.network.gateways,
       cryptoService
@@ -65,7 +65,7 @@ describe('test did', () => {
     const did = DidIdRegister.create({
       controllers: [config.config.invite!.id],
     });
-    did.addRole(RoleManageAddEnum.Client);
+    did.addRole(RoleManageType.Client);
     const client = new DidIdIssuerService(
       testValues.network.gateways,
       cryptoService

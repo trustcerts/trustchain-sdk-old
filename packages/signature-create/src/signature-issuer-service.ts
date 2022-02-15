@@ -1,8 +1,6 @@
 import {
   IssuerService,
   CryptoService,
-  getHash,
-  getHashFromFile,
   sortKeys,
   SignatureContent,
 } from '@trustcerts/core';
@@ -12,7 +10,8 @@ import {
   TransactionType,
   SignatureInfoTypeEnum,
   HashResponse,
-  HashTransactionDto,
+  HashDidTransactionDto,
+  DidHashStructure,
 } from '@trustcerts/gateway';
 
 export class SignatureIssuerService extends IssuerService {
@@ -25,123 +24,18 @@ export class SignatureIssuerService extends IssuerService {
     this.api = new HashGatewayApi(this.apiConfiguration);
   }
 
-  /**
-   * Signs a file
-   *
-   * @returns {Promise<void>}
-   */
-  async signFile(filePath: string): Promise<HashResponse> {
-    const hash = await getHashFromFile(filePath);
-    return this.create(hash);
-  }
-
-  /**
-   * Signs a string.
-   * @param value
-   */
-  async signString(value: string): Promise<HashResponse> {
-    const hash = await getHash(value);
-    return this.create(hash);
-  }
-
-  /**
-   * Signs a hash.
-   * @param hash
-   * @private
-   */
-  public async create(
-    hash: string,
-    date = new Date().toISOString()
-  ): Promise<HashResponse> {
-    const transaction = await this.createTransaction(
-      hash,
-      TransactionType.Hash
-    );
-    return this.api
-      .gatewayHashControllerCreate(transaction, {
-        timeout: this.timeout,
-      })
-      .then(
-        res => res.data,
-        (err: AxiosError) => {
-          if (err.response) {
-            return Promise.reject(err.response.data);
-          } else {
-            return Promise.reject(err);
-          }
-        }
-      );
-  }
-
-  /**
-   * Revokes a file
-   *
-   * @returns {Promise<void>}
-   */
-  async revokeFile(
-    filePath: string,
-    date = new Date().toISOString()
-  ): Promise<HashResponse> {
-    const hash = await getHashFromFile(filePath);
-    return this.revoke(hash, date);
-  }
-
-  /**
-   * Revokes a string.
-   * @param value
-   */
-  async revokeString(
-    value: string,
-    date = new Date().toISOString()
-  ): Promise<HashResponse> {
-    const hash = await getHash(value);
-    return this.revoke(hash, date);
-  }
-
-  /**
-   * Revokes a string
-   * @param hash
-   * @private
-   */
-  private async revoke(hash: string, date: string) {
-    const transaction = await this.createTransaction(hash, date, true);
-    return this.api
-      .gatewayHashControllerCreate(transaction, {
-        timeout: this.timeout,
-      })
-      .then(
-        res => res.data,
-        (err: AxiosError) => {
-          if (err.response) {
-            return Promise.reject(err.response.data);
-          } else {
-            return Promise.reject(err);
-          }
-        }
-      );
-  }
-
-  /**
-   * Creates a transaction to sign or revoke a hash.
-   * @param hash
-   * @param type
-   * @private
-   */
-  private async createTransaction(hash: string, date: string, revoke = false) {
-    const transaction: HashTransactionDto = {
+  async persistSchema(value: DidHashStructure): Promise<HashResponse> {
+    // TODO outsource this to the issuer service since the transaction schema of dids are equal
+    const transaction: HashDidTransactionDto = {
       version: 1,
+      body: {
+        date: new Date().toISOString(),
+        value,
+        type: TransactionType.Hash,
+        version: 1,
+      },
       metadata: {
         version: 1,
-      },      
-      body: {
-        version: 1,
-        date,        
-        type: TransactionType.Hash,
-        value: {
-          algorithm: 'sha256',
-          id: hash,
-          revoked: revoke ? new Date().toISOString(),
-        },
       },
       signature: {
         type: SignatureInfoTypeEnum.Single,
@@ -159,6 +53,16 @@ export class SignatureIssuerService extends IssuerService {
       ),
       identifier: this.cryptoService.fingerPrint,
     });
-    return transaction;
+
+    return await this.api.gatewayHashControllerCreate(transaction).then(
+      res => res.data,
+      (err: AxiosError) => {
+        if (err.response) {
+          return Promise.reject(err.response.data);
+        } else {
+          return Promise.reject(err);
+        }
+      }
+    );
   }
 }

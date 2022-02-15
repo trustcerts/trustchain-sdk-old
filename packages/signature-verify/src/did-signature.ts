@@ -1,9 +1,15 @@
 import { Did } from '@trustcerts/core';
-import { HashDocResponse, HashStructure } from '@trustcerts/observer';
-import { HashTransactionDto } from '@trustcerts/gateway';
-import { IDidSignatureDocument } from './did-signature-document';
+import {
+  HashDocResponse,
+  DidHashStructure,
+  DidHashTransaction,
+  DidHashDocument,
+} from '@trustcerts/observer';
 
-export class SignatureSchema extends Did {
+export class DidSignature extends Did {
+  algorithm!: string;
+  revoked?: string | undefined;
+
   constructor(public id: string) {
     super(id);
     // if the passed id value already has a prefix remove it.
@@ -11,24 +17,36 @@ export class SignatureSchema extends Did {
     // TODO use method from Identifier.method
   }
 
-  parseTransaction(_transactions: HashTransactionDto[]): void {
-    throw new Error('Method not implemented.');
-  }
-  parseDocument(_document: HashDocResponse): void {
-    throw new Error('Method not implemented.');
+  parseTransaction(transactions: DidHashTransaction[]): void {
+    for (const transaction of transactions) {
+      this.version++;
+      // validate signature of transaction
+      // parse it into the existing document
+      this.parseTransactionControllers(transaction);
+
+      this.algorithm = transaction.values.algorithm;
+      this.revoked = transaction.values.revoked;
+    }
   }
 
-  getDocument(): IDidSignatureDocument {
+  parseDocument(docResponse: HashDocResponse): void {
+    this.parseDocumentSuper(docResponse);
+    this.algorithm = docResponse.document.algorithm;
+    this.revoked = docResponse.document.revoked;
+  }
+
+  getDocument(): DidHashDocument {
     return {
       '@context': this.context,
       id: this.id,
       controller: Array.from(this.controller.current.values()),
+      algorithm: this.algorithm,
     };
   }
   resetChanges(): void {}
 
-  getChanges(): HashStructure {
-    const changes = this.getBasicChanges<HashStructure>();
+  getChanges(): DidHashStructure {
+    const changes = this.getBasicChanges<DidHashStructure>();
     return changes;
   }
 }

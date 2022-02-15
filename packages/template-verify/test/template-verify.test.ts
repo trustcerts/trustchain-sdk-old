@@ -8,7 +8,7 @@ import {
 } from '@trustcerts/core';
 import { LocalConfigService } from '@trustcerts/config-local';
 import { TemplateIssuerService } from '@trustcerts/template-create';
-import { TemplateVerifierService } from '../src';
+import { TemplateVerifierService } from '../src/template-verifier-service';
 import { JSONSchemaType } from 'ajv';
 import { WalletService } from '@trustcerts/wallet';
 import { readFileSync } from 'fs';

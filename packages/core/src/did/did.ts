@@ -1,6 +1,10 @@
-import { IDidDocument } from './did-document';
 import { Management } from './management';
-import { ControllerManage, DidTransaction } from '@trustcerts/observer';
+import {
+  ControllerManage,
+  DidDocument,
+  DidTransaction,
+  DocResponse,
+} from '@trustcerts/observer';
 
 export abstract class Did {
   public version = 0;
@@ -52,9 +56,16 @@ export abstract class Did {
   // TODO instead of any pass the didtransaction attribte. Has to be imported in another way since it is an extended class from the open-api spec
   abstract parseTransaction(transactions: any): void;
   abstract parseDocument(document: any): void;
-  abstract getDocument(): IDidDocument;
+  abstract getDocument(): DidDocument;
   abstract resetChanges(): void;
   abstract getChanges(): any;
+
+  protected parseDocumentSuper(docResponse: DocResponse) {
+    this.version = docResponse.metaData.versionId;
+    docResponse.document.controller.forEach(controller =>
+      this.addController(controller)
+    );
+  }
 
   protected getBasicChanges<T>(): T {
     // TODO set DIDStrucutre

@@ -9,13 +9,10 @@ import {
 import { sortKeys } from '../../crypto/hash';
 import { verifySignature } from '../../crypto/sign';
 import { importKey } from '../../crypto/key';
-import { DidIdResolver } from './did-id-resolver';
 import { logger } from '../../logger';
 
 export class DidIdVerifierService extends VerifierService {
   protected apis: DidObserverApi[];
-
-  private resolver = new DidIdResolver();
 
   constructor(protected observerUrls: string[], equalMin = 2) {
     super(observerUrls, equalMin);
@@ -94,40 +91,6 @@ export class DidIdVerifierService extends VerifierService {
       }
       reject('no transactions founds');
     });
-  }
-
-  private async validateDoc(
-    document: IdDocResponse,
-    config: DidManagerConfigValues<DidIdTransaction>
-  ) {
-    //TODO implement validation of a document with recursive approach
-    // TODO validate if signatureinfo is better than signaturedto to store more information
-    const issuer = document.signatures[0].values[0].identifier;
-    if (document.document.id === issuer.split('#')[0]) {
-      // TODO instead of self certified use the genesis block to build the chain of trust
-    } else {
-      if (document.metaData) {
-        config.time = document.metaData.updated ?? document.metaData.created;
-      }
-      const did = await this.resolver.load(issuer, config);
-      const key = did.getKey(issuer).publicKeyJwk;
-      const value = JSON.stringify(
-        sortKeys({
-          document: document.document,
-          version: document.metaData.versionId,
-        })
-      );
-      console.log(value);
-      // TODO validate all signatures
-      const valid = await verifySignature(
-        value,
-        document.signatures[0].values[0].signature,
-        await importKey(key, 'jwk', ['verify'])
-      );
-      if (!valid) {
-        throw Error(`signature is wrong for ${document.document.id}`);
-      }
-    }
   }
 
   /**

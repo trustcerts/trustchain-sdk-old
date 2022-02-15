@@ -3,13 +3,13 @@ import {
   DidPublicKeyTypeEnum,
   DidService,
   DidIdStructure,
-  RoleManageAddEnum,
+  RoleManageType,
   IdDocResponse,
   DidIdTransaction,
+  DidIdDocument,
 } from '@trustcerts/observer';
 import { Did } from '../did';
 import { Management } from '../management';
-import { IDidIdDocument } from './did-id-document';
 
 // Enum values müssen äquivalent zu DidStructure in api.ts (note: die gibt's doppelt, gateway & observer)
 export enum VerificationRelationshipType {
@@ -35,7 +35,7 @@ export class DidId extends Did {
 
   private service = new Management<DidService>();
 
-  private role = new Management<RoleManageAddEnum>();
+  private role = new Management<RoleManageType>();
 
   constructor(public id: string) {
     super(id);
@@ -122,7 +122,7 @@ export class DidId extends Did {
     return this.role.current.has(value);
   }
 
-  addRole(value: RoleManageAddEnum): void {
+  addRole(value: RoleManageType): void {
     if (this.hasRole(value)) {
       throw Error('role already set');
     }
@@ -310,10 +310,8 @@ export class DidId extends Did {
   }
 
   parseDocument(docResponse: IdDocResponse): void {
-    this.version = docResponse.metaData.versionId;
-    docResponse.document.controller.forEach(controller =>
-      this.addController(controller)
-    );
+    this.parseDocumentSuper(docResponse);
+
     docResponse.document.service.forEach(service =>
       this.addService(service.id, service.endpoint, service.type)
     );
@@ -328,7 +326,7 @@ export class DidId extends Did {
     });
 
     docResponse.document.role.forEach(role =>
-      this.addRole((role as unknown) as RoleManageAddEnum)
+      this.addRole((role as unknown) as RoleManageType)
     );
     // required since the this.add... calls will fill the add fields.
     this.resetChanges();
@@ -388,8 +386,8 @@ export class DidId extends Did {
     }
   }
 
-  getDocument(): IDidIdDocument {
-    const didDoc: Partial<IDidIdDocument> = {
+  getDocument(): DidIdDocument {
+    const didDoc: Partial<DidIdDocument> = {
       '@context': this.context,
       id: this.id,
       controller: Array.from(this.controller.current.values()),
@@ -410,6 +408,6 @@ export class DidId extends Did {
       }
     });
 
-    return didDoc as IDidIdDocument;
+    return didDoc as DidIdDocument;
   }
 }

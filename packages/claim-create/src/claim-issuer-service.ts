@@ -1,31 +1,45 @@
-import { SignatureIssuerService } from '@trustcerts/signature-create';
-import { Template } from '@trustcerts/observer';
+import {
+  SignatureIssuerService,
+  DidSignatureRegister,
+} from '@trustcerts/signature-create';
+import { DidSignatureResolver } from '@trustcerts/signature-verify';
+import { DidTemplate } from '@trustcerts/template-verify';
+import { DidSchemaResolver } from '@trustcerts/schema-verify';
 import {
   ClaimValues,
   Claim,
   ClaimVerifierService,
 } from '@trustcerts/claim-verify';
 import Ajv from 'ajv';
+import { Identifier } from '@trustcerts/core';
 
 /**
  * service to creaton and revocation of claims
  */
 export class ClaimIssuerService {
+  private didSchemaResolver = new DidSchemaResolver();
+  private didSignatureRegister = new DidSignatureRegister();
+  private didSignatureResolver = new DidSignatureResolver();
+
   /**
    * create a claim.
    */
   async create(
-    template: Template,
+    template: DidTemplate,
     values: ClaimValues,
     host: string,
     signatureIssuer: SignatureIssuerService
   ): Promise<Claim> {
     const ajv = new Ajv();
-    if (!ajv.validate(JSON.parse(template.schema), values)) {
+    const schema = await this.didSchemaResolver.load(template.schemaId);
+    if (!ajv.validate(JSON.parse(schema.schema), values)) {
       throw Error('input does not match with schema');
     }
     const hash = await ClaimVerifierService.getHash(values, template.id);
-    await signatureIssuer.signString(hash);
+    const didHash = await this.didSignatureRegister.create({
+      id: Identifier.generate('hash', hash),
+    });
+    this.didSignatureRegister.save(didHash, signatureIssuer);
     return new Claim(values, template, host);
   }
 
@@ -42,6 +56,12 @@ export class ClaimIssuerService {
       claim.values,
       claim.getTemplateId()
     );
-    await signatureIssuer.revokeString(hash);
+    const didHash = await this.didSignatureResolver
+      .load(Identifier.generate('hash', hash))
+      .catch(() => {
+        throw new Error('hash of claim not found');
+      });
+    didHash.revoked = new Date().toISOString();
+    await this.didSignatureRegister.save(didHash, signatureIssuer);
   }
 }

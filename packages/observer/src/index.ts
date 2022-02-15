@@ -1,4 +1,3 @@
-export * from './api/api';
-export * from './api/configuration';
+export * from './api';
 export { BaseAPI } from './api/base';
 export { AxiosError } from 'axios';

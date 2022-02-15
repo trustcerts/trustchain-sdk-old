@@ -1,11 +1,13 @@
 import { Did } from '@trustcerts/core';
-import { SchemaDocResponse, SchemaStructure } from '@trustcerts/observer';
-import { SchemaTransactionDto } from '@trustcerts/gateway';
-import { IDidSchemaDocument } from './did-schema-document';
+import {
+  DidSchemaDocument,
+  DidSchemaTransaction,
+  SchemaDocResponse,
+  SchemaStructure,
+} from '@trustcerts/observer';
 
 export class DidSchema extends Did {
-  protected schema: any;
-  private schemaChanges = false;
+  public schema!: string;
 
   constructor(public id: string) {
     super(id);
@@ -14,14 +16,26 @@ export class DidSchema extends Did {
     // TODO use method from Identifier.method
   }
 
-  parseTransaction(_transactions: SchemaTransactionDto[]): void {
-    throw new Error('Method not implemented.');
+  parseTransaction(transactions: DidSchemaTransaction[]): void {
+    for (const transaction of transactions) {
+      this.version++;
+      // validate signature of transaction
+      // parse it into the existing document
+      this.parseTransactionControllers(transaction);
+
+      this.schema = transaction.values.schema ?? this.schema;
+    }
   }
-  parseDocument(_document: SchemaDocResponse): void {
+  parseDocument(docResponse: SchemaDocResponse): void {
+    this.parseDocumentSuper(docResponse);
+    this.schema = docResponse.document.value ?? this.schema;
+  }
+
+  resetChanges(): void {
     throw new Error('Method not implemented.');
   }
 
-  getDocument(): IDidSchemaDocument {
+  getDocument(): DidSchemaDocument {
     return {
       '@context': this.context,
       id: this.id,
@@ -29,21 +43,11 @@ export class DidSchema extends Did {
       value: this.schema,
     };
   }
-  resetChanges(): void {
-    this.schemaChanges = false;
-  }
-
-  setSchema(schema: string) {
-    this.schema = schema;
-    this.schemaChanges = true;
-  }
 
   getChanges(): SchemaStructure {
     // TODO maybe throw an error if the changes are requested, but the version is 0 so there is no did to update.
     const changes = this.getBasicChanges<SchemaStructure>();
-    if (this.schemaChanges) {
-      changes.schema;
-    }
+    changes.schema = this.schema;
     return changes;
   }
 }

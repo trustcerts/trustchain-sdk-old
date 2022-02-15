@@ -1,11 +1,14 @@
-import { VerifierService, DidManagerConfigValues } from '@trustcerts/core';
+import {
+  VerifierService,
+  DidManagerConfigValues,
+  logger,
+} from '@trustcerts/core';
 import {
   AxiosError,
   SchemaDocResponse,
   SchemaObserverApi,
   DidSchemaTransaction,
 } from '@trustcerts/observer';
-import {} from '@trustcerts/gateway';
 
 export class SchemaVerifierService extends VerifierService {
   protected apis: SchemaObserverApi[];
@@ -21,23 +24,30 @@ export class SchemaVerifierService extends VerifierService {
     id: string,
     config: DidManagerConfigValues<DidSchemaTransaction>
   ): Promise<SchemaDocResponse> {
-    for (const api of this.apis) {
-      await api
-        .observerSchemaControllerGetDoc(id, config.time, undefined, {
-          timeout: 2000,
-        })
-        .then(
-          res => Promise.resolve(res.data),
-          (err: AxiosError) => {
-            // TODO evaluate the error
-            // got a response, validate it
-            if (err.response) {
-            } else {
-              // got no response maybe a timeout
+    return new Promise(async (resolve, reject) => {
+      for (const api of this.apis) {
+        await api
+          .observerSchemaControllerGetDoc(id, config.time, undefined, {
+            timeout: this.timeout,
+          })
+          .then(
+            async res =>
+              await this.validateDoc(res.data, config).then(
+                () => resolve(res.data),
+                err => logger.warn(err)
+              ),
+            (err: AxiosError) => {
+              logger.log(err);
+              // TODO evaluate the error
+              // got a response, validate it
+              if (err.response) {
+              } else {
+                // got no response maybe a timeout
+              }
             }
-          }
-        );
-    }
-    return Promise.reject('no transactions found');
+          );
+      }
+      reject('no did doc found');
+    });
   }
 }
