@@ -1,5 +1,5 @@
 {
-  "version": "0.4.11",
+  "version": "0.4.12",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -52,8 +52,8 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@trustcerts/core": "^0.4.11",
-    "@trustcerts/gateway": "^0.4.10",
-    "@trustcerts/observer": "^0.4.10"
+    "@trustcerts/core": "^0.4.12",
+    "@trustcerts/gateway": "^0.4.12",
+    "@trustcerts/observer": "^0.4.12"
   }
 }
