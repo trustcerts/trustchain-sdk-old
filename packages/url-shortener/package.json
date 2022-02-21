@@ -1,5 +1,5 @@
 {
-  "version": "0.4.16",
+  "version": "0.4.17",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -82,6 +82,6 @@
   },
   "dependencies": {
     "@openapitools/openapi-generator-cli": "^2.4.23",
-    "@trustcerts/core": "^0.4.16"
+    "@trustcerts/core": "^0.4.17"
   }
 }

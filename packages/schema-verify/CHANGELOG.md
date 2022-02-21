@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.17](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.16...v0.4.17) (2022-02-21)
+
+
+### Bug Fixes
+
+* pass structure instead of transaction ([91fd34f](https://github.com/trustcerts/trustchain-sdk/commit/91fd34ff9a05ca962c682c62987723520434bbcf))
+
+
+
+
+
 ## [0.4.16](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.15...v0.4.16) (2022-02-21)
 
 **Note:** Version bump only for package @trustcerts/schema-verify
