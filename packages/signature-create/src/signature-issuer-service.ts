@@ -38,7 +38,7 @@ export class SignatureIssuerService extends IssuerService {
         version: 1,
       },
       signature: {
-        type: SignatureType.single,
+        type: SignatureType.Single,
         values: [],
       },
     };

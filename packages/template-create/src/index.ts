@@ -35,7 +35,7 @@ export class TemplateIssuerService extends IssuerService {
         value,
       },
       signature: {
-        type: SignatureType.single,
+        type: SignatureType.Single,
         values: [],
       },
     };

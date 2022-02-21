@@ -483,10 +483,10 @@ export interface InviteRequest {
     * @enum {string}
     */
 export enum InviteRequestRole {
-    validator = 'validator',
-    gateway = 'gateway',
-    observer = 'observer',
-    client = 'client'
+    Validator = 'Validator',
+    Gateway = 'Gateway',
+    Observer = 'Observer',
+    Client = 'Client'
 }
 
 /**
@@ -615,10 +615,10 @@ export interface RoleManage {
  */
 
 export enum RoleManageType {
-    validator = 'validator',
-    gateway = 'gateway',
-    observer = 'observer',
-    client = 'client'
+    Validator = 'Validator',
+    Gateway = 'Gateway',
+    Observer = 'Observer',
+    Client = 'Client'
 }
 
 /**
@@ -791,8 +791,8 @@ export interface SignatureInfo {
  */
 
 export enum SignatureType {
-    single = 'single',
-    multi = 'multi'
+    Single = 'Single',
+    Multi = 'Multi'
 }
 
 /**

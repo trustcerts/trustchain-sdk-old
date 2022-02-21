@@ -52,7 +52,7 @@ describe('test local config service', () => {
     await did.addKey(keyPair.identifier, keyPair.publicKey);
 
     did.addService('service1', 'https://example.com', 'webpage');
-    did.addRole(RoleManageType.client);
+    did.addRole(RoleManageType.Client);
     did.addVerificationRelationship(
       keyPair.identifier,
       VerificationRelationshipType.authentication
@@ -82,7 +82,7 @@ describe('test local config service', () => {
       controllers: [config.config.invite!.id],
     });
     did.addService('service1', 'https://example.com', 'webpage');
-    did.addRole(RoleManageType.client);
+    did.addRole(RoleManageType.Client);
 
     await DidIdRegister.save(did, client);
     expect(
@@ -107,7 +107,7 @@ describe('test local config service', () => {
     });
     const keyPair = await generateKeyPair(did.id);
     await did.addKey(keyPair.identifier, keyPair.publicKey);
-    did.addRole(RoleManageType.client);
+    did.addRole(RoleManageType.Client);
     did.addVerificationRelationship(
       keyPair.identifier,
       VerificationRelationshipType.authentication
