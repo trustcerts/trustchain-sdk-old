@@ -1,5 +1,5 @@
 import { Identifier, DidCreation } from '@trustcerts/core';
-import { SchemaCreationResponse } from '@trustcerts/gateway';
+import { SchemaResponse } from '@trustcerts/gateway';
 import { SchemaIssuerService } from './schema-issuer-service';
 import { DidSchema } from '@trustcerts/schema-verify';
 
@@ -18,7 +18,7 @@ export class DidSchemaRegister {
   public static save(
     did: DidSchema,
     client: SchemaIssuerService
-  ): Promise<SchemaCreationResponse> {
+  ): Promise<SchemaResponse> {
     const value = did.getChanges();
     did.version++;
     did.resetChanges();

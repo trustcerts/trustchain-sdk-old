@@ -103,7 +103,7 @@ export class DocumentLoader {
           };
         } else {
           // is DID doc
-          const did = await resolver.load(url);          
+          const did = await resolver.load(url);
           return {
             contextUrl: null,
             document: did.getDocument(),

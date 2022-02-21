@@ -12,8 +12,8 @@ import {
   Configuration,
   CreateDidIdDto,
   DidGatewayApi,
+  AxiosError,
 } from '@trustcerts/gateway';
-import { AxiosError } from 'axios';
 import { DidIdIssuerService } from './did-issuer-service';
 
 export class DidIdRegister {

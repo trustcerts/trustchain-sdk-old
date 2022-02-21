@@ -35,6 +35,7 @@ export abstract class VerifierService {
     document: DocResponse,
     config: DidManagerConfigValues<DidTransaction>
   ) {
+    console.log(document);
     //TODO implement validation of a document with recursive approach
     // TODO validate if signatureinfo is better than signaturedto to store more information
     const issuer = document.signatures[0].values[0].identifier;
@@ -52,7 +53,6 @@ export abstract class VerifierService {
           version: document.metaData.versionId,
         })
       );
-      console.log(value);
       // TODO validate all signatures
       const valid = await verifySignature(
         value,

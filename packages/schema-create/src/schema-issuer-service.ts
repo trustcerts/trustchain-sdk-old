@@ -6,8 +6,8 @@ import {
 } from '@trustcerts/core';
 import {
   AxiosError,
-  SchemaCreationResponse,
   SchemaGatewayApi,
+  SchemaResponse,
   SchemaStructure,
   SchemaTransactionDto,
   SignatureInfoTypeEnum,
@@ -22,7 +22,7 @@ export class SchemaIssuerService extends IssuerService {
     this.api = new SchemaGatewayApi(this.apiConfiguration);
   }
 
-  async persistSchema(value: SchemaStructure): Promise<SchemaCreationResponse> {
+  async persistSchema(value: SchemaStructure): Promise<SchemaResponse> {
     // TODO outsource this to the issuer service since the transaction schema of dids are equal
     const transaction: SchemaTransactionDto = {
       version: 1,

@@ -4,7 +4,6 @@ import {
   sortKeys,
   SignatureContent,
 } from '@trustcerts/core';
-import { AxiosError } from 'axios';
 import {
   HashGatewayApi,
   TransactionType,
@@ -12,6 +11,7 @@ import {
   HashResponse,
   HashDidTransactionDto,
   DidHashStructure,
+  AxiosError,
 } from '@trustcerts/gateway';
 
 export class SignatureIssuerService extends IssuerService {

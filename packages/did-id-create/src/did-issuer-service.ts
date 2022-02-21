@@ -1,5 +1,3 @@
-import { AxiosError } from 'axios';
-
 import {
   CryptoService,
   sortKeys,
@@ -11,6 +9,7 @@ import {
   DidIdTransactionDto,
   SignatureInfoTypeEnum,
   TransactionType,
+  AxiosError,
 } from '@trustcerts/gateway';
 import { DidIdStructure } from '@trustcerts/observer';
 export class DidIdIssuerService extends IssuerService {
@@ -49,6 +48,7 @@ export class DidIdIssuerService extends IssuerService {
       ),
       identifier: this.cryptoService.fingerPrint,
     });
+    console.log(transaction);
 
     return await this.api.gatewayDidControllerStore(transaction).then(
       res => res.data,

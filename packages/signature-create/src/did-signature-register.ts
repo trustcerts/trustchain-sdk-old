@@ -4,7 +4,7 @@ import {
   getHash,
   getHashFromFile,
 } from '@trustcerts/core';
-import { SchemaCreationResponse } from '@trustcerts/gateway';
+import { SchemaResponse } from '@trustcerts/gateway';
 import { SignatureIssuerService } from './signature-issuer-service';
 import {
   DidSignature,
@@ -28,7 +28,7 @@ export class DidSignatureRegister {
   public save(
     did: DidSignature,
     client: SignatureIssuerService
-  ): Promise<SchemaCreationResponse> {
+  ): Promise<SchemaResponse> {
     const value = did.getChanges();
     did.version++;
     did.resetChanges();

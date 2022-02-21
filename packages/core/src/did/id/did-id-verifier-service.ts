@@ -39,11 +39,12 @@ export class DidIdVerifierService extends VerifierService {
             timeout: this.timeout,
           })
           .then(
-            async res =>
+            async res => {
               await this.validateDoc(res.data, config).then(
                 () => resolve(res.data),
                 err => logger.warn(err)
-              ),
+              );
+            },
             (err: AxiosError) => {
               logger.log(err);
               // TODO evaluate the error

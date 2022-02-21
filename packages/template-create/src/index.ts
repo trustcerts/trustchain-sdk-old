@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios';
 import {
   CryptoService,
   sortKeys,
@@ -12,6 +11,7 @@ import {
   TemplateTransactionDto,
   TransactionType,
   SignatureInfoTypeEnum,
+  AxiosError,
 } from '@trustcerts/gateway';
 
 export class TemplateIssuerService extends IssuerService {

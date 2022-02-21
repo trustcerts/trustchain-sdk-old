@@ -464,10 +464,10 @@ export interface InviteRequest {
     'name': string;
     /**
      * Describes for what type of role in the network the secret is allowed to be used
-     * @type {object}
+     * @type {string}
      * @memberof InviteRequest
      */
-    'role': object;
+    'role': InviteRequestRoleEnum;
     /**
      * If set to true a new secret will be set for an existing entry
      * @type {boolean}
@@ -475,6 +475,18 @@ export interface InviteRequest {
      */
     'force'?: boolean;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum InviteRequestRoleEnum {
+    Validator = 'validator',
+    Gateway = 'gateway',
+    Observer = 'observer',
+    Client = 'client'
+}
+
 /**
  * 
  * @export
@@ -610,19 +622,19 @@ export enum RoleManageType {
 /**
  * 
  * @export
- * @interface SchemaCreationResponse
+ * @interface SchemaResponse
  */
-export interface SchemaCreationResponse {
+export interface SchemaResponse {
     /**
      * additional metadata to the transaction
      * @type {PersistedTransaction}
-     * @memberof SchemaCreationResponse
+     * @memberof SchemaResponse
      */
     'metaData': PersistedTransaction;
     /**
      * transaction that was persisted.
      * @type {SchemaTransactionDto}
-     * @memberof SchemaCreationResponse
+     * @memberof SchemaResponse
      */
     'transaction': SchemaTransactionDto;
 }
@@ -1838,7 +1850,7 @@ export const SchemaGatewayApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async gatewaySchemaControllerCreate(schemaTransactionDto: SchemaTransactionDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SchemaCreationResponse>> {
+        async gatewaySchemaControllerCreate(schemaTransactionDto: SchemaTransactionDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SchemaResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.gatewaySchemaControllerCreate(schemaTransactionDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1859,7 +1871,7 @@ export const SchemaGatewayApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        gatewaySchemaControllerCreate(schemaTransactionDto: SchemaTransactionDto, options?: any): AxiosPromise<SchemaCreationResponse> {
+        gatewaySchemaControllerCreate(schemaTransactionDto: SchemaTransactionDto, options?: any): AxiosPromise<SchemaResponse> {
             return localVarFp.gatewaySchemaControllerCreate(schemaTransactionDto, options).then((request) => request(axios, basePath));
         },
     };
