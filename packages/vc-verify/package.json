@@ -1,5 +1,5 @@
 {
-  "version": "0.4.15",
+  "version": "0.4.16",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -74,7 +74,7 @@
   "devDependencies": {
     "@size-limit/preset-small-lib": "^7.0.8",
     "@transmute/vc-status-rl-2020": "^0.7.0-unstable.32",
-    "@trustcerts/vc-revocation": "^0.4.15",
+    "@trustcerts/vc-revocation": "^0.4.16",
     "husky": "^7.0.4",
     "size-limit": "^7.0.8",
     "tsdx": "^0.14.1",
@@ -83,10 +83,10 @@
   },
   "dependencies": {
     "@mattrglobal/jsonld-signatures-bbs": "^0.12.0",
-    "@trustcerts/config-local": "^0.4.15",
-    "@trustcerts/core": "^0.4.15",
-    "@trustcerts/vc-create": "^0.4.15",
-    "@trustcerts/wallet": "^0.4.15",
+    "@trustcerts/config-local": "^0.4.16",
+    "@trustcerts/core": "^0.4.16",
+    "@trustcerts/vc-create": "^0.4.16",
+    "@trustcerts/wallet": "^0.4.16",
     "base64url": "^3.0.1",
     "jose": "^4.3.7"
   },

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.16](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.15...v0.4.16) (2022-02-21)
+
+
+### Bug Fixes
+
+* enum names ([3ddac22](https://github.com/trustcerts/trustchain-sdk/commit/3ddac225a5d95f3298ba27dce82ea47cfca5d0bb))
+
+
+
+
+
 ## [0.4.15](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.14...v0.4.15) (2022-02-21)
 
 
