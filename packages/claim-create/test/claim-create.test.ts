@@ -75,7 +75,7 @@ describe('claim', () => {
     );
     const template: TemplateStructure = {
       compression: {
-        type: CompressionType.Json,
+        type: CompressionType.JSON,
       },
       template: '<h1>Hello {{ name }}</h1>',
       schema: JSON.stringify(schema),

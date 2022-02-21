@@ -45,7 +45,7 @@ describe('test did', () => {
     const did = DidIdRegister.create({
       controllers: [config.config.invite!.id],
     });
-    did.addRole(RoleManageType.Client);
+    did.addRole(RoleManageType.client);
     const client = new DidIdIssuerService(
       testValues.network.gateways,
       cryptoService
@@ -65,7 +65,7 @@ describe('test did', () => {
     const did = DidIdRegister.create({
       controllers: [config.config.invite!.id],
     });
-    did.addRole(RoleManageType.Client);
+    did.addRole(RoleManageType.client);
     const client = new DidIdIssuerService(
       testValues.network.gateways,
       cryptoService

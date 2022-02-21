@@ -47,8 +47,8 @@ export interface Compression {
  */
 
 export enum CompressionType {
-    Json = 'JSON',
-    Proto = 'PROTO'
+    JSON = 'JSON',
+    PROTO = 'PROTO'
 }
 
 /**
@@ -469,7 +469,7 @@ export interface InviteRequest {
      * @type {string}
      * @memberof InviteRequest
      */
-    'role': InviteRequestRoleEnum;
+    'role': InviteRequestRole;
     /**
      * If set to true a new secret will be set for an existing entry
      * @type {boolean}
@@ -482,11 +482,11 @@ export interface InviteRequest {
     * @export
     * @enum {string}
     */
-export enum InviteRequestRoleEnum {
-    Validator = 'validator',
-    Gateway = 'gateway',
-    Observer = 'observer',
-    Client = 'client'
+export enum InviteRequestRole {
+    validator = 'validator',
+    gateway = 'gateway',
+    observer = 'observer',
+    client = 'client'
 }
 
 /**
@@ -615,10 +615,10 @@ export interface RoleManage {
  */
 
 export enum RoleManageType {
-    Validator = 'validator',
-    Gateway = 'gateway',
-    Observer = 'observer',
-    Client = 'client'
+    validator = 'validator',
+    gateway = 'gateway',
+    observer = 'observer',
+    client = 'client'
 }
 
 /**
@@ -791,8 +791,8 @@ export interface SignatureInfo {
  */
 
 export enum SignatureType {
-    Single = 'single',
-    Multi = 'multi'
+    single = 'single',
+    multi = 'multi'
 }
 
 /**

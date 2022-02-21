@@ -33,7 +33,7 @@ export class DidIdIssuerService extends IssuerService {
         version: 1,
       },
       signature: {
-        type: SignatureType.Single,
+        type: SignatureType.single,
         values: [],
       },
     };

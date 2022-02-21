@@ -32,7 +32,7 @@ export class ClaimVerifierService {
     const template = await this.didTemplateResolver.load(did);
     let compressor: Compress;
     if (
-      template.compression.type === CompressionType.Proto &&
+      template.compression.type === CompressionType.PROTO &&
       template.compression.value
     ) {
       compressor = new Proto(JSON.parse(template.compression.value));

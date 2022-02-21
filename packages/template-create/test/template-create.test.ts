@@ -61,7 +61,7 @@ describe('test template service', () => {
     );
     const value: TemplateStructure = {
       compression: {
-        type: CompressionType.Json,
+        type: CompressionType.JSON,
       },
       template,
       schema: JSON.stringify(schema),
