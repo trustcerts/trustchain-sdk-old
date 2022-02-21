@@ -2,7 +2,7 @@ import { Management } from './management';
 import {
   ControllerManage,
   DidDocument,
-  DidTransaction,
+  DidStructure,
   DocResponse,
 } from '@trustcerts/observer';
 
@@ -54,7 +54,7 @@ export abstract class Did {
   }
 
   // TODO instead of any pass the didtransaction attribte. Has to be imported in another way since it is an extended class from the open-api spec
-  abstract parseTransaction(transactions: any): void;
+  abstract parseTransactions(transactions: DidStructure[]): void;
   abstract parseDocument(document: any): void;
   abstract getDocument(): DidDocument;
   abstract resetChanges(): void;
@@ -91,14 +91,14 @@ export abstract class Did {
   /**
    * parse the controllers
    */
-  protected parseTransactionControllers(transaction: DidTransaction) {
-    if (transaction.values.controller?.remove) {
-      transaction.values.controller.remove.forEach(id =>
+  protected parseTransactionControllers(transaction: DidStructure) {
+    if (transaction.controller?.remove) {
+      transaction.controller.remove.forEach(id =>
         this.controller.current.delete(id)
       );
     }
-    if (transaction.values.controller?.add) {
-      transaction.values.controller.add.forEach(controller =>
+    if (transaction.controller?.add) {
+      transaction.controller.add.forEach(controller =>
         this.controller.current.set(controller, controller)
       );
     }

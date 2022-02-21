@@ -2,7 +2,6 @@ import { Did } from '@trustcerts/core';
 import {
   HashDocResponse,
   DidHashStructure,
-  DidHashTransaction,
   DidHashDocument,
 } from '@trustcerts/observer';
 
@@ -17,15 +16,15 @@ export class DidSignature extends Did {
     // TODO use method from Identifier.method
   }
 
-  parseTransaction(transactions: DidHashTransaction[]): void {
+  parseTransactions(transactions: DidHashStructure[]): void {
     for (const transaction of transactions) {
       this.version++;
       // validate signature of transaction
       // parse it into the existing document
       this.parseTransactionControllers(transaction);
 
-      this.algorithm = transaction.values.algorithm;
-      this.revoked = transaction.values.revoked;
+      this.algorithm = transaction.algorithm;
+      this.revoked = transaction.revoked;
     }
   }
 

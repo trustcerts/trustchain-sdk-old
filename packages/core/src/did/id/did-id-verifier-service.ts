@@ -10,6 +10,7 @@ import { sortKeys } from '../../crypto/hash';
 import { verifySignature } from '../../crypto/sign';
 import { importKey } from '../../crypto/key';
 import { logger } from '../../logger';
+import { DidIdStructure } from '@trustcerts/gateway';
 
 export class DidIdVerifierService extends VerifierService {
   protected apis: DidObserverApi[];
@@ -30,7 +31,7 @@ export class DidIdVerifierService extends VerifierService {
    */
   async getDidDocument(
     id: string,
-    config: DidManagerConfigValues<DidIdTransaction>
+    config: DidManagerConfigValues<DidIdStructure>
   ): Promise<IdDocResponse> {
     return new Promise(async (resolve, reject) => {
       for (const api of this.apis) {

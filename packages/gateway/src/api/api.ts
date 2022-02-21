@@ -24,36 +24,6 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 /**
  * 
  * @export
- * @interface Compression
- */
-export interface Compression {
-    /**
-     * 
-     * @type {CompressionType}
-     * @memberof Compression
-     */
-    'type': CompressionType;
-    /**
-     * Json encoded information that are required for this kind of compression.
-     * @type {string}
-     * @memberof Compression
-     */
-    'value'?: string;
-}
-/**
- * 
- * @export
- * @enum {string}
- */
-
-export enum CompressionType {
-    JSON = 'JSON',
-    PROTO = 'PROTO'
-}
-
-/**
- * 
- * @export
  * @interface ControllerManage
  */
 export interface ControllerManage {
@@ -643,31 +613,6 @@ export interface SchemaResponse {
 /**
  * 
  * @export
- * @interface SchemaStructure
- */
-export interface SchemaStructure {
-    /**
-     * unique identifier of a did
-     * @type {string}
-     * @memberof SchemaStructure
-     */
-    'id': string;
-    /**
-     * Did that controls this did.
-     * @type {ControllerManage}
-     * @memberof SchemaStructure
-     */
-    'controller'?: ControllerManage;
-    /**
-     * json schema to validate the data that should be parsed into the
-     * @type {string}
-     * @memberof SchemaStructure
-     */
-    'schema'?: string;
-}
-/**
- * 
- * @export
  * @interface SchemaTransactionBody
  */
 export interface SchemaTransactionBody {
@@ -691,10 +636,10 @@ export interface SchemaTransactionBody {
     'type': TransactionType;
     /**
      * 
-     * @type {SchemaStructure}
+     * @type {object}
      * @memberof SchemaTransactionBody
      */
-    'value': SchemaStructure;
+    'value': object;
 }
 /**
  * 
@@ -817,43 +762,6 @@ export interface TemplateResponse {
 /**
  * 
  * @export
- * @interface TemplateStructure
- */
-export interface TemplateStructure {
-    /**
-     * unique identifier of a template
-     * @type {string}
-     * @memberof TemplateStructure
-     */
-    'id': string;
-    /**
-     * Did that controls this did.
-     * @type {ControllerManage}
-     * @memberof TemplateStructure
-     */
-    'controller'?: ControllerManage;
-    /**
-     * template that should be used.
-     * @type {string}
-     * @memberof TemplateStructure
-     */
-    'template': string;
-    /**
-     * did of the schema the template is based on
-     * @type {string}
-     * @memberof TemplateStructure
-     */
-    'schemaId': string;
-    /**
-     * 
-     * @type {Compression}
-     * @memberof TemplateStructure
-     */
-    'compression': Compression;
-}
-/**
- * 
- * @export
  * @interface TemplateTransactionBody
  */
 export interface TemplateTransactionBody {
@@ -877,10 +785,10 @@ export interface TemplateTransactionBody {
     'type': TransactionType;
     /**
      * 
-     * @type {TemplateStructure}
+     * @type {object}
      * @memberof TemplateTransactionBody
      */
-    'value': TemplateStructure;
+    'value': object;
 }
 /**
  * 

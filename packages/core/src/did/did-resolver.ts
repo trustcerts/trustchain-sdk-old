@@ -5,6 +5,7 @@ import { DidManagerConfigValues } from './DidManagerConfigValues';
 import { InitDidManagerConfigValues } from './InitDidManagerConfigValues';
 import { DidNetworks } from './network/did-networks';
 import { Network } from './network/network';
+import { DidStructure } from '@trustcerts/observer';
 
 export abstract class DidResolver {
   constructor() {
@@ -15,10 +16,10 @@ export abstract class DidResolver {
   protected async loadDid(
     did: Did,
     // TODO any is not the best type
-    config: DidManagerConfigValues<any>
+    config: DidManagerConfigValues<DidStructure>
   ): Promise<void> {
     if (config.transactions?.length > 0) {
-      did.parseTransaction(config.transactions);
+      did.parseTransactions(config.transactions);
     } else {
       // resolve the network based on the did string
       const network: Network = DidNetworks.resolveNetwork(did.id);
@@ -39,7 +40,7 @@ export abstract class DidResolver {
           .catch((err: Error) => {
             throw new Error(`Could not resolve DID: ${err} (${did.id})`);
           });
-        did.parseTransaction(config.transactions);
+        did.parseTransactions(config.transactions);
       }
     }
 

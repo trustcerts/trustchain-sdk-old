@@ -1,9 +1,8 @@
 import { Did } from '@trustcerts/core';
 import {
   DidSchemaDocument,
-  DidSchemaTransaction,
+  DidSchemaStructure,
   SchemaDocResponse,
-  SchemaStructure,
 } from '@trustcerts/observer';
 
 export class DidSchema extends Did {
@@ -16,14 +15,14 @@ export class DidSchema extends Did {
     // TODO use method from Identifier.method
   }
 
-  parseTransaction(transactions: DidSchemaTransaction[]): void {
+  parseTransactions(transactions: DidSchemaStructure[]): void {
     for (const transaction of transactions) {
       this.version++;
       // validate signature of transaction
       // parse it into the existing document
       this.parseTransactionControllers(transaction);
 
-      this.schema = transaction.values.schema ?? this.schema;
+      this.schema = transaction.schema ?? this.schema;
     }
   }
   parseDocument(docResponse: SchemaDocResponse): void {
@@ -44,9 +43,9 @@ export class DidSchema extends Did {
     };
   }
 
-  getChanges(): SchemaStructure {
+  getChanges(): DidSchemaStructure {
     // TODO maybe throw an error if the changes are requested, but the version is 0 so there is no did to update.
-    const changes = this.getBasicChanges<SchemaStructure>();
+    const changes = this.getBasicChanges<DidSchemaStructure>();
     changes.schema = this.schema;
     return changes;
   }

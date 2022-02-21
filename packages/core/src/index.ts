@@ -15,6 +15,7 @@ export * from './did/id/did-id';
 export * from './did/id/did-id-resolver';
 export * from './did/did-creation';
 export * from './did/DidManagerConfigValues';
+export * from './did/InitDidManagerConfigValues';
 
 export * from './crypto';
 export * from './crypto-service';

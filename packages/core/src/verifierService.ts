@@ -2,7 +2,7 @@ import {
   Configuration,
   BaseAPI,
   DocResponse,
-  DidTransaction,
+  DidStructure,
 } from '@trustcerts/observer';
 import { sortKeys } from './crypto/hash';
 import { importKey } from './crypto/key';
@@ -33,7 +33,7 @@ export abstract class VerifierService {
 
   protected async validateDoc(
     document: DocResponse,
-    config: DidManagerConfigValues<DidTransaction>
+    config: DidManagerConfigValues<DidStructure>
   ) {
     console.log(document);
     //TODO implement validation of a document with recursive approach

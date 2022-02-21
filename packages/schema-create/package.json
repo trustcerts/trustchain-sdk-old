@@ -56,6 +56,7 @@
   "dependencies": {
     "@trustcerts/core": "^0.4.16",
     "@trustcerts/gateway": "^0.4.16",
+    "@trustcerts/observer": "^0.4.16",
     "@trustcerts/schema-verify": "^0.4.16"
   }
 }

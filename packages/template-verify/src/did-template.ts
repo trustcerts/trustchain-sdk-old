@@ -2,9 +2,8 @@ import { Did } from '@trustcerts/core';
 import {
   Compression,
   DidTemplateDocument,
-  DidTemplateTransaction,
+  DidTemplateStructure,
   TemplateDocResponse,
-  TemplateStructure,
 } from '@trustcerts/observer';
 
 export class DidTemplate extends Did {
@@ -21,16 +20,16 @@ export class DidTemplate extends Did {
     // TODO use method from Identifier.method
   }
 
-  parseTransaction(transactions: DidTemplateTransaction[]): void {
+  parseTransactions(transactions: DidTemplateStructure[]): void {
     for (const transaction of transactions) {
       this.version++;
       // validate signature of transaction
       // parse it into the existing document
       this.parseTransactionControllers(transaction);
 
-      this.schemaId = transaction.values.schemaId ?? this.schemaId;
-      this.template = transaction.values.template ?? this.template;
-      this.compression = transaction.values.compression ?? this.compression;
+      this.schemaId = transaction.schemaId ?? this.schemaId;
+      this.template = transaction.template ?? this.template;
+      this.compression = transaction.compression ?? this.compression;
     }
   }
   parseDocument(docResponse: TemplateDocResponse): void {
@@ -52,8 +51,8 @@ export class DidTemplate extends Did {
   }
   resetChanges(): void {}
 
-  getChanges(): TemplateStructure {
-    const changes = this.getBasicChanges<TemplateStructure>();
+  getChanges(): DidTemplateStructure {
+    const changes = this.getBasicChanges<DidTemplateStructure>();
     return changes;
   }
 }
