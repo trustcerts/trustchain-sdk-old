@@ -1,5 +1,5 @@
 {
-  "version": "0.4.14",
+  "version": "0.4.15",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -81,7 +81,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@trustcerts/core": "^0.4.14",
+    "@trustcerts/core": "^0.4.15",
     "@trustcerts/platform": "^0.4.10"
   },
   "gitHead": "9cc3c3d078fe46729a72961bc6bd241667d43309"

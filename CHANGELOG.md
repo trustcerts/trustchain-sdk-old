@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.15](https://github.com/trustcerts/sdk/compare/v0.4.14...v0.4.15) (2022-02-21)
+
+
+### Bug Fixes
+
+* use better rules for enums ([94ad67f](https://github.com/trustcerts/sdk/commit/94ad67f1f99e66ae8480d906d79caf5bf2447b6f))
+
+
+
+
+
 ## [0.4.14](https://github.com/trustcerts/sdk/compare/v0.4.13...v0.4.14) (2022-02-21)
 
 
