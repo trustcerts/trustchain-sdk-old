@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.14](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.13...v0.4.14) (2022-02-21)
+
+
+### Bug Fixes
+
+* set correct enum names ([815e477](https://github.com/trustcerts/trustchain-sdk/commit/815e4778143434e4d7468d3c73cb93df725829b1))
+
+
+
+
+
 ## [0.4.13](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.12...v0.4.13) (2022-02-21)
 
 **Note:** Version bump only for package @trustcerts/template-verify
