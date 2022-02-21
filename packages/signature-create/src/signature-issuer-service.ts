@@ -7,11 +7,11 @@ import {
 import {
   HashGatewayApi,
   TransactionType,
-  SignatureInfoTypeEnum,
   HashResponse,
   HashDidTransactionDto,
   DidHashStructure,
   AxiosError,
+  SignatureType,
 } from '@trustcerts/gateway';
 
 export class SignatureIssuerService extends IssuerService {
@@ -38,7 +38,7 @@ export class SignatureIssuerService extends IssuerService {
         version: 1,
       },
       signature: {
-        type: SignatureInfoTypeEnum.Single,
+        type: SignatureType.Single,
         values: [],
       },
     };

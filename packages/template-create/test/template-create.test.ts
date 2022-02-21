@@ -11,7 +11,7 @@ import { TemplateIssuerService } from '../src';
 import { JSONSchemaType } from 'ajv';
 import { WalletService } from '@trustcerts/wallet';
 import { readFileSync } from 'fs';
-import { TemplateStructure, CompressionTypeEnum } from '@trustcerts/gateway';
+import { TemplateStructure, CompressionType } from '@trustcerts/gateway';
 
 interface Name {
   name: string;
@@ -61,7 +61,7 @@ describe('test template service', () => {
     );
     const value: TemplateStructure = {
       compression: {
-        type: CompressionTypeEnum.Json,
+        type: CompressionType.Json,
       },
       template,
       schema: JSON.stringify(schema),

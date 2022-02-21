@@ -2,7 +2,7 @@ import { toDataURL } from 'qrcode';
 import mustache from 'mustache';
 import { ClaimValues } from './claim-values';
 import { Compress, JsonCompressor, Proto } from './compress';
-import { CompressionTypeEnum } from '@trustcerts/observer';
+import { CompressionType } from '@trustcerts/observer';
 import { DidSignature } from '@trustcerts/signature-verify';
 import { DidTemplate } from '@trustcerts/template-verify';
 /**
@@ -29,7 +29,7 @@ export class Claim {
   ) {
     let compressor: Compress;
     if (
-      template.compression.type === CompressionTypeEnum.Proto &&
+      template.compression.type === CompressionType.Proto &&
       template.compression.value
     ) {
       compressor = new Proto(JSON.parse(template.compression.value));

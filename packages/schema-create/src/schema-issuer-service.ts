@@ -10,7 +10,7 @@ import {
   SchemaResponse,
   SchemaStructure,
   SchemaTransactionDto,
-  SignatureInfoTypeEnum,
+  SignatureType,
   TransactionType,
 } from '@trustcerts/gateway';
 
@@ -36,7 +36,7 @@ export class SchemaIssuerService extends IssuerService {
         version: 1,
       },
       signature: {
-        type: SignatureInfoTypeEnum.Single,
+        type: SignatureType.Single,
         values: [],
       },
     };

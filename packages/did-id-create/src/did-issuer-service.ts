@@ -7,9 +7,9 @@ import {
 import {
   DidGatewayApi,
   DidIdTransactionDto,
-  SignatureInfoTypeEnum,
   TransactionType,
   AxiosError,
+  SignatureType,
 } from '@trustcerts/gateway';
 import { DidIdStructure } from '@trustcerts/observer';
 export class DidIdIssuerService extends IssuerService {
@@ -33,7 +33,7 @@ export class DidIdIssuerService extends IssuerService {
         version: 1,
       },
       signature: {
-        type: SignatureInfoTypeEnum.Single,
+        type: SignatureType.Single,
         values: [],
       },
     };

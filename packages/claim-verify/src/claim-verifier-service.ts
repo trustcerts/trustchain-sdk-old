@@ -3,7 +3,7 @@ import { Compress, JsonCompressor, Proto } from './compress';
 import { DidTemplateResolver } from '@trustcerts/template-verify';
 import { DidSignatureResolver } from '@trustcerts/signature-verify';
 import { getHash, Identifier, sortKeys } from '@trustcerts/core';
-import { CompressionTypeEnum } from '@trustcerts/observer';
+import { CompressionType } from '@trustcerts/observer';
 import { DidSchemaResolver } from '@trustcerts/schema-verify';
 import { Claim } from './claim';
 import Ajv from 'ajv';
@@ -32,7 +32,7 @@ export class ClaimVerifierService {
     const template = await this.didTemplateResolver.load(did);
     let compressor: Compress;
     if (
-      template.compression.type === CompressionTypeEnum.Proto &&
+      template.compression.type === CompressionType.Proto &&
       template.compression.value
     ) {
       compressor = new Proto(JSON.parse(template.compression.value));

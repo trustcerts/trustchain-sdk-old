@@ -20,7 +20,7 @@ import {
 import { TemplateVerifierService } from '@trustcerts/template-verify';
 import { WalletService } from '@trustcerts/wallet';
 import { readFileSync } from 'fs';
-import { TemplateStructure, CompressionTypeEnum } from '@trustcerts/gateway';
+import { TemplateStructure, CompressionType } from '@trustcerts/gateway';
 
 /**
  * Test claim class.
@@ -75,7 +75,7 @@ describe('claim', () => {
     );
     const template: TemplateStructure = {
       compression: {
-        type: CompressionTypeEnum.Json,
+        type: CompressionType.Json,
       },
       template: '<h1>Hello {{ name }}</h1>',
       schema: JSON.stringify(schema),

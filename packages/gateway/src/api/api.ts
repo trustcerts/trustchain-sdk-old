@@ -28,11 +28,11 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
  */
 export interface Compression {
     /**
-     * type of the compression
-     * @type {string}
+     * 
+     * @type {CompressionType}
      * @memberof Compression
      */
-    'type': CompressionTypeEnum;
+    'type': CompressionType;
     /**
      * Json encoded information that are required for this kind of compression.
      * @type {string}
@@ -40,12 +40,13 @@ export interface Compression {
      */
     'value'?: string;
 }
-
 /**
-    * @export
-    * @enum {string}
-    */
-export enum CompressionTypeEnum {
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum CompressionType {
     Json = 'JSON',
     Proto = 'PROTO'
 }
@@ -93,25 +94,6 @@ export interface CreateDidIdDto {
      * @memberof CreateDidIdDto
      */
     'publicKey': PublicKeyJwkDto;
-}
-/**
- * 
- * @export
- * @interface DidCreationResponse
- */
-export interface DidCreationResponse {
-    /**
-     * additional metadata to the transaction
-     * @type {PersistedTransaction}
-     * @memberof DidCreationResponse
-     */
-    'metaData': PersistedTransaction;
-    /**
-     * 
-     * @type {DidIdTransactionDto}
-     * @memberof DidCreationResponse
-     */
-    'transaction': DidIdTransactionDto;
 }
 /**
  * 
@@ -286,11 +268,11 @@ export interface DidPublicKey {
      */
     'controller': string;
     /**
-     * Type of the key
-     * @type {string}
+     * 
+     * @type {DidPublicKeyType}
      * @memberof DidPublicKey
      */
-    'type': DidPublicKeyTypeEnum;
+    'type': DidPublicKeyType;
     /**
      * encoded key value
      * @type {PublicKeyJwkDto}
@@ -298,15 +280,35 @@ export interface DidPublicKey {
      */
     'publicKeyJwk': PublicKeyJwkDto;
 }
-
 /**
-    * @export
-    * @enum {string}
-    */
-export enum DidPublicKeyTypeEnum {
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum DidPublicKeyType {
     RsaVerificationKey2018 = 'RsaVerificationKey2018'
 }
 
+/**
+ * 
+ * @export
+ * @interface DidResponse
+ */
+export interface DidResponse {
+    /**
+     * additional metadata to the transaction
+     * @type {PersistedTransaction}
+     * @memberof DidResponse
+     */
+    'metaData': PersistedTransaction;
+    /**
+     * 
+     * @type {DidIdTransactionDto}
+     * @memberof DidResponse
+     */
+    'transaction': DidIdTransactionDto;
+}
 /**
  * 
  * @export
@@ -770,11 +772,11 @@ export interface SignatureDto {
  */
 export interface SignatureInfo {
     /**
-     * Type of the signature procedure.
-     * @type {string}
+     * 
+     * @type {SignatureType}
      * @memberof SignatureInfo
      */
-    'type': SignatureInfoTypeEnum;
+    'type': SignatureType;
     /**
      * signature of the document values
      * @type {Array<SignatureDto>}
@@ -782,12 +784,13 @@ export interface SignatureInfo {
      */
     'values': Array<SignatureDto>;
 }
-
 /**
-    * @export
-    * @enum {string}
-    */
-export enum SignatureInfoTypeEnum {
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum SignatureType {
     Single = 'single',
     Multi = 'multi'
 }
@@ -795,19 +798,19 @@ export enum SignatureInfoTypeEnum {
 /**
  * 
  * @export
- * @interface TemplateCreationResponse
+ * @interface TemplateResponse
  */
-export interface TemplateCreationResponse {
+export interface TemplateResponse {
     /**
      * additional metadata to the transaction
      * @type {PersistedTransaction}
-     * @memberof TemplateCreationResponse
+     * @memberof TemplateResponse
      */
     'metaData': PersistedTransaction;
     /**
      * transaction that was persisted.
      * @type {TemplateTransactionDto}
-     * @memberof TemplateCreationResponse
+     * @memberof TemplateResponse
      */
     'transaction': TemplateTransactionDto;
 }
@@ -1238,7 +1241,7 @@ export const DidGatewayApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async gatewayDidControllerCreate(createDidIdDto: CreateDidIdDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DidCreationResponse>> {
+        async gatewayDidControllerCreate(createDidIdDto: CreateDidIdDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DidResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.gatewayDidControllerCreate(createDidIdDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1292,7 +1295,7 @@ export const DidGatewayApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        gatewayDidControllerCreate(createDidIdDto: CreateDidIdDto, options?: any): AxiosPromise<DidCreationResponse> {
+        gatewayDidControllerCreate(createDidIdDto: CreateDidIdDto, options?: any): AxiosPromise<DidResponse> {
             return localVarFp.gatewayDidControllerCreate(createDidIdDto, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1957,7 +1960,7 @@ export const TemplateGatewayApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async gatewayTemplateControllerCreate(templateTransactionDto: TemplateTransactionDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TemplateCreationResponse>> {
+        async gatewayTemplateControllerCreate(templateTransactionDto: TemplateTransactionDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TemplateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.gatewayTemplateControllerCreate(templateTransactionDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1978,7 +1981,7 @@ export const TemplateGatewayApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        gatewayTemplateControllerCreate(templateTransactionDto: TemplateTransactionDto, options?: any): AxiosPromise<TemplateCreationResponse> {
+        gatewayTemplateControllerCreate(templateTransactionDto: TemplateTransactionDto, options?: any): AxiosPromise<TemplateResponse> {
             return localVarFp.gatewayTemplateControllerCreate(templateTransactionDto, options).then((request) => request(axios, basePath));
         },
     };

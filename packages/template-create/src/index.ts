@@ -7,11 +7,11 @@ import {
 import {
   TemplateGatewayApi,
   TemplateStructure,
-  TemplateCreationResponse,
   TemplateTransactionDto,
   TransactionType,
-  SignatureInfoTypeEnum,
   AxiosError,
+  TemplateResponse,
+  SignatureType,
 } from '@trustcerts/gateway';
 
 export class TemplateIssuerService extends IssuerService {
@@ -22,7 +22,7 @@ export class TemplateIssuerService extends IssuerService {
     this.api = new TemplateGatewayApi(this.apiConfiguration);
   }
 
-  async create(value: TemplateStructure): Promise<TemplateCreationResponse> {
+  async create(value: TemplateStructure): Promise<TemplateResponse> {
     const transaction: TemplateTransactionDto = {
       version: 1,
       metadata: {
@@ -35,7 +35,7 @@ export class TemplateIssuerService extends IssuerService {
         value,
       },
       signature: {
-        type: SignatureInfoTypeEnum.Single,
+        type: SignatureType.Single,
         values: [],
       },
     };

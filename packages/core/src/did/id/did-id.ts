@@ -1,6 +1,6 @@
 import {
   DidPublicKey,
-  DidPublicKeyTypeEnum,
+  DidPublicKeyType,
   DidService,
   DidIdStructure,
   RoleManageType,
@@ -64,7 +64,7 @@ export class DidId extends Did {
     const verificationMethod: DidPublicKey = {
       controller: this.id,
       id: this.getFullId(id),
-      type: DidPublicKeyTypeEnum.RsaVerificationKey2018,
+      type: DidPublicKeyType.RsaVerificationKey2018,
       publicKeyJwk: publicKeyJwk,
     };
 
