@@ -48,7 +48,7 @@ export abstract class DidResolver {
     DidCachedService.add(did, config.time);
   }
 
-  protected setConfig<T>(
+  protected setConfig<T extends DidStructure>(
     values?: InitDidManagerConfigValues<T>
   ): DidManagerConfigValues<T> {
     return {

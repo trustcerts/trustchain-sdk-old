@@ -24,6 +24,36 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 /**
  * 
  * @export
+ * @interface Compression
+ */
+export interface Compression {
+    /**
+     * 
+     * @type {CompressionType}
+     * @memberof Compression
+     */
+    'type': CompressionType;
+    /**
+     * Json encoded information that are required for this kind of compression.
+     * @type {string}
+     * @memberof Compression
+     */
+    'value'?: string;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum CompressionType {
+    JSON = 'JSON',
+    PROTO = 'PROTO'
+}
+
+/**
+ * 
+ * @export
  * @interface ControllerManage
  */
 export interface ControllerManage {
@@ -282,6 +312,31 @@ export interface DidResponse {
 /**
  * 
  * @export
+ * @interface DidSchemaStructure
+ */
+export interface DidSchemaStructure {
+    /**
+     * unique identifier of a did
+     * @type {string}
+     * @memberof DidSchemaStructure
+     */
+    'id': string;
+    /**
+     * Did that controls this did.
+     * @type {ControllerManage}
+     * @memberof DidSchemaStructure
+     */
+    'controller'?: ControllerManage;
+    /**
+     * json schema to validate the data that should be parsed into the
+     * @type {string}
+     * @memberof DidSchemaStructure
+     */
+    'schema'?: string;
+}
+/**
+ * 
+ * @export
  * @interface DidService
  */
 export interface DidService {
@@ -303,6 +358,43 @@ export interface DidService {
      * @memberof DidService
      */
     'endpoint': string;
+}
+/**
+ * 
+ * @export
+ * @interface DidTemplateStructure
+ */
+export interface DidTemplateStructure {
+    /**
+     * unique identifier of a template
+     * @type {string}
+     * @memberof DidTemplateStructure
+     */
+    'id': string;
+    /**
+     * Did that controls this did.
+     * @type {ControllerManage}
+     * @memberof DidTemplateStructure
+     */
+    'controller'?: ControllerManage;
+    /**
+     * template that should be used.
+     * @type {string}
+     * @memberof DidTemplateStructure
+     */
+    'template': string;
+    /**
+     * did of the schema the template is based on
+     * @type {string}
+     * @memberof DidTemplateStructure
+     */
+    'schemaId': string;
+    /**
+     * 
+     * @type {Compression}
+     * @memberof DidTemplateStructure
+     */
+    'compression': Compression;
 }
 /**
  * 
@@ -636,10 +728,10 @@ export interface SchemaTransactionBody {
     'type': TransactionType;
     /**
      * 
-     * @type {object}
+     * @type {DidSchemaStructure}
      * @memberof SchemaTransactionBody
      */
-    'value': object;
+    'value': DidSchemaStructure;
 }
 /**
  * 
@@ -785,10 +877,10 @@ export interface TemplateTransactionBody {
     'type': TransactionType;
     /**
      * 
-     * @type {object}
+     * @type {DidTemplateStructure}
      * @memberof TemplateTransactionBody
      */
-    'value': object;
+    'value': DidTemplateStructure;
 }
 /**
  * 
