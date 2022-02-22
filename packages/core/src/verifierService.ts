@@ -58,9 +58,7 @@ export abstract class VerifierService {
         document.signatures[0].values[0].signature,
         await importKey(key, 'jwk', ['verify'])
       );
-      console.log(valid);
       if (!valid) {
-        console.log(document.document);
         throw Error(`signature is wrong for ${document.document.id}`);
       }
     }

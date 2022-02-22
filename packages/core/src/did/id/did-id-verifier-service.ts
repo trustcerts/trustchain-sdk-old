@@ -47,10 +47,10 @@ export class DidIdVerifierService extends VerifierService {
               );
             },
             (err: AxiosError) => {
-              logger.log(err);
               // TODO evaluate the error
               // got a response, validate it
               if (err.response) {
+                console.log(err.response.data);
               } else {
                 // got no response maybe a timeout
               }

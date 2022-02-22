@@ -67,7 +67,6 @@ export class DidNetworks {
    * @returns
    */
   public static resolveNetwork(id: string): Network {
-    console.log(JSON.stringify(this.nameSpaceNetworks));
     // replace the did method
     if (id.startsWith(`did:${Identifier.method}:`)) {
       id = id.replace(`did:${Identifier.method}:`, '');
