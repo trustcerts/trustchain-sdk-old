@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.19](https://github.com/trustcerts/sdk/compare/v0.4.18...v0.4.19) (2022-02-22)
+
+
+### Bug Fixes
+
+* remove console.log ([17527a6](https://github.com/trustcerts/sdk/commit/17527a65f12c1b19597776017d49fc3172594900))
+
+
+
+
+
 ## [0.4.18](https://github.com/trustcerts/sdk/compare/v0.4.17...v0.4.18) (2022-02-22)
 
 
