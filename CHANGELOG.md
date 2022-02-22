@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.18](https://github.com/trustcerts/sdk/compare/v0.4.17...v0.4.18) (2022-02-22)
+
+
+### Bug Fixes
+
+* set network output ([399cf94](https://github.com/trustcerts/sdk/commit/399cf948fb499913d6291cd73f6e8843a35c3772))
+
+
+
+
+
 ## [0.4.17](https://github.com/trustcerts/sdk/compare/v0.4.16...v0.4.17) (2022-02-21)
 
 
