@@ -109,7 +109,6 @@ export class DidSignatureRegister {
       Identifier.generate('hash', hash)
     );
     did.revoked = date;
-    console.log(did);
     return did;
   }
 }

@@ -39,7 +39,7 @@ describe('test local config service', () => {
         SignatureType.Rsa
       )
     )[0];
-    await cryptoService.init(key).catch(console.log);
+    await cryptoService.init(key);
   }, 10000);
 
   it('add did', async () => {
