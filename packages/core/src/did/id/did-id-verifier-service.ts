@@ -5,20 +5,24 @@ import {
   DidIdTransaction,
   IdDocResponse,
   AxiosError,
+  Configuration,
 } from '@trustcerts/observer';
-import { sortKeys } from '../../crypto/hash';
-import { verifySignature } from '../../crypto/sign';
-import { importKey } from '../../crypto/key';
 import { logger } from '../../logger';
 import { DidIdStructure } from '@trustcerts/gateway';
+import { Network } from '../network/network';
+import { DidNetworks } from '../network/did-networks';
 
 export class DidIdVerifierService extends VerifierService {
-  protected apis: DidObserverApi[];
+  protected apis!: DidObserverApi[];
 
-  constructor(protected observerUrls: string[], equalMin = 2) {
-    super(observerUrls, equalMin);
-    this.apis = this.apiConfigurations.map(
-      config => new DidObserverApi(config)
+  protected setEndpoints(id: string) {
+    // resolve the network based on the did string
+    const network: Network = DidNetworks.resolveNetwork(id);
+    if (!network) {
+      throw new Error(`no networks found for ${id}`);
+    }
+    this.apis = network.observers.map(
+      url => new DidObserverApi(new Configuration({ basePath: url }))
     );
   }
 
@@ -33,6 +37,7 @@ export class DidIdVerifierService extends VerifierService {
     id: string,
     config: DidManagerConfigValues<DidIdStructure>
   ): Promise<IdDocResponse> {
+    this.setEndpoints(id);
     return new Promise(async (resolve, reject) => {
       for (const api of this.apis) {
         await api
@@ -40,21 +45,13 @@ export class DidIdVerifierService extends VerifierService {
             timeout: this.timeout,
           })
           .then(
-            async res => {
-              await this.validateDoc(res.data, config).then(
+            async res =>
+              this.validateDoc(res.data, config).then(
                 () => resolve(res.data),
                 err => logger.warn(err)
-              );
-            },
-            (err: AxiosError) => {
-              // TODO evaluate the error
-              // got a response, validate it
-              if (err.response) {
-                console.log(err.response.data);
-              } else {
-                // got no response maybe a timeout
-              }
-            }
+              ),
+            (err: AxiosError) =>
+              err.response ? logger.warn(err.response.data) : logger.warn(err)
           );
       }
       reject('no did doc found');
@@ -74,6 +71,7 @@ export class DidIdVerifierService extends VerifierService {
     validate = true,
     time: string
   ): Promise<DidIdTransaction[]> {
+    this.setEndpoints(id);
     return new Promise(async (resolve, reject) => {
       for (const api of this.apis) {
         await api
@@ -83,66 +81,14 @@ export class DidIdVerifierService extends VerifierService {
           .then(async res => {
             if (validate) {
               for (const transaction of res.data) {
-                await this.validateTransaction(transaction).catch(err =>
-                  logger.warn(err)
-                );
+                await this.validateTransaction(transaction);
               }
               resolve(res.data);
             }
-          });
+          })
+          .catch(logger.warn);
       }
       reject('no transactions founds');
     });
-  }
-
-  /**
-   * Validates the signature of a given transaction.
-   * @param transaction
-   * @private
-   */
-  private async validateTransaction(transaction: DidIdTransaction) {
-    const key: JsonWebKey = await this.getKey(transaction);
-    const value = JSON.stringify(
-      sortKeys({
-        value: transaction.values,
-        date: transaction.createdAt,
-      })
-    );
-    const valid = await verifySignature(
-      value,
-      transaction.signature[0].signature,
-      await importKey(key, 'jwk', ['verify'])
-    );
-    if (!valid) {
-      throw Error('signature is wrong');
-    }
-  }
-
-  private async getKey(transaction: DidIdTransaction): Promise<JsonWebKey> {
-    if (
-      transaction.signature[0].identifier.split('#')[0] ===
-      transaction.values.id
-    ) {
-      // TODO instead of searching for self certified, use the genesis block.
-      if (
-        transaction.values.verificationMethod &&
-        transaction.values.verificationMethod.add
-      ) {
-        const element = transaction.values.verificationMethod.add.find(
-          value => value.id === transaction.signature[0].identifier
-        );
-        if (element) {
-          return element.publicKeyJwk;
-        } else {
-          throw Error('element not found');
-        }
-      } else {
-        throw Error('verification element does not exist');
-      }
-    } else {
-      // TODO design how the system will load and validate the information. Since newer transactions are based on older a client can not validate before having all information.
-      const did = await this.resolver.load(transaction.signature[0].identifier);
-      return did.getKey(transaction.signature[0].identifier).publicKeyJwk;
-    }
   }
 }

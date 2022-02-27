@@ -1,7 +1,10 @@
 import { EncoderService } from '../src/encoder-service';
 import { ShortenerService } from '../src/shortener-service';
+import { readFileSync } from 'fs';
+
 describe('shorten', () => {
-  const url = 'http://localhost:3222'
+  const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
+  const url = testValues.creator;
 
   beforeAll(async () => {});
 

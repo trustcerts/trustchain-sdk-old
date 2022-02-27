@@ -30,9 +30,7 @@ export class DidSchema extends Did {
     this.schema = docResponse.document.value ?? this.schema;
   }
 
-  resetChanges(): void {
-    throw new Error('Method not implemented.');
-  }
+  resetChanges(): void {}
 
   getDocument(): DidSchemaDocument {
     return {

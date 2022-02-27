@@ -1,4 +1,5 @@
 {
+  "$schema": "./values-schema.json",
   "configValues": {
     "invite": {
       "id": "did:trust:tc:dev:id:XLzBJd69tqEgq7oqqdEsHW",
@@ -9,6 +10,8 @@
     "keyPairs": []
   },
   "filePath": "../../tmp/testFile.json",
+  "cloud": "https://platform.dev.trustcerts.de",
+  "creator": "https://creator.dev.trustcerts.de",
   "network": {
     "gateways": ["https://api.gateway1.dev.trustcerts.de"],
     "observers": ["https://api.observer1.dev.trustcerts.de"],

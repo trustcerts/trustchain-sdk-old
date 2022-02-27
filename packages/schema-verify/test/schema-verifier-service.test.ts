@@ -9,9 +9,13 @@ import {
 } from '@trustcerts/core';
 import { LocalConfigService } from '@trustcerts/config-local';
 import { WalletService } from '@trustcerts/wallet';
-import { SchemaIssuerService, DidSchemaRegister } from '../src';
+import {
+  SchemaIssuerService,
+  DidSchemaRegister,
+} from '@trustcerts/schema-create';
+import { DidSchemaResolver } from '../src';
 
-describe('test schema issuer service', () => {
+describe('test schema verifier service', () => {
   let config: ConfigService;
 
   let cryptoService: CryptoService;
@@ -38,7 +42,7 @@ describe('test schema issuer service', () => {
     await cryptoService.init(key);
   }, 10000);
 
-  it('create schema', async () => {
+  it('verify schema', async () => {
     const client = new SchemaIssuerService(
       testValues.network.gateways,
       cryptoService
@@ -49,5 +53,9 @@ describe('test schema issuer service', () => {
     did.schema = '{foo: bar}';
     const res = await DidSchemaRegister.save(did, client);
     expect(res).toBeDefined();
+
+    const resolver = new DidSchemaResolver();
+    const resolvedId = await resolver.load(did.id);
+    expect(resolvedId.schema).toEqual(did.schema);
   }, 7000);
 });

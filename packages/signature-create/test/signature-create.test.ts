@@ -6,13 +6,14 @@ import {
   VerificationRelationshipType,
   DidNetworks,
   Identifier,
-  logger,
   write,
   SignatureType,
+  base58Encode,
 } from '@trustcerts/core';
 import { LocalConfigService } from '@trustcerts/config-local';
 import { WalletService } from '@trustcerts/wallet';
-import { SignatureIssuerService } from '../src';
+import { DidSignatureRegister, SignatureIssuerService } from '../src';
+import { DidSignatureResolver } from '@trustcerts/signature-verify';
 
 describe('test signature service', () => {
   let config: ConfigService;
@@ -24,8 +25,8 @@ describe('test signature service', () => {
   const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
 
   beforeAll(async () => {
-    DidNetworks.add('tc:dev', testValues.network);
-    Identifier.setNetwork('tc:dev');
+    DidNetworks.add(testValues.network.namespace, testValues.network);
+    Identifier.setNetwork(testValues.network.namespace);
     config = new LocalConfigService(testValues.filePath);
     await config.init(testValues.configValues);
 
@@ -44,44 +45,67 @@ describe('test signature service', () => {
   }, 10000);
 
   it('sign string', async () => {
-    const client = new SignatureIssuerService(
+    const issuer = new SignatureIssuerService(
       testValues.network.gateways,
       cryptoService
     );
-    const value = getRandomValues(new Uint8Array(200)).toString();
-    const transaction = await client
-      .signString(value)
-      .catch(err => logger.error(err));
-    expect(transaction).toBeDefined();
+    const signature = base58Encode(getRandomValues(new Uint8Array(20)));
+
+    const didsignatureRegister = new DidSignatureRegister();
+    const resolver = new DidSignatureResolver();
+
+    const did = await didsignatureRegister.signString(signature, [
+      config.config.invite!.id,
+    ]);
+    await didsignatureRegister.save(did, issuer);
+    // wait some time since the observer has to be synced.
+    await new Promise(res => setTimeout(res, 2000));
+    const loadedDid = await resolver.load(did.id);
+    expect(loadedDid.id).toEqual(did.id);
   }, 7000);
 
   it('sign string double', async () => {
-    const client = new SignatureIssuerService(
+    const issuer = new SignatureIssuerService(
       testValues.network.gateways,
       cryptoService
     );
-    const value = getRandomValues(new Uint8Array(200)).toString();
-    const transaction = await client
-      .signString(value)
-      .catch(err => logger.error(err));
-    expect(transaction).toBeDefined();
-    await client
-      .signString(value)
+    const signature = base58Encode(getRandomValues(new Uint8Array(20)));
+
+    const didsignatureRegister = new DidSignatureRegister();
+    const resolver = new DidSignatureResolver();
+
+    const did = await didsignatureRegister.signString(signature, [
+      config.config.invite!.id,
+    ]);
+    await didsignatureRegister.save(did, issuer);
+    // wait some time since the observer has to be synced.
+    await new Promise(res => setTimeout(res, 2000));
+    const loadedDid = await resolver.load(did.id);
+    expect(loadedDid.id).toEqual(did.id);
+    await didsignatureRegister
+      .save(did, issuer)
       .catch(err =>
         expect(err.message.includes('hash already signed')).toBeTruthy()
       );
   }, 7000);
 
   it('sign file', async () => {
-    const client = new SignatureIssuerService(
+    const issuer = new SignatureIssuerService(
       testValues.network.gateways,
       cryptoService
     );
+    const didsignatureRegister = new DidSignatureRegister();
+    const resolver = new DidSignatureResolver();
+
     write(testFile, getRandomValues(new Uint8Array(200)).toString());
-    const transaction = await client
-      .signFile(testFile)
-      .catch(err => logger.error(err));
-    expect(transaction).toBeDefined();
+    const did = await didsignatureRegister.signFile(testFile, [
+      config.config.invite!.id,
+    ]);
+    await didsignatureRegister.save(did, issuer);
+    // wait some time since the observer has to be synced.
+    await new Promise(res => setTimeout(res, 2000));
+    const loadedDid = await resolver.load(did.id);
+    expect(loadedDid.id).toEqual(did.id);
   });
 
   afterAll(() => {

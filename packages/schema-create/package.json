@@ -30,6 +30,35 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "testEnvironment": "node",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "moduleNameMapper": {
+      "^jose/(.*)$": "<rootDir>/node_modules/jose/dist/node/cjs/$1"
+    },
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 0,
+        "functions": 0,
+        "lines": 0,
+        "statements": 0
+      }
+    },
+    "collectCoverageFrom": [
+      "src/*.{js,ts}"
+    ]
+  },
   "name": "@trustcerts/schema-create",
   "author": "trustcerts",
   "module": "dist/schema-create.esm.js",

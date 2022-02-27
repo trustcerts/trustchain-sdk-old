@@ -61,7 +61,6 @@ describe('test local config service', () => {
       testValues.network.gateways,
       cryptoService
     );
-
     await DidIdRegister.save(did, client);
     await new Promise(resolve =>
       setTimeout(() => {
@@ -88,7 +87,7 @@ describe('test local config service', () => {
     expect(
       did.getDocument().service.find(service => service.id.includes('service1'))
     ).toBeDefined();
-
+    await new Promise(resolve => setTimeout(resolve, 500));
     did.removeService('service1');
     await DidIdRegister.save(did, client);
     expect(

@@ -5,32 +5,36 @@ import {
   IssuerService,
 } from '@trustcerts/core';
 import {
-  DidGatewayApi,
-  DidIdTransactionDto,
-  TransactionType,
+  TemplateGatewayApi,
+  DidTemplateStructure,
   AxiosError,
+  TemplateResponse,
   SignatureType,
+  TemplateTransactionDto,
+  TransactionType,
 } from '@trustcerts/gateway';
-import { DidIdStructure } from '@trustcerts/observer';
-export class DidIdIssuerService extends IssuerService {
-  protected api: DidGatewayApi;
+
+export class TemplateIssuerService extends IssuerService {
+  protected api: TemplateGatewayApi;
 
   constructor(gateways: string[], cryptoService: CryptoService) {
     super(gateways, cryptoService);
-    this.api = new DidGatewayApi(this.apiConfiguration);
+    this.api = new TemplateGatewayApi(this.apiConfiguration);
   }
 
-  async persistDid(value: DidIdStructure): Promise<void> {
-    const transaction: DidIdTransactionDto = {
+  async persistTemplate(
+    value: DidTemplateStructure
+  ): Promise<TemplateResponse> {
+    const transaction: TemplateTransactionDto = {
       version: 1,
-      body: {
-        date: new Date().toISOString(),
-        value,
-        type: TransactionType.Did,
-        version: 1,
-      },
       metadata: {
         version: 1,
+      },
+      body: {
+        version: 1,
+        date: new Date().toISOString(),
+        type: TransactionType.Template,
+        value,
       },
       signature: {
         type: SignatureType.Single,
@@ -48,8 +52,7 @@ export class DidIdIssuerService extends IssuerService {
       ),
       identifier: this.cryptoService.fingerPrint,
     });
-
-    return await this.api.gatewayDidControllerStore(transaction).then(
+    return await this.api.gatewayTemplateControllerCreate(transaction).then(
       res => res.data,
       (err: AxiosError) => {
         if (err.response) {

@@ -40,12 +40,15 @@ export class DidSignature extends Did {
       id: this.id,
       controller: Array.from(this.controller.current.values()),
       algorithm: this.algorithm,
+      revoked: this.revoked,
     };
   }
   resetChanges(): void {}
 
   getChanges(): DidHashStructure {
     const changes = this.getBasicChanges<DidHashStructure>();
+    changes.algorithm = this.algorithm;
+    changes.revoked = this.revoked;
     return changes;
   }
 }

@@ -7,6 +7,9 @@ import {
   DidIdResolver,
   SignatureContent,
   VerifierService,
+  logger,
+  DidNetworks,
+  Network,
   DidManagerConfigValues,
 } from '@trustcerts/core';
 import {
@@ -14,23 +17,29 @@ import {
   DidHashDocument,
   HashDocResponse,
   HashObserverApi,
-  DidHashTransaction,
   TransactionType,
+  DidHashStructure,
+  DidSchemaTransaction,
+  Configuration,
 } from '@trustcerts/observer';
 
-export class SignatureVerifierService extends VerifierService {
-  protected apis: HashObserverApi[];
+export class DidSignatureVerifierService extends VerifierService {
+  protected apis!: HashObserverApi[];
 
-  constructor(protected observerUrls: string[], equalMin = 2) {
-    super(observerUrls, equalMin);
-    this.apis = this.apiConfigurations.map(
-      config => new HashObserverApi(config)
+  protected setEndpoints(id: string) {
+    // resolve the network based on the did string
+    const network: Network = DidNetworks.resolveNetwork(id);
+    if (!network) {
+      throw new Error(`no networks found for ${id}`);
+    }
+    this.apis = network.observers.map(
+      url => new HashObserverApi(new Configuration({ basePath: url }))
     );
   }
 
   public async verifyString(
     value: string,
-    config: DidManagerConfigValues<DidHashTransaction>
+    config: DidManagerConfigValues<DidHashStructure>
   ): Promise<DidHashDocument> {
     const hash = await getHash(value);
     return this.verify(hash, config);
@@ -38,7 +47,7 @@ export class SignatureVerifierService extends VerifierService {
 
   public async verifyFile(
     file: string | File,
-    config: DidManagerConfigValues<DidHashTransaction>
+    config: DidManagerConfigValues<DidHashStructure>
   ): Promise<DidHashDocument> {
     const hash = await getHashFromFile(file);
     return this.verify(hash, config);
@@ -46,18 +55,18 @@ export class SignatureVerifierService extends VerifierService {
 
   public async verify(
     checksum: string,
-    config: DidManagerConfigValues<DidHashTransaction>
+    config: DidManagerConfigValues<DidHashStructure>
   ): Promise<DidHashDocument> {
     const hashDocument = await this.getDidDocument(checksum, config);
-    const usedKey = hashDocument.signatures[0].values[0].identifier;
+    const usedKey = hashDocument.signatures.values[0].identifier;
     const time = hashDocument.metaData.created;
     const resolver = new DidIdResolver();
     const did = await resolver.load(usedKey, { time });
     const key = did.getKey(usedKey);
     if (
       await verifySignature(
-        SignatureVerifierService.hash(hashDocument),
-        hashDocument.signatures[0].values[0].signature,
+        DidSignatureVerifierService.hash(hashDocument),
+        hashDocument.signatures.values[0].signature,
         await importKey(key.publicKeyJwk, 'jwk', ['verify'])
       )
     ) {
@@ -69,26 +78,60 @@ export class SignatureVerifierService extends VerifierService {
 
   async getDidDocument(
     id: string,
-    config: DidManagerConfigValues<DidHashTransaction>
+    config: DidManagerConfigValues<DidHashStructure>
   ): Promise<HashDocResponse> {
-    for (const api of this.apis) {
-      await api
-        .observerHashControllerGetDoc(id, config.time, undefined, {
-          timeout: 2000,
-        })
-        .then(
-          res => Promise.resolve(res.data),
-          (err: AxiosError) => {
-            // TODO evaluate the error
-            // got a response, validate it
-            if (err.response) {
-            } else {
-              // got no response maybe a timeout
+    this.setEndpoints(id);
+    return new Promise(async (resolve, reject) => {
+      for (const api of this.apis) {
+        await api
+          .observerHashControllerGetDoc(id, config.time, undefined, {
+            timeout: this.timeout,
+          })
+          .then(
+            async res =>
+              this.validateDoc(res.data, config).then(
+                () => resolve(res.data),
+                err => logger.warn(err)
+              ),
+            (err: AxiosError) =>
+              err.response ? logger.warn(err.response.data) : logger.warn(err)
+          );
+      }
+      reject('no did doc found');
+    });
+  }
+  /**
+   * Resolve a DID document's transactions by returning the first valid response of a observer of the network
+   * @param id The DID of the DID document
+   * @param validate Whether to validate the response
+   * @param time The time of the DID document that shall be queried
+   * @param timeout Timeout for each observer that is queried
+   * @returns The DID document's transactions
+   */
+  async getDidTransactions(
+    id: string,
+    validate = true,
+    time: string
+  ): Promise<DidSchemaTransaction[]> {
+    this.setEndpoints(id);
+    return new Promise(async (resolve, reject) => {
+      for (const api of this.apis) {
+        await api
+          .observerHashControllerGetTransactions(id, time, undefined, {
+            timeout: this.timeout,
+          })
+          .then(async res => {
+            if (validate) {
+              for (const transaction of res.data) {
+                await this.validateTransaction(transaction);
+              }
+              resolve(res.data);
             }
-          }
-        );
-    }
-    return Promise.reject('no transactions found');
+          })
+          .catch(logger.warn);
+      }
+      reject('no transactions founds');
+    });
   }
 
   private static hash(hash: HashDocResponse): string {

@@ -33,6 +33,35 @@
   "name": "@trustcerts/schema-verify",
   "author": "trustcerts",
   "module": "dist/schema-verify.esm.js",
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "testEnvironment": "node",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "moduleNameMapper": {
+      "^jose/(.*)$": "<rootDir>/node_modules/jose/dist/node/cjs/$1"
+    },
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 0,
+        "functions": 0,
+        "lines": 0,
+        "statements": 0
+      }
+    },
+    "collectCoverageFrom": [
+      "src/*.{js,ts}"
+    ]
+  },
   "size-limit": [
     {
       "path": "dist/schema-verify.cjs.production.min.js",
@@ -44,6 +73,9 @@
     }
   ],
   "devDependencies": {
+    "@trustcerts/config-local": "^0.4.19",
+    "@trustcerts/schema-create": "^0.4.19",
+    "@trustcerts/wallet": "^0.4.19",
     "@size-limit/preset-small-lib": "^7.0.8",
     "husky": "^7.0.4",
     "size-limit": "^7.0.8",

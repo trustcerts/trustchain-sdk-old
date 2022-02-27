@@ -3,8 +3,11 @@ import { DidId } from './did-id';
 import { DidResolver } from '../did-resolver';
 import { DidStructure } from '@trustcerts/observer';
 import { DidIdStructure } from '@trustcerts/gateway';
+import { DidIdVerifierService } from './did-id-verifier-service';
 
 export class DidIdResolver extends DidResolver {
+  protected verifier = new DidIdVerifierService();
+
   public async load(
     id: string,
     values?: InitDidManagerConfigValues<DidStructure>

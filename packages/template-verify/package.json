@@ -74,8 +74,9 @@
   "devDependencies": {
     "@size-limit/preset-small-lib": "^7.0.8",
     "@trustcerts/config-local": "^0.4.19",
-    "@trustcerts/gateway": "^0.4.18",
+    "@trustcerts/schema-create": "^0.4.19",
     "@trustcerts/template-create": "^0.4.19",
+    "@trustcerts/gateway": "^0.4.18",
     "@trustcerts/wallet": "^0.4.19",
     "husky": "^7.0.4",
     "size-limit": "^7.0.8",

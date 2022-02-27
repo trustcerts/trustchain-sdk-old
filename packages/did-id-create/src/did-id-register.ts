@@ -70,8 +70,8 @@ export class DidIdRegister {
     const value = did.getChanges();
 
     // const document = did.getDocument();
-    // did.version++;
-    // did.resetChanges();
+    did.version++;
+    did.resetChanges();
     return client.persistDid(value);
   }
 }

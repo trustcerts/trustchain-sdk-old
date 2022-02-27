@@ -11,17 +11,23 @@ import {
   DidSignatureResolver,
 } from '@trustcerts/signature-verify';
 
+export interface DidHashCreation extends DidCreation {
+  id: string;
+  algorithm: string;
+}
+
 export class DidSignatureRegister {
   private didSignatrueResolver = new DidSignatureResolver();
 
   /**
    * creates a fresh did with a unique identifier. Add controller when they are passed.
    */
-  public create(values?: DidCreation): DidSignature {
+  public create(values: DidHashCreation): DidSignature {
     // TODO check if a given id should be allowed
     const id = values?.id ?? Identifier.generate('hash');
     const did = new DidSignature(id);
-    values?.controllers?.forEach(controller => did.addController(controller));
+    values.controllers?.forEach(controller => did.addController(controller));
+    did.algorithm = values.algorithm;
     return did;
   }
 
@@ -40,11 +46,15 @@ export class DidSignatureRegister {
    *
    * @returns {Promise<void>}
    */
-  async signFile(filePath: string): Promise<DidSignature> {
+  async signFile(
+    filePath: string,
+    controllers: string[]
+  ): Promise<DidSignature> {
     const hash = await getHashFromFile(filePath);
     return this.create({
       id: Identifier.generate('hash', hash),
-      controllers: [],
+      algorithm: 'sha256',
+      controllers,
     });
   }
 
@@ -52,11 +62,15 @@ export class DidSignatureRegister {
    * Signs a string.
    * @param value
    */
-  async signString(value: string): Promise<DidSignature> {
+  async signString(
+    value: string,
+    controllers: string[]
+  ): Promise<DidSignature> {
     const hash = await getHash(value);
     return this.create({
       id: Identifier.generate('hash', hash),
-      controllers: [],
+      algorithm: 'sha256',
+      controllers,
     });
   }
 
@@ -95,6 +109,7 @@ export class DidSignatureRegister {
       Identifier.generate('hash', hash)
     );
     did.revoked = date;
+    console.log(did);
     return did;
   }
 }

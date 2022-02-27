@@ -28,7 +28,8 @@ export class ClaimIssuerService {
     template: DidTemplate,
     values: ClaimValues,
     host: string,
-    signatureIssuer: SignatureIssuerService
+    signatureIssuer: SignatureIssuerService,
+    controllers: string[],
   ): Promise<Claim> {
     const ajv = new Ajv();
     const schema = await this.didSchemaResolver.load(template.schemaId);
@@ -38,6 +39,8 @@ export class ClaimIssuerService {
     const hash = await ClaimVerifierService.getHash(values, template.id);
     const didHash = await this.didSignatureRegister.create({
       id: Identifier.generate('hash', hash),
+      algorithm: 'sha256',
+      controllers,
     });
     this.didSignatureRegister.save(didHash, signatureIssuer);
     return new Claim(values, template, host);

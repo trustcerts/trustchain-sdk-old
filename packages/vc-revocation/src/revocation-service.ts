@@ -35,8 +35,8 @@ export class RevocationService {
 
   constructor() {
     // Ausgeklammert weil noch kein Blockchain-Support
-    // DidNetworks.add('tc:dev', network);
-    // Identifier.setNetwork('tc:dev');
+    // DidNetworks.add(testValues.network.namespace, network);
+    // Identifier.setNetwork(testValues.network.namespace);
     // this.config = new LocalConfigService(filePath);
   }
 

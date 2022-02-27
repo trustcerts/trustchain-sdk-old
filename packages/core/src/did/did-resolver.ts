@@ -1,17 +1,12 @@
 import { DidCachedService } from './cache/did-cached-service';
 import { Did } from './did';
-import { DidIdVerifierService } from './id/did-id-verifier-service';
 import { DidManagerConfigValues } from './DidManagerConfigValues';
 import { InitDidManagerConfigValues } from './InitDidManagerConfigValues';
-import { DidNetworks } from './network/did-networks';
-import { Network } from './network/network';
 import { DidStructure } from '@trustcerts/observer';
+import { VerifierService } from '../verifierService';
 
 export abstract class DidResolver {
-  constructor() {
-    // TODO do not load it here
-    DidCachedService.load();
-  }
+  protected verifier!: VerifierService;
 
   protected async loadDid(
     did: Did,
@@ -21,21 +16,15 @@ export abstract class DidResolver {
     if (config.transactions?.length > 0) {
       did.parseTransactions(config.transactions);
     } else {
-      // resolve the network based on the did string
-      const network: Network = DidNetworks.resolveNetwork(did.id);
-      if (!network) {
-        throw new Error(`no networks found for ${did.id}`);
-      }
-      const verifier = new DidIdVerifierService(network.observers);
       if (config.doc) {
-        const document = await verifier
+        const document = await this.verifier
           .getDidDocument(did.id, config)
           .catch((err: Error) => {
             throw new Error(`Could not resolve DID: ${err} (${did.id})`);
           });
         did.parseDocument(document);
       } else {
-        config.transactions = await verifier
+        config.transactions = await this.verifier
           .getDidTransactions(did.id, config.validateChainOfTrust, config.time)
           .catch((err: Error) => {
             throw new Error(`Could not resolve DID: ${err} (${did.id})`);

@@ -7,20 +7,15 @@ import {
 } from '@trustcerts/observer';
 
 export class DidTemplate extends Did {
+  // use setters to change values to detect if there where changes
   public compression!: Compression;
 
   public template!: string;
 
   public schemaId!: string;
 
-  constructor(public id: string) {
-    super(id);
-    // if the passed id value already has a prefix remove it.
-    // TODO set correct regexp, normal did should have no type
-    // TODO use method from Identifier.method
-  }
-
   parseTransactions(transactions: DidTemplateStructure[]): void {
+    // this.values.
     for (const transaction of transactions) {
       this.version++;
       // validate signature of transaction
@@ -53,6 +48,9 @@ export class DidTemplate extends Did {
 
   getChanges(): DidTemplateStructure {
     const changes = this.getBasicChanges<DidTemplateStructure>();
+    changes.compression = this.compression;
+    changes.schemaId = this.schemaId;
+    changes.template = this.template;
     return changes;
   }
 }

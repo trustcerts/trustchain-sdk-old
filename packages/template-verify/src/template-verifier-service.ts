@@ -1,6 +1,8 @@
 import {
   DidManagerConfigValues,
+  DidNetworks,
   logger,
+  Network,
   VerifierService,
 } from '@trustcerts/core';
 import {
@@ -8,15 +10,20 @@ import {
   TemplateDocResponse,
   DidTemplateTransaction,
   AxiosError,
+  Configuration,
 } from '@trustcerts/observer';
 
 export class TemplateVerifierService extends VerifierService {
-  protected apis: TemplateObserverApi[];
+  protected apis!: TemplateObserverApi[];
 
-  constructor(protected observerUrls: string[], equalMin = 2) {
-    super(observerUrls, equalMin);
-    this.apis = this.apiConfigurations.map(
-      config => new TemplateObserverApi(config)
+  protected setEndpoints(id: string) {
+    // resolve the network based on the did string
+    const network: Network = DidNetworks.resolveNetwork(id);
+    if (!network) {
+      throw new Error(`no networks found for ${id}`);
+    }
+    this.apis = network.observers.map(
+      url => new TemplateObserverApi(new Configuration({ basePath: url }))
     );
   }
 
@@ -55,6 +62,40 @@ export class TemplateVerifierService extends VerifierService {
           );
       }
       reject('no did doc found');
+    });
+  }
+
+  /**
+   * Resolve a DID document's transactions by returning the first valid response of a observer of the network
+   * @param id The DID of the DID document
+   * @param validate Whether to validate the response
+   * @param time The time of the DID document that shall be queried
+   * @param timeout Timeout for each observer that is queried
+   * @returns The DID document's transactions
+   */
+  async getDidTransactions(
+    id: string,
+    validate = true,
+    time: string
+  ): Promise<DidTemplateTransaction[]> {
+    this.setEndpoints(id);
+    return new Promise(async (resolve, reject) => {
+      for (const api of this.apis) {
+        await api
+          .observerTemplateControllerGetTransactions(id, time, undefined, {
+            timeout: this.timeout,
+          })
+          .then(async res => {
+            if (validate) {
+              for (const transaction of res.data) {
+                await this.validateTransaction(transaction);
+              }
+              resolve(res.data);
+            }
+          })
+          .catch(logger.warn);
+      }
+      reject('no transactions founds');
     });
   }
 }
