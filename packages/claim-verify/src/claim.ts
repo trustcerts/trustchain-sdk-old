@@ -12,7 +12,7 @@ export class Claim {
   /**
    * Url of the claim.
    */
-  private url: string;
+  private url: any;
 
   /**
    * Information about the validation.

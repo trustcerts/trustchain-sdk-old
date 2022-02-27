@@ -29,7 +29,7 @@ export class ClaimIssuerService {
     values: ClaimValues,
     host: string,
     signatureIssuer: SignatureIssuerService,
-    controllers: string[],
+    controllers: string[]
   ): Promise<Claim> {
     const ajv = new Ajv();
     const schema = await this.didSchemaResolver.load(template.schemaId);
@@ -37,6 +37,7 @@ export class ClaimIssuerService {
       throw Error('input does not match with schema');
     }
     const hash = await ClaimVerifierService.getHash(values, template.id);
+    console.log(hash);
     const didHash = await this.didSignatureRegister.create({
       id: Identifier.generate('hash', hash),
       algorithm: 'sha256',
@@ -59,9 +60,11 @@ export class ClaimIssuerService {
       claim.values,
       claim.getTemplateId()
     );
+    console.log(hash);
     const didHash = await this.didSignatureResolver
       .load(Identifier.generate('hash', hash))
-      .catch(() => {
+      .catch(err => {
+        console.log(err);
         throw new Error('hash of claim not found');
       });
     didHash.revoked = new Date().toISOString();

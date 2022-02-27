@@ -42,6 +42,7 @@ jobs:
           npm i
           ./build.sh
 
+      # TODO replace this with a static config
       - name: generate config folder
         run: npm run trusty-generate
 

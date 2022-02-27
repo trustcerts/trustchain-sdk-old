@@ -75,6 +75,7 @@
     "@size-limit/preset-small-lib": "^7.0.8",
     "@trustcerts/config-local": "^0.4.20",
     "@trustcerts/gateway": "^0.4.20",
+    "@trustcerts/schema-create": "^0.4.20",
     "@trustcerts/signature-verify": "^0.4.20",
     "@trustcerts/template-create": "^0.4.20",
     "@trustcerts/template-verify": "^0.4.20",

@@ -80,7 +80,6 @@ describe('test template service', () => {
     templateDid.compression = {
       type: CompressionType.JSON,
     };
-    console.log(templateDid);
     const res = await DidTemplateRegister.save(templateDid, client);
     expect(res).toBeDefined();
   });

@@ -110,7 +110,6 @@ describe('test signature service', () => {
 
     await new Promise(res => setTimeout(res, 2000));
     loadedDid = await resolver.load(did.id);
-    console.log(loadedDid);
     expect(loadedDid.revoked).toBeDefined();
     // expect(loadedDid.revoked! > loadedDid.).toBeTruthy();
   }, 10000);

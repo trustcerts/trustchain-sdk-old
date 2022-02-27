@@ -38,6 +38,7 @@ export class TemplateVerifierService extends VerifierService {
     id: string,
     config: DidManagerConfigValues<DidTemplateTransaction>
   ): Promise<TemplateDocResponse> {
+    this.setEndpoints(id);
     return new Promise(async (resolve, reject) => {
       for (const api of this.apis) {
         await api
