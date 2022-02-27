@@ -1,5 +1,5 @@
 {
-  "version": "0.4.19",
+  "version": "0.4.20",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -73,12 +73,12 @@
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^7.0.8",
-    "@trustcerts/config-local": "^0.4.19",
-    "@trustcerts/gateway": "^0.4.18",
-    "@trustcerts/signature-verify": "^0.4.19",
-    "@trustcerts/template-create": "^0.4.19",
-    "@trustcerts/template-verify": "^0.4.19",
-    "@trustcerts/wallet": "^0.4.19",
+    "@trustcerts/config-local": "^0.4.20",
+    "@trustcerts/gateway": "^0.4.20",
+    "@trustcerts/signature-verify": "^0.4.20",
+    "@trustcerts/template-create": "^0.4.20",
+    "@trustcerts/template-verify": "^0.4.20",
+    "@trustcerts/wallet": "^0.4.20",
     "husky": "^7.0.4",
     "size-limit": "^7.0.8",
     "tsdx": "^0.14.1",
@@ -86,11 +86,11 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@trustcerts/claim-verify": "^0.4.19",
-    "@trustcerts/core": "^0.4.19",
-    "@trustcerts/observer": "^0.4.18",
-    "@trustcerts/schema-verify": "^0.4.19",
-    "@trustcerts/signature-create": "^0.4.19"
+    "@trustcerts/claim-verify": "^0.4.20",
+    "@trustcerts/core": "^0.4.20",
+    "@trustcerts/observer": "^0.4.20",
+    "@trustcerts/schema-verify": "^0.4.20",
+    "@trustcerts/signature-create": "^0.4.20"
   },
   "gitHead": "5b6d6c645f256b5b4d8ba37343f091e6fdcda803"
 }

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.20](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.19...v0.4.20) (2022-02-27)
+
+
+### Bug Fixes
+
+* tmp ([f917452](https://github.com/trustcerts/trustchain-sdk/commit/f917452ffee333c1afcdd7ac57aa625072906bea))
+
+
+
+
+
 ## [0.4.19](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.18...v0.4.19) (2022-02-22)
 
 **Note:** Version bump only for package @trustcerts/vc-revocation
