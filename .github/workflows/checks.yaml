@@ -11,6 +11,7 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v2
         with:
+          submodules: true
           fetch-depth: 0
 
       - name: "Use NodeJS 16"
@@ -43,14 +44,9 @@ jobs:
           npm i
           ./build.sh
 
-          
-      - name: generate config folder
-        run:  npm run trusty-generate
-
       - name: Start blockchain-nodes
         run: |
-          docker network create test-network
-          cd ./config
+          cd ./test/trustchain-config/config-example/network-small
           ./all.sh up -d
           ./initNodes.sh
 
