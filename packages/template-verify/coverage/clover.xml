@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1646002639639" clover="3.2.0">
-  <project timestamp="1646002639639" name="All files">
+<coverage generated="1646125481166" clover="3.2.0">
+  <project timestamp="1646125481166" name="All files">
     <metrics statements="73" coveredstatements="43" conditionals="25" coveredconditionals="6" methods="24" coveredmethods="13" elements="122" coveredelements="62" complexity="0" loc="73" ncloc="73" packages="1" files="4" classes="4"/>
     <file name="did-template-resolver.ts" path="/root/ssi/packages/template-verify/src/did-template-resolver.ts">
       <metrics statements="12" coveredstatements="12" conditionals="3" coveredconditionals="3" methods="2" coveredmethods="2"/>

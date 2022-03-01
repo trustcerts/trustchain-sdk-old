@@ -62,6 +62,7 @@ describe('test signature service', () => {
     await didsignatureRegister.save(did, issuer);
     // wait some time since the observer has to be synced.
     await new Promise(res => setTimeout(res, 2000));
+    console.log(did.id);
     const loadedDid = await resolver.load(did.id);
     expect(loadedDid.id).toEqual(did.id);
   }, 10000);

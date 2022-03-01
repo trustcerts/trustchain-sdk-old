@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1646002602823" clover="3.2.0">
-  <project timestamp="1646002602823" name="All files">
-    <metrics statements="54" coveredstatements="43" conditionals="26" coveredconditionals="15" methods="14" coveredmethods="11" elements="94" coveredelements="69" complexity="0" loc="54" ncloc="54" packages="1" files="3" classes="3"/>
+<coverage generated="1646125439116" clover="3.2.0">
+  <project timestamp="1646125439116" name="All files">
+    <metrics statements="53" coveredstatements="43" conditionals="26" coveredconditionals="15" methods="14" coveredmethods="11" elements="93" coveredelements="69" complexity="0" loc="53" ncloc="53" packages="1" files="3" classes="3"/>
     <file name="did-signature-register.ts" path="/root/ssi/packages/signature-create/src/did-signature-register.ts">
-      <metrics statements="35" coveredstatements="25" conditionals="21" coveredconditionals="11" methods="9" coveredmethods="6"/>
+      <metrics statements="34" coveredstatements="25" conditionals="21" coveredconditionals="11" methods="9" coveredmethods="6"/>
       <line num="1" count="1" type="stmt"/>
       <line num="9" count="1" type="stmt"/>
       <line num="19" count="1" type="stmt"/>
@@ -37,8 +37,7 @@
       <line num="108" count="0" type="cond" truecount="0" falsecount="1"/>
       <line num="111" count="0" type="stmt"/>
       <line num="112" count="0" type="stmt"/>
-      <line num="113" count="0" type="stmt"/>
-      <line num="115" count="1" type="stmt"/>
+      <line num="114" count="1" type="stmt"/>
     </file>
     <file name="index.ts" path="/root/ssi/packages/signature-create/src/index.ts">
       <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>

@@ -9,19 +9,21 @@ import {
 export abstract class Did {
   public version = 0;
 
-  protected idLength = 22;
-
   protected controller = new Management<string>();
 
   protected context = ['https://www.w3.org/ns/did/v1'];
 
   constructor(public id: string) {
-    const result = new RegExp(
-      `did:trust:[:a-z]*[1-9A-HJ-NP-Za-km-z]{${this.idLength}}`
-    ).test(id);
+    const result = new RegExp(this.getExp()).test(id);
     if (!result) {
+      console.log(this.getExp());
       throw Error('wrong format for did: ' + id);
     }
+  }
+
+  // will not be overwritten by parent class.
+  protected getExp() {
+    return '^did:trust:[:a-z]*[1-9A-HJ-NP-Za-km-z]{22}$';
   }
 
   public getVersion(): number {

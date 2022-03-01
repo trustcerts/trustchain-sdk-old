@@ -16,6 +16,10 @@ export class DidSignature extends Did {
     // TODO use method from Identifier.method
   }
 
+  protected getExp() {
+    return '^did:trust:[:a-z]*[1-9A-HJ-NP-Za-km-z]{20}';
+  }
+
   parseTransactions(transactions: DidHashStructure[]): void {
     for (const transaction of transactions) {
       this.version++;
