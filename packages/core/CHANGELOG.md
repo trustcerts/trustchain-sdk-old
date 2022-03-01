@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.21](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.20...v0.4.21) (2022-03-01)
+
+
+### Bug Fixes
+
+* set did:sig regexp ([50bf022](https://github.com/trustcerts/trustchain-sdk/commit/50bf0220450dac8559a49c46092ad69c23140cc7))
+
+
+
+
+
 ## [0.4.20](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.19...v0.4.20) (2022-02-27)
 
 

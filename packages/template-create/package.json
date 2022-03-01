@@ -1,5 +1,5 @@
 {
-  "version": "0.4.20",
+  "version": "0.4.21",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -73,8 +73,8 @@
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^7.0.8",
-    "@trustcerts/config-local": "^0.4.20",
-    "@trustcerts/wallet": "^0.4.20",
+    "@trustcerts/config-local": "^0.4.21",
+    "@trustcerts/wallet": "^0.4.21",
     "husky": "^7.0.4",
     "size-limit": "^7.0.8",
     "tsdx": "^0.14.1",
@@ -82,10 +82,10 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@trustcerts/core": "^0.4.20",
+    "@trustcerts/core": "^0.4.21",
     "@trustcerts/gateway": "^0.4.20",
-    "@trustcerts/schema-create": "^0.4.20",
-    "@trustcerts/template-verify": "^0.4.20",
+    "@trustcerts/schema-create": "^0.4.21",
+    "@trustcerts/template-verify": "^0.4.21",
     "ajv": "^8.8.2"
   },
   "gitHead": "9cc3c3d078fe46729a72961bc6bd241667d43309"

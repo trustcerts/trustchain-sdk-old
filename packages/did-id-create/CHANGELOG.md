@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.21](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.20...v0.4.21) (2022-03-01)
+
+
+### Bug Fixes
+
+* remove console logs ([fb347b3](https://github.com/trustcerts/trustchain-sdk/commit/fb347b3945e83edb20f0344c75692e698940f874))
+
+
+
+
+
 ## [0.4.20](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.19...v0.4.20) (2022-02-27)
 
 

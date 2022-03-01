@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.21](https://github.com/trustcerts/sdk/compare/v0.4.20...v0.4.21) (2022-03-01)
+
+
+### Bug Fixes
+
+* change values.json ([7bf74e3](https://github.com/trustcerts/sdk/commit/7bf74e324d2ef90baeec0e22f63f8a7899800f4e))
+* remove console logs ([fb347b3](https://github.com/trustcerts/sdk/commit/fb347b3945e83edb20f0344c75692e698940f874))
+* set did:sig regexp ([50bf022](https://github.com/trustcerts/sdk/commit/50bf0220450dac8559a49c46092ad69c23140cc7))
+* update tests to did operations ([3f36c26](https://github.com/trustcerts/sdk/commit/3f36c265e18a983cfe0b3e99a6376cbce6ab5371))
+
+
+
+
+
 ## [0.4.20](https://github.com/trustcerts/sdk/compare/v0.4.19...v0.4.20) (2022-02-27)
 
 
