@@ -27,8 +27,8 @@ export class DidSignature extends Did {
       // parse it into the existing document
       this.parseTransactionControllers(transaction);
 
-      this.algorithm = transaction.algorithm;
-      this.revoked = transaction.revoked;
+      this.algorithm = transaction.algorithm ?? this.algorithm;
+      this.revoked = transaction.revoked ?? this.revoked;
     }
   }
 

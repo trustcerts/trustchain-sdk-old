@@ -118,7 +118,7 @@ export interface DidHashStructure {
      * @type {string}
      * @memberof DidHashStructure
      */
-    'algorithm': string;
+    'algorithm'?: string;
     /**
      * if set to a date it will revoke the hash
      * @type {string}
