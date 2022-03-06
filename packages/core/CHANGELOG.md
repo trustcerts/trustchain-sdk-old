@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.23](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.22...v0.4.23) (2022-03-06)
+
+
+### Bug Fixes
+
+* return the id from issuerservice ([829cd99](https://github.com/trustcerts/trustchain-sdk/commit/829cd9978a8bf4ae0c5f98b836f35d23885ea61f))
+
+
+
+
+
 ## [0.4.22](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.21...v0.4.22) (2022-03-06)
 
 **Note:** Version bump only for package @trustcerts/core
