@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.22](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.21...v0.4.22) (2022-03-06)
+
+
+### Bug Fixes
+
+* remove coverage folders ([e555891](https://github.com/trustcerts/trustchain-sdk/commit/e555891adc8b825c21942946911b586e03796647))
+
+
+
+
+
 ## [0.4.21](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.20...v0.4.21) (2022-03-01)
 
 
