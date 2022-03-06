@@ -18,4 +18,11 @@ export abstract class IssuerService {
       basePath: gateways[0],
     });
   }
+
+  /**
+   * Returns the identifier of the user.
+   */
+  public getId(): string {
+    return this.cryptoService.fingerPrint.split('#')[0];
+  }
 }
