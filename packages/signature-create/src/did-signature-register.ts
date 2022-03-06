@@ -3,6 +3,7 @@ import {
   DidCreation,
   getHash,
   getHashFromFile,
+  getHashFromArrayBuffer,
 } from '@trustcerts/core';
 import { SchemaResponse } from '@trustcerts/gateway';
 import { SignatureIssuerService } from './signature-issuer-service';
@@ -59,6 +60,23 @@ export class DidSignatureRegister {
   }
 
   /**
+   * Signs a buffer
+   *
+   * @returns {Promise<void>}
+   */
+  async signBuffer(
+    buffer: ArrayBuffer,
+    controllers: string[]
+  ): Promise<DidSignature> {
+    const hash = await getHashFromArrayBuffer(buffer);
+    return this.create({
+      id: Identifier.generate('hash', hash),
+      algorithm: 'sha256',
+      controllers,
+    });
+  }
+
+  /**
    * Signs a string.
    * @param value
    */
@@ -84,6 +102,19 @@ export class DidSignatureRegister {
     date = new Date().toISOString()
   ): Promise<DidSignature> {
     const hash = await getHashFromFile(filePath);
+    return this.revoke(hash, date);
+  }
+
+  /**
+   * Revokes a buffer
+   *
+   * @returns {Promise<void>}
+   */
+  async revokeBuffer(
+    buffer: Buffer,
+    date = new Date().toISOString()
+  ): Promise<DidSignature> {
+    const hash = await getHashFromArrayBuffer(buffer);
     return this.revoke(hash, date);
   }
 

@@ -16,7 +16,7 @@ import {
   DidSignatureRegister,
   SignatureIssuerService,
 } from '@trustcerts/signature-create';
-import { DidSignatureResolver } from '../src';
+import { DidSignatureResolver } from '../dist';
 
 describe('test signature service', () => {
   let config: ConfigService;
@@ -25,7 +25,7 @@ describe('test signature service', () => {
 
   let testFile = 'tmp/test';
 
-  const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
+  const testValues = JSON.parse(readFileSync('../../values-dev.json', 'utf-8'));
 
   beforeAll(async () => {
     DidNetworks.add(testValues.network.namespace, testValues.network);
@@ -62,8 +62,26 @@ describe('test signature service', () => {
     await didsignatureRegister.save(did, issuer);
     // wait some time since the observer has to be synced.
     await new Promise(res => setTimeout(res, 2000));
-    console.log(did.id);
-    const loadedDid = await resolver.load(did.id);
+    const loadedDid = await resolver.verifyFile(testFile);
+    expect(loadedDid.id).toEqual(did.id);
+  }, 10000);
+
+  it('verify buffer', async () => {
+    const issuer = new SignatureIssuerService(
+      testValues.network.gateways,
+      cryptoService
+    );
+    const didsignatureRegister = new DidSignatureRegister();
+    const resolver = new DidSignatureResolver();
+
+    const buffer = new ArrayBuffer(8);
+    const did = await didsignatureRegister.signBuffer(buffer, [
+      config.config.invite!.id,
+    ]);
+    await didsignatureRegister.save(did, issuer);
+    // wait some time since the observer has to be synced.
+    await new Promise(res => setTimeout(res, 2000));
+    const loadedDid = await resolver.verifyBuffer(buffer);
     expect(loadedDid.id).toEqual(did.id);
   }, 10000);
 
@@ -83,7 +101,7 @@ describe('test signature service', () => {
     await didsignatureRegister.save(did, issuer);
     // wait some time since the observer has to be synced.
     await new Promise(res => setTimeout(res, 2000));
-    const loadedDid = await resolver.load(did.id);
+    const loadedDid = await resolver.verifyString(signature);
     expect(loadedDid.id).toEqual(did.id);
   });
 

@@ -1,11 +1,4 @@
 import {
-  getHash,
-  getHashFromFile,
-  sortKeys,
-  verifySignature,
-  importKey,
-  DidIdResolver,
-  SignatureContent,
   VerifierService,
   logger,
   DidNetworks,
@@ -17,7 +10,6 @@ import {
   DidHashDocument,
   HashDocResponse,
   HashObserverApi,
-  TransactionType,
   DidHashStructure,
   DidSchemaTransaction,
   Configuration,
@@ -37,43 +29,28 @@ export class DidSignatureVerifierService extends VerifierService {
     );
   }
 
-  public async verifyString(
-    value: string,
-    config: DidManagerConfigValues<DidHashStructure>
-  ): Promise<DidHashDocument> {
-    const hash = await getHash(value);
-    return this.verify(hash, config);
-  }
-
-  public async verifyFile(
-    file: string | File,
-    config: DidManagerConfigValues<DidHashStructure>
-  ): Promise<DidHashDocument> {
-    const hash = await getHashFromFile(file);
-    return this.verify(hash, config);
-  }
-
   public async verify(
     checksum: string,
     config: DidManagerConfigValues<DidHashStructure>
   ): Promise<DidHashDocument> {
-    const hashDocument = await this.getDidDocument(checksum, config);
-    const usedKey = hashDocument.signatures.values[0].identifier;
-    const time = hashDocument.metaData.created;
-    const resolver = new DidIdResolver();
-    const did = await resolver.load(usedKey, { time });
-    const key = did.getKey(usedKey);
-    if (
-      await verifySignature(
-        DidSignatureVerifierService.hash(hashDocument),
-        hashDocument.signatures.values[0].signature,
-        await importKey(key.publicKeyJwk, 'jwk', ['verify'])
-      )
-    ) {
-      return Promise.resolve(hashDocument.document);
-    } else {
-      return Promise.reject('signature does not match');
-    }
+    return (await this.getDidDocument(checksum, config)).document;
+    // TODO check if the validation is done in the getDidDocument function
+    // const usedKey = hashDocument.signatures.values[0].identifier;
+    // const time = hashDocument.metaData.created;
+    // const resolver = new DidIdResolver();
+    // const did = await resolver.load(usedKey, { time });
+    // const key = did.getKey(usedKey);
+    // if (
+    //   await verifySignature(
+    //     DidSignatureVerifierService.hash(hashDocument),
+    //     hashDocument.signatures.values[0].signature,
+    //     await importKey(key.publicKeyJwk, 'jwk', ['verify'])
+    //   )
+    // ) {
+    //   return Promise.resolve(hashDocument.document);
+    // } else {
+    //   return Promise.reject('signature does not match');
+    // }
   }
 
   async getDidDocument(
@@ -132,17 +109,5 @@ export class DidSignatureVerifierService extends VerifierService {
       }
       reject('no transactions founds');
     });
-  }
-
-  private static hash(hash: HashDocResponse): string {
-    const content: SignatureContent = {
-      date: hash.metaData.created,
-      type: TransactionType.Hash,
-      value: {
-        algorithm: hash.document.algorithm,
-        hash: hash.document.id,
-      },
-    };
-    return JSON.stringify(sortKeys(content));
   }
 }

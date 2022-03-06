@@ -22,7 +22,7 @@ describe('test signature service', () => {
 
   let testFile = 'tmp/test';
 
-  const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
+  const testValues = JSON.parse(readFileSync('../../values-dev.json', 'utf-8'));
 
   beforeAll(async () => {
     DidNetworks.add(testValues.network.namespace, testValues.network);
@@ -88,6 +88,24 @@ describe('test signature service', () => {
         expect(err.message.includes('hash already signed')).toBeTruthy()
       );
   }, 7000);
+
+  it('sign buffer', async () => {
+    const issuer = new SignatureIssuerService(
+      testValues.network.gateways,
+      cryptoService
+    );
+    const didsignatureRegister = new DidSignatureRegister();
+    const resolver = new DidSignatureResolver();
+
+    const did = await didsignatureRegister.signBuffer(new ArrayBuffer(8), [
+      config.config.invite!.id,
+    ]);
+    await didsignatureRegister.save(did, issuer);
+    // wait some time since the observer has to be synced.
+    await new Promise(res => setTimeout(res, 2000));
+    const loadedDid = await resolver.load(did.id);
+    expect(loadedDid.id).toEqual(did.id);
+  });
 
   it('sign file', async () => {
     const issuer = new SignatureIssuerService(
