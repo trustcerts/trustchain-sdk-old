@@ -171,13 +171,8 @@ export class CloudService {
       this.cloudEncryption.exportRandomValue(),
       newPassword
     );
-    const configuration = new Configuration({
-      basePath: this.url,
-      accessToken: this.accessToken,
-    });
-    const authApi = new AuthorizePlatformApi(configuration);
     // update password and encryption key
-    await authApi
+    await this.getAuthApiWithCredentials()
       .authControllerChangePassword({
         newPassword: await this.cloudEncryption.getAuthenticationPassword(),
         oldPassword,
@@ -243,8 +238,8 @@ export class CloudService {
    * Delete the account from the system.
    * @returns
    */
-  public deleteAccount() {
-    return this.authApi.authControllerDeleteAccount();
+  public async deleteAccount(): Promise<void> {
+    await this.getAuthApiWithCredentials().authControllerDeleteAccount();
   }
 
   private async decryptWallet(wallet: KeyPair[]): Promise<DecryptedKeyPair[]> {
@@ -261,5 +256,17 @@ export class CloudService {
       });
     }
     return keys;
+  }
+
+  /**
+   * Returns the authapi with credentials
+   * @returns
+   */
+  private getAuthApiWithCredentials() {
+    const configuration = new Configuration({
+      basePath: this.url,
+      accessToken: this.accessToken,
+    });
+    return new AuthorizePlatformApi(configuration);
   }
 }
