@@ -243,7 +243,7 @@ export class CloudService {
    * Delete the account from the system.
    * @returns
    */
-  public delete() {
+  public deleteAccount() {
     return this.authApi.authControllerDeleteAccount();
   }
 
