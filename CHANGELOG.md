@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.26](https://github.com/trustcerts/sdk/compare/v0.4.25...v0.4.26) (2022-03-08)
+
+
+### Bug Fixes
+
+* add credentials to delete request ([010a479](https://github.com/trustcerts/sdk/commit/010a479070ec7660d633436e5e8c1580e764fc5c))
+
+
+
+
+
 ## [0.4.25](https://github.com/trustcerts/sdk/compare/v0.4.24...v0.4.25) (2022-03-08)
 
 
