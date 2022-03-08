@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.24](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.23...v0.4.24) (2022-03-08)
+
+
+### Bug Fixes
+
+* add delete endpoint ([386c3cd](https://github.com/trustcerts/trustchain-sdk/commit/386c3cd931cc02fd4106537d566b45920168314e))
+
+
+
+
+
 ## [0.4.20](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.19...v0.4.20) (2022-02-27)
 
 
