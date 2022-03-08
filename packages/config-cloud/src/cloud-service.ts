@@ -117,7 +117,7 @@ export class CloudService {
    * @param username
    * @returns
    */
-  requestReset(username: string): Promise<any> {
+  public requestReset(username: string): Promise<any> {
     return this.authApi.authControllerRequestLink({ username });
   }
 
@@ -214,27 +214,11 @@ export class CloudService {
     };
   }
 
-  private async decryptWallet(wallet: KeyPair[]): Promise<DecryptedKeyPair[]> {
-    const keys: DecryptedKeyPair[] = [];
-    for (const keypair of wallet) {
-      const key: JsonWebKey = JSON.parse(
-        await this.cloudEncryption.decrypt(keypair.privateKey)
-      ) as JsonWebKey;
-      keys.push({
-        identifier: keypair.identifier,
-        privateKey: key,
-        publicKey: keypair.publicKey,
-        signatureType: keypair.signatureType,
-      });
-    }
-    return keys;
-  }
-
   /**
    * Encrypts the config and uploads it to the server.
    * @param config
    */
-  async saveConfig(config: Config): Promise<void> {
+  public async saveConfig(config: Config): Promise<void> {
     const wallet: KeyPair[] = await Promise.all(
       config.keyPairs.map(async (keypair: any) => {
         return {
@@ -253,5 +237,29 @@ export class CloudService {
       id: config.invite!.id,
       wallet: wallet ?? [],
     });
+  }
+
+  /**
+   * Delete the account from the system.
+   * @returns
+   */
+  public delete() {
+    return this.authApi.authControllerDeleteAccount();
+  }
+
+  private async decryptWallet(wallet: KeyPair[]): Promise<DecryptedKeyPair[]> {
+    const keys: DecryptedKeyPair[] = [];
+    for (const keypair of wallet) {
+      const key: JsonWebKey = JSON.parse(
+        await this.cloudEncryption.decrypt(keypair.privateKey)
+      ) as JsonWebKey;
+      keys.push({
+        identifier: keypair.identifier,
+        privateKey: key,
+        publicKey: keypair.publicKey,
+        signatureType: keypair.signatureType,
+      });
+    }
+    return keys;
   }
 }
