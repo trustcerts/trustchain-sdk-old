@@ -16,8 +16,7 @@
     "release:canary": "lerna publish --canary",
     "install:pages": "lerna bootstrap --scope smoke-test-react --include-dependencies",
     "build:pages": "rm -rf ./docs/smoke-test-react && lerna run build:smoke-test-react",
-    "update": "lernaupdate",
-    "trusty-generate": "trusty generate -h localhost -v 2 -o 1 -g 1"
+    "update": "lernaupdate"
   },
   "repository": {
     "type": "git",
