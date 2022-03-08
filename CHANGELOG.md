@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.25](https://github.com/trustcerts/sdk/compare/v0.4.24...v0.4.25) (2022-03-08)
+
+
+### Bug Fixes
+
+* remove account from cloud ([bc7ecaf](https://github.com/trustcerts/sdk/commit/bc7ecaf5a27910668263a841f473a8fb638ace8c))
+
+
+
+
+
 ## [0.4.24](https://github.com/trustcerts/sdk/compare/v0.4.23...v0.4.24) (2022-03-08)
 
 
