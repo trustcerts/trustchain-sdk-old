@@ -43,11 +43,9 @@ jobs:
           npm i
           ./build.sh
 
-      - name: Start blockchain-nodes
-        run: |
-          cd ./test/trustchain-config/config-example/network-small
-          ./all.sh up -d
-          ./initNodes.sh
+      - name: TrustCerts Custom Blockchain
+        uses: trustcerts/blockchain-custom-action@v1.0.0
+
 
       - name: Start trustcreator and platform services
         run: |
