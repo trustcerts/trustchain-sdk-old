@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.27](https://github.com/trustcerts/sdk/compare/v0.4.26...v0.4.27) (2022-03-18)
+
+
+### Bug Fixes
+
+* 🐛 update ci / remove submodule ([24c5b83](https://github.com/trustcerts/sdk/commit/24c5b833e8bfdb27a686e6ac4db8535f08c97b2d))
+* improve shorten service ([368ab32](https://github.com/trustcerts/sdk/commit/368ab3271ee0af00952205cea0ddd3e1abbdb75c))
+* update ci ([1a37aed](https://github.com/trustcerts/sdk/commit/1a37aedd404705813b046eff33e7a685f8587266))
+
+
+
+
+
 ## [0.4.26](https://github.com/trustcerts/sdk/compare/v0.4.25...v0.4.26) (2022-03-08)
 
 

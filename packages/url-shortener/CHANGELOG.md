@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.27](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.26...v0.4.27) (2022-03-18)
+
+
+### Bug Fixes
+
+* improve shorten service ([368ab32](https://github.com/trustcerts/trustchain-sdk/commit/368ab3271ee0af00952205cea0ddd3e1abbdb75c))
+
+
+
+
+
 ## [0.4.23](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.22...v0.4.23) (2022-03-06)
 
 **Note:** Version bump only for package @trustcerts/url-shortener
