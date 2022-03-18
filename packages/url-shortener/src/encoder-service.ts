@@ -30,16 +30,25 @@ export class EncoderService {
   }
 
   /**
+   * Generates a key for encryption
+   */
+  static async generateKey(): Promise<CryptoKey> {
+    return subtle.generateKey(
+      this.algo,
+      true, //whether the key is extractable (i.e. can be used in exportKey)
+      ['encrypt', 'decrypt'] //can be "encrypt", "decrypt", "wrapKey", or "unwrapKey"
+    ) as Promise<CryptoKey>;
+  }
+
+  /**
    * Encodes a value with a generated password.
    * @param value
    * @returns encrypted value, password
    */
-  static async encode(value: Uint8Array): Promise<Encryption> {
-    const key: CryptoKey = (await subtle.generateKey(
-      this.algo,
-      true, //whether the key is extractable (i.e. can be used in exportKey)
-      ['encrypt', 'decrypt'] //can be "encrypt", "decrypt", "wrapKey", or "unwrapKey"
-    )) as CryptoKey;
+  static async encode(value: Uint8Array, key?: CryptoKey): Promise<Encryption> {
+    if (!key) {
+      key = await this.generateKey();
+    }
 
     // TODO check if the array size has impact on the security
     const iv = getRandomValues(new Uint8Array(16));
