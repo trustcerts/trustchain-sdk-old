@@ -6,7 +6,7 @@ import {
 } from '@trustcerts/core';
 
 export interface Encryption {
-  value: string;
+  value: Uint8Array;
   key: string;
   iv: string;
 }
@@ -61,7 +61,7 @@ export class EncoderService {
       value
     );
     return {
-      value: base58Encode(new Uint8Array(encrypted)),
+      value: new Uint8Array(encrypted),
       iv: base58Encode(iv),
       key: base58Encode(new Uint8Array(await subtle.exportKey('raw', key))),
     };
@@ -92,7 +92,7 @@ export class EncoderService {
           iv: base58Decode(values.iv),
         },
         newKey,
-        base58Decode(values.value)
+        values.value
       )
       .then(
         value => new Uint8Array(value),

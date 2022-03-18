@@ -1,5 +1,6 @@
 import { EncoderService } from './encoder-service';
 import { Configuration, ShortenCreatorApi } from './creator';
+import { base58Decode, base58Encode } from '@trustcerts/core';
 
 /**
  * Shortes a url by upload the encrypted input on a server.
@@ -28,7 +29,7 @@ export class ShortenerService {
     const encryption = await EncoderService.encode(this.encoder.encode(value));
     const id = await this.api
       .shortenControllerShorten({
-        url: encryption.value,
+        url: base58Encode(encryption.value),
         iv: encryption.iv,
         email,
       })
@@ -50,7 +51,7 @@ export class ShortenerService {
         return EncoderService.decode({
           iv: res.iv,
           key: elements[1],
-          value: res.url,
+          value: base58Decode(res.url),
         });
       })
       .then(decrypted => this.decoder.decode(decrypted));
