@@ -6,6 +6,8 @@ import { Configuration, ShortenCreatorApi } from './creator';
  */
 export class ShortenerService {
   private api: ShortenCreatorApi;
+  encoder: TextEncoder;
+  decoder: TextDecoder;
 
   constructor(basePath: string, accessToken?: string) {
     const configuration = new Configuration({
@@ -13,6 +15,8 @@ export class ShortenerService {
       accessToken,
     });
     this.api = new ShortenCreatorApi(configuration);
+    this.encoder = new TextEncoder();
+    this.decoder = new TextDecoder();
   }
 
   /**
@@ -21,7 +25,7 @@ export class ShortenerService {
    * @returns id and password
    */
   public async shorten(value: string, email: string): Promise<string> {
-    const encryption = await EncoderService.encode(value);
+    const encryption = await EncoderService.encode(this.encoder.encode(value));
     const id = await this.api
       .shortenControllerShorten({
         url: encryption.value,
@@ -32,15 +36,23 @@ export class ShortenerService {
     return `${id}#${encryption.key}`;
   }
 
+  /**
+   * Resolves a file where the identifier and the password is given.
+   * @param id
+   * @returns
+   */
   public async resolve(id: string): Promise<string> {
     const elements = id.split('#');
-    const res = await this.api
+    return this.api
       .shortenControllerResolve(elements[0])
-      .then(res => res.data);
-    return await EncoderService.decode({
-      iv: res.iv,
-      key: elements[1],
-      value: res.url,
-    });
+      .then(res => res.data)
+      .then(res => {
+        return EncoderService.decode({
+          iv: res.iv,
+          key: elements[1],
+          value: res.url,
+        });
+      })
+      .then(decrypted => this.decoder.decode(decrypted));
   }
 }

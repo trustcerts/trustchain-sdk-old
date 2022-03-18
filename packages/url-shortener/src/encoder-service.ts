@@ -12,6 +12,9 @@ export interface Encryption {
 }
 
 export class EncoderService {
+  /**
+   * Algorithm that is used for encryption.
+   */
   private static algo: AesKeyAlgorithm = {
     name: 'AES-CBC',
     length: 128, //can be  128, 192, or 256
@@ -26,7 +29,12 @@ export class EncoderService {
     this.algo.length = length;
   }
 
-  static async encode(value: string): Promise<Encryption> {
+  /**
+   * Encodes a value with a generated password.
+   * @param value
+   * @returns encrypted value, password
+   */
+  static async encode(value: Uint8Array): Promise<Encryption> {
     const key: CryptoKey = (await subtle.generateKey(
       this.algo,
       true, //whether the key is extractable (i.e. can be used in exportKey)
@@ -41,7 +49,7 @@ export class EncoderService {
         iv,
       },
       key,
-      new TextEncoder().encode(value)
+      value
     );
     return {
       value: base58Encode(new Uint8Array(encrypted)),
@@ -50,7 +58,12 @@ export class EncoderService {
     };
   }
 
-  static async decode(values: Encryption): Promise<string> {
+  /**
+   * Returns a value
+   * @param values
+   * @returns
+   */
+  static async decode(values: Encryption): Promise<Uint8Array> {
     const newKey = await subtle
       .importKey('raw', base58Decode(values.key), this.algo, true, [
         'encrypt',
@@ -63,7 +76,7 @@ export class EncoderService {
         }
       );
 
-    const decrypted = await subtle
+    return subtle
       .decrypt(
         {
           name: 'AES-CBC',
@@ -73,11 +86,10 @@ export class EncoderService {
         base58Decode(values.value)
       )
       .then(
-        value => value,
+        value => new Uint8Array(value),
         () => {
           throw new Error('failed to decrypt');
         }
       );
-    return new TextDecoder().decode(decrypted);
   }
 }

@@ -10,8 +10,12 @@ describe('shorten', () => {
 
   it('encode and decode', async () => {
     const input = 'hello world';
-    const encoded = await EncoderService.encode(input);
-    const decoded = await EncoderService.decode(encoded);
+    const encoded = await EncoderService.encode(
+      new TextEncoder().encode(input)
+    );
+    const decoded = new TextDecoder().decode(
+      await EncoderService.decode(encoded)
+    );
     expect(decoded).toEqual(input);
   });
   it('upload and download', async () => {
