@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.29](https://github.com/trustcerts/sdk/compare/v0.4.28...v0.4.29) (2022-03-18)
+
+
+### Bug Fixes
+
+* set output as uintarray ([e9a3aa3](https://github.com/trustcerts/sdk/commit/e9a3aa30027e15f2cd38ae6f00ee7841b2819cc5))
+
+
+
+
+
 ## [0.4.28](https://github.com/trustcerts/sdk/compare/v0.4.27...v0.4.28) (2022-03-18)
 
 
