@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.28](https://github.com/trustcerts/sdk/compare/v0.4.27...v0.4.28) (2022-03-18)
+
+
+### Bug Fixes
+
+* pass key to encoder ([c10b224](https://github.com/trustcerts/sdk/commit/c10b22468605439562c47608cce43883a01b2dd0))
+
+
+
+
+
 ## [0.4.27](https://github.com/trustcerts/sdk/compare/v0.4.26...v0.4.27) (2022-03-18)
 
 
