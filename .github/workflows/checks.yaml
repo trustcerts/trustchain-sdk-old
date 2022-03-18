@@ -10,7 +10,6 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v2
         with:
-          submodules: true
           fetch-depth: 0
 
       - name: "Use NodeJS 16"
@@ -43,11 +42,9 @@ jobs:
           npm i
           ./build.sh
 
-      - name: Start blockchain-nodes
-        run: |
-          cd ./test/trustchain-config/config-example/network-small
-          ./all.sh up -d
-          ./initNodes.sh
+      - name: TrustCerts Custom Blockchain
+        uses: trustcerts/blockchain-custom-action@v1.0.0
+
 
       - name: Start trustcreator and platform services
         run: |
