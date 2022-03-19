@@ -32,14 +32,12 @@ export class Identifier {
   }
 
   /**
-   * Generate the did based on the type.
+   * Generate the did based on the type. If a id is passed it will be used.
    * @param type
+   * @param id
    */
-  public static generate(type: string): string {
-    const id = encode(getRandomValues()).slice(0, 22);
-    // if (!this.tcNamespace) {
-    //     throw Error('namespace not set yet');
-    // }
+  public static generate(type: string, id?: string): string {
+    id = id ?? encode(getRandomValues()).slice(0, 22);
     return `did:${this.method}:${this.tcNamespace}:${
       type ? type + ':' : ''
     }${id}`;

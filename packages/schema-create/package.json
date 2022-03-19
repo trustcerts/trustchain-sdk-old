@@ -1,0 +1,91 @@
+{
+  "version": "0.4.23",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "testEnvironment": "node",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "moduleNameMapper": {
+      "^jose/(.*)$": "<rootDir>/node_modules/jose/dist/node/cjs/$1"
+    },
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 0,
+        "functions": 0,
+        "lines": 0,
+        "statements": 0
+      }
+    },
+    "collectCoverageFrom": [
+      "src/*.{js,ts}"
+    ]
+  },
+  "name": "@trustcerts/schema-create",
+  "author": "trustcerts",
+  "module": "dist/schema-create.esm.js",
+  "size-limit": [
+    {
+      "path": "dist/schema-create.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/schema-create.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^7.0.8",
+    "@trustcerts/config-local": "^0.4.23",
+    "@trustcerts/wallet": "^0.4.23",
+    "husky": "^7.0.4",
+    "size-limit": "^7.0.8",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.3.1",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "@trustcerts/core": "^0.4.23",
+    "@trustcerts/gateway": "^0.4.22",
+    "@trustcerts/observer": "^0.4.22",
+    "@trustcerts/schema-verify": "^0.4.23"
+  }
+}

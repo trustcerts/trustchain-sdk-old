@@ -1,15 +1,14 @@
 import {
   DidPublicKey,
-  DidPublicKeyTypeEnum,
+  DidPublicKeyType,
   DidService,
-  DidStructure,
-  DidTransaction,
-  DocResponse,
-  RoleManageAddEnum,
+  DidIdStructure,
+  RoleManageType,
+  IdDocResponse,
+  DidIdDocument,
 } from '@trustcerts/observer';
 import { Did } from '../did';
 import { Management } from '../management';
-import { IDidIdDocument } from './did-id-document';
 
 // Enum values müssen äquivalent zu DidStructure in api.ts (note: die gibt's doppelt, gateway & observer)
 export enum VerificationRelationshipType {
@@ -35,20 +34,10 @@ export class DidId extends Did {
 
   private service = new Management<DidService>();
 
-  private role = new Management<RoleManageAddEnum>();
+  private role = new Management<RoleManageType>();
 
   constructor(public id: string) {
     super(id);
-    // if the passed id value already has a prefix remove it.
-    // TODO set correct regexp, normal did should have no type
-    // TODO use method from Identifier.method
-    const result = new RegExp(/did:trust:[:a-z]*[1-9A-HJ-NP-Za-km-z]{22}/).test(
-      id
-    );
-    if (!result) {
-      throw Error('wrong format for did: ' + id);
-    }
-
     Object.values(VerificationRelationshipType).forEach(vrType => {
       this.verificationRelationships.set(vrType, new Management<string>());
     });
@@ -74,7 +63,7 @@ export class DidId extends Did {
     const verificationMethod: DidPublicKey = {
       controller: this.id,
       id: this.getFullId(id),
-      type: DidPublicKeyTypeEnum.RsaVerificationKey2018,
+      type: DidPublicKeyType.RsaVerificationKey2018,
       publicKeyJwk: publicKeyJwk,
     };
 
@@ -132,7 +121,7 @@ export class DidId extends Did {
     return this.role.current.has(value);
   }
 
-  addRole(value: RoleManageAddEnum): void {
+  addRole(value: RoleManageType): void {
     if (this.hasRole(value)) {
       throw Error('role already set');
     }
@@ -147,27 +136,6 @@ export class DidId extends Did {
 
     this.role.current.delete(value);
     this.role.remove.add(value);
-  }
-
-  hasController(value: string): boolean {
-    return this.controller.current.has(value);
-  }
-
-  addController(value: string): void {
-    if (this.hasController(value)) {
-      throw Error('controller already set');
-    }
-    this.controller.current.set(value, value);
-    this.controller.add.set(value, value);
-  }
-
-  removeController(value: string): void {
-    if (!this.hasController(value)) {
-      throw Error('controller not found');
-    }
-
-    this.controller.current.delete(value);
-    this.controller.remove.add(value);
   }
 
   addVerificationRelationship(
@@ -251,10 +219,12 @@ export class DidId extends Did {
     );
   }
 
-  getChanges(): DidStructure {
-    const changes: DidStructure = {
+  getChanges(): DidIdStructure {
+    const changes: DidIdStructure = {
       id: this.id,
     };
+
+    changes.controller = this.getChangesController();
 
     if (this.role.add.size > 0) {
       changes.role = {
@@ -266,18 +236,6 @@ export class DidId extends Did {
         changes.role = {};
       }
       changes.role.remove = Array.from(this.role.remove.values());
-    }
-
-    if (this.controller.add.size > 0) {
-      changes.controller = {
-        add: Array.from(this.controller.add.values()),
-      };
-    }
-    if (this.controller.remove.size > 0) {
-      if (!changes.controller) {
-        changes.controller = {};
-      }
-      changes.controller.remove = Array.from(this.controller.remove.values());
     }
 
     if (this.service.add.size > 0) {
@@ -350,11 +308,9 @@ export class DidId extends Did {
     });
   }
 
-  parseDocument(docResponse: DocResponse): void {
-    this.version = docResponse.metaData.versionId;
-    docResponse.document.controller.forEach(controller =>
-      this.addController(controller)
-    );
+  parseDocument(docResponse: IdDocResponse): void {
+    this.parseDocumentSuper(docResponse);
+
     docResponse.document.service.forEach(service =>
       this.addService(service.id, service.endpoint, service.type)
     );
@@ -369,47 +325,37 @@ export class DidId extends Did {
     });
 
     docResponse.document.role.forEach(role =>
-      this.addRole((role as unknown) as RoleManageAddEnum)
+      this.addRole((role as unknown) as RoleManageType)
     );
     // required since the this.add... calls will fill the add fields.
     this.resetChanges();
   }
 
-  parseTransaction(transactions: DidTransaction[]): void {
+  parseTransactions(transactions: DidIdStructure[]): void {
     for (const transaction of transactions) {
       this.version++;
       // validate signature of transaction
       // parse it into the existing document
+      this.parseTransactionControllers(transaction);
 
-      if (transaction.values.controller?.remove) {
-        transaction.values.controller.remove.forEach(id =>
-          this.controller.current.delete(id)
-        );
-      }
-      if (transaction.values.controller?.add) {
-        transaction.values.controller.add.forEach(controller =>
-          this.controller.current.set(controller, controller)
-        );
-      }
-
-      if (transaction.values.service?.remove) {
-        transaction.values.service.remove.forEach(id =>
+      if (transaction.service?.remove) {
+        transaction.service.remove.forEach(id =>
           this.service.current.delete(id)
         );
       }
-      if (transaction.values.service?.add) {
-        transaction.values.service.add.forEach(service =>
+      if (transaction.service?.add) {
+        transaction.service.add.forEach(service =>
           this.service.current.set(service.id, service)
         );
       }
 
-      if (transaction.values.verificationMethod?.remove) {
-        transaction.values.verificationMethod.remove.forEach(id =>
+      if (transaction.verificationMethod?.remove) {
+        transaction.verificationMethod.remove.forEach(id =>
           this.verificationMethod.current.delete(id)
         );
       }
-      if (transaction.values.verificationMethod?.add) {
-        transaction.values.verificationMethod.add.forEach(verificationMethod =>
+      if (transaction.verificationMethod?.add) {
+        transaction.verificationMethod.add.forEach(verificationMethod =>
           this.verificationMethod.current.set(
             verificationMethod.id,
             verificationMethod
@@ -418,29 +364,25 @@ export class DidId extends Did {
       }
 
       Object.values(VerificationRelationshipType).forEach(vrType => {
-        transaction.values[vrType]?.remove?.forEach(id => {
+        transaction[vrType]?.remove?.forEach(id => {
           this.verificationRelationships.get(vrType)?.current.delete(id);
         });
-        transaction.values[vrType]?.add?.forEach(id => {
+        transaction[vrType]?.add?.forEach(id => {
           this.verificationRelationships.get(vrType)?.current.set(id, id);
         });
       });
 
-      if (transaction.values.role?.remove) {
-        transaction.values.role.remove.forEach(role =>
-          this.role.current.delete(role)
-        );
+      if (transaction.role?.remove) {
+        transaction.role.remove.forEach(role => this.role.current.delete(role));
       }
-      if (transaction.values.role?.add) {
-        transaction.values.role.add.forEach(role =>
-          this.role.current.set(role, role)
-        );
+      if (transaction.role?.add) {
+        transaction.role.add.forEach(role => this.role.current.set(role, role));
       }
     }
   }
 
-  getDocument(): IDidIdDocument {
-    const didDoc: Partial<IDidIdDocument> = {
+  getDocument(): DidIdDocument {
+    const didDoc: Partial<DidIdDocument> = {
       '@context': this.context,
       id: this.id,
       controller: Array.from(this.controller.current.values()),
@@ -451,6 +393,7 @@ export class DidId extends Did {
       role: Array.from(this.role.current.values()),
     };
 
+    // TODO move them before initing the didDoc to remove the Partial call
     // Add all vrTypes from Enum VerificationRelationshipType (should also be present in blockchain / IDidIdDocument)
     Object.values(VerificationRelationshipType).forEach(vrType => {
       const vrTypeManagement = this.verificationRelationships.get(vrType);
@@ -460,6 +403,6 @@ export class DidId extends Did {
       }
     });
 
-    return didDoc as IDidIdDocument;
+    return didDoc as DidIdDocument;
   }
 }

@@ -34,8 +34,8 @@ describe('vc', () => {
   beforeAll(async () => {
     const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
 
-    DidNetworks.add('tc:dev', testValues.network);
-    Identifier.setNetwork('tc:dev');
+    DidNetworks.add(testValues.network.namespace, testValues.network);
+    Identifier.setNetwork(testValues.network.namespace);
     config = new LocalConfigService(testValues.filePath);
     await config.init(testValues.configValues);
 

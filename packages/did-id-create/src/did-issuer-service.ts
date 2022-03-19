@@ -1,29 +1,17 @@
-import { AxiosError } from 'axios';
-
 import {
-  DecryptedKeyPair,
-  Invite,
   CryptoService,
   sortKeys,
-  generateKeyPair,
-  Identifier,
   SignatureContent,
   IssuerService,
-  IDidIdDocument,
-  DidIdResolver,
-  DidCreation,
-  DidId,
-  SignatureType,
 } from '@trustcerts/core';
 import {
-  Configuration,
-  CreateDidDto,
   DidGatewayApi,
-  DidStructure,
-  DidTransactionDto,
-  SignatureInfoTypeEnum,
+  DidIdTransactionDto,
   TransactionType,
+  AxiosError,
+  SignatureType,
 } from '@trustcerts/gateway';
+import { DidIdStructure } from '@trustcerts/observer';
 export class DidIdIssuerService extends IssuerService {
   protected api: DidGatewayApi;
 
@@ -32,32 +20,12 @@ export class DidIdIssuerService extends IssuerService {
     this.api = new DidGatewayApi(this.apiConfiguration);
   }
 
-  async persistDid(
-    value: DidStructure,
-    document: IDidIdDocument,
-    version: number
-  ): Promise<void> {
-    const transaction: DidTransactionDto = {
+  async persistDid(value: DidIdStructure): Promise<void> {
+    const transaction: DidIdTransactionDto = {
       version: 1,
       body: {
         date: new Date().toISOString(),
         value,
-        didDocSignature: {
-          type: SignatureInfoTypeEnum.Single,
-          values: [
-            {
-              signature: await this.cryptoService.sign(
-                JSON.stringify(
-                  sortKeys({
-                    document,
-                    version,
-                  })
-                )
-              ),
-              identifier: this.cryptoService.fingerPrint,
-            },
-          ],
-        },
         type: TransactionType.Did,
         version: 1,
       },
@@ -65,7 +33,7 @@ export class DidIdIssuerService extends IssuerService {
         version: 1,
       },
       signature: {
-        type: SignatureInfoTypeEnum.Single,
+        type: SignatureType.Single,
         values: [],
       },
     };
@@ -91,56 +59,5 @@ export class DidIdIssuerService extends IssuerService {
         }
       }
     );
-  }
-}
-
-export class DidIdRegister {
-  private static defaultSignatureType = SignatureType.Rsa;
-
-  /**
-   * creates a fresh did with a unique identifier. Add controller when they are passed.
-   */
-  public static create(values?: DidCreation): DidId {
-    // TODO check if a given id should be allowed
-    const id = values?.id ?? Identifier.generate('id');
-    const did = new DidId(id);
-    values?.controllers?.forEach(controller => did.addController(controller));
-    return did;
-  }
-
-  public static async createByInvite(
-    invite: Invite
-  ): Promise<{ did: DidId; keyPair: DecryptedKeyPair }> {
-    if (!invite.secret) {
-      throw new Error('no invite secret found');
-    }
-    // generate first key pair
-    const newKey = await generateKeyPair(invite.id, this.defaultSignatureType);
-    // set first keypair to manipularte did
-    const inviteValues: CreateDidDto = {
-      identifier: invite.id,
-      publicKey: newKey.publicKey,
-      secret: invite.secret,
-    };
-    // register the key on the chain
-    const configuration = new Configuration({
-      basePath: invite.endpoint,
-    });
-    const api = new DidGatewayApi(configuration);
-    await api.gatewayDidControllerCreate(inviteValues);
-    // load own did document.
-    return {
-      did: await DidIdResolver.load(invite.id),
-      keyPair: newKey,
-    };
-  }
-
-  public static save(did: DidId, client: DidIdIssuerService): Promise<void> {
-    const value = did.getChanges();
-
-    const document = did.getDocument();
-    did.version++;
-    did.resetChanges();
-    return client.persistDid(value, document, did.version);
   }
 }

@@ -7,14 +7,16 @@ import {
   DidNetworks,
   base58Encode,
   Identifier,
-  logger,
   write,
   SignatureType,
 } from '@trustcerts/core';
 import { LocalConfigService } from '@trustcerts/config-local';
 import { WalletService } from '@trustcerts/wallet';
-import { SignatureIssuerService } from '@trustcerts/signature-create';
-import { SignatureVerifierService } from '../src';
+import {
+  DidSignatureRegister,
+  SignatureIssuerService,
+} from '@trustcerts/signature-create';
+import { DidSignatureResolver } from '../dist';
 
 describe('test signature service', () => {
   let config: ConfigService;
@@ -23,11 +25,11 @@ describe('test signature service', () => {
 
   let testFile = 'tmp/test';
 
-  const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
+  const testValues = JSON.parse(readFileSync('../../values-dev.json', 'utf-8'));
 
   beforeAll(async () => {
-    DidNetworks.add('tc:dev', testValues.network);
-    Identifier.setNetwork('tc:dev');
+    DidNetworks.add(testValues.network.namespace, testValues.network);
+    Identifier.setNetwork(testValues.network.namespace);
     config = new LocalConfigService(testValues.filePath);
     await config.init(testValues.configValues);
 
@@ -50,49 +52,85 @@ describe('test signature service', () => {
       testValues.network.gateways,
       cryptoService
     );
-    const verifier = new SignatureVerifierService(testValues.network.observers);
+    const didsignatureRegister = new DidSignatureRegister();
+    const resolver = new DidSignatureResolver();
+
     write(testFile, getRandomValues(new Uint8Array(200)).toString());
-    await issuer.signFile(testFile).catch(err => logger.error(err));
+    const did = await didsignatureRegister.signFile(testFile, [
+      config.config.invite!.id,
+    ]);
+    await didsignatureRegister.save(did, issuer);
     // wait some time since the observer has to be synced.
-    await new Promise((resolve)=> setTimeout(()=>{resolve(true)} , 2000));
-    const transaction = await verifier.verifyFile(testFile);
-    expect(transaction).toBeDefined();
-  }, 5000);
+    await new Promise(res => setTimeout(res, 2000));
+    const loadedDid = await resolver.verifyFile(testFile);
+    expect(loadedDid.id).toEqual(did.id);
+  }, 10000);
+
+  it('verify buffer', async () => {
+    const issuer = new SignatureIssuerService(
+      testValues.network.gateways,
+      cryptoService
+    );
+    const didsignatureRegister = new DidSignatureRegister();
+    const resolver = new DidSignatureResolver();
+
+    const buffer = new ArrayBuffer(8);
+    const did = await didsignatureRegister.signBuffer(buffer, [
+      config.config.invite!.id,
+    ]);
+    await didsignatureRegister.save(did, issuer);
+    // wait some time since the observer has to be synced.
+    await new Promise(res => setTimeout(res, 2000));
+    const loadedDid = await resolver.verifyBuffer(buffer);
+    expect(loadedDid.id).toEqual(did.id);
+  }, 10000);
+
   it('verify string', async () => {
-    const client = new SignatureIssuerService(
+    const issuer = new SignatureIssuerService(
       testValues.network.gateways,
       cryptoService
     );
     const signature = base58Encode(getRandomValues(new Uint8Array(20)));
-    await client.signString(signature).catch(err => logger.error(err));
+
+    const didsignatureRegister = new DidSignatureRegister();
+    const resolver = new DidSignatureResolver();
+
+    const did = await didsignatureRegister.signString(signature, [
+      config.config.invite!.id,
+    ]);
+    await didsignatureRegister.save(did, issuer);
     // wait some time since the observer has to be synced.
-    await new Promise((resolve)=> setTimeout(()=>{resolve(true)} , 2000))
-    const verifier = new SignatureVerifierService(testValues.network.observers);
-    const transaction = await verifier.verifyString(signature);
-    expect(transaction).toBeDefined();
+    await new Promise(res => setTimeout(res, 2000));
+    const loadedDid = await resolver.verifyString(signature);
+    expect(loadedDid.id).toEqual(did.id);
   });
 
   it('revoke string', async () => {
-    const issuerService = new SignatureIssuerService(
+    const issuer = new SignatureIssuerService(
       testValues.network.gateways,
       cryptoService
     );
-    const verifierService = new SignatureVerifierService(
-      testValues.network.observers
-    );
-    const value = base58Encode(
-      new Uint8Array(getRandomValues(new Uint8Array(20)))
-    );
-    await issuerService.signString(value);
-    await new Promise((resolve)=> setTimeout(()=>{resolve(true)} , 2000));
-    let transaction = await verifierService.verifyString(value);
-    expect(transaction.revokedAt).toBeUndefined();
+    const signature = base58Encode(getRandomValues(new Uint8Array(20)));
 
-    await issuerService.revokeString(value);
-    await new Promise((resolve)=> setTimeout(()=>{resolve(true)} , 2000));
-    transaction = await verifierService.verifyString(value);
-    expect(transaction.revokedAt).toBeDefined();
-    expect(transaction.revokedAt! > transaction.createdAt).toBeTruthy();
+    const didsignatureRegister = new DidSignatureRegister();
+    const resolver = new DidSignatureResolver();
+
+    const did = await didsignatureRegister.signString(signature, [
+      config.config.invite!.id,
+    ]);
+    await didsignatureRegister.save(did, issuer);
+    // wait some time since the observer has to be synced.
+    await new Promise(res => setTimeout(res, 2000));
+    let loadedDid = await resolver.load(did.id);
+
+    expect(loadedDid.revoked).toBeUndefined();
+    loadedDid.revoked = new Date().toISOString();
+    await didsignatureRegister.save(loadedDid, issuer);
+
+    await new Promise(res => setTimeout(res, 2000));
+    loadedDid = await resolver.load(did.id);
+    expect(loadedDid.revoked).toBeDefined();
+    // expect(loadedDid.revoked! > loadedDid.).toBeTruthy();
   }, 10000);
 
   afterAll(() => {

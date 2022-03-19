@@ -1,5 +1,4 @@
-import { Configuration } from '@trustcerts/gateway';
-import { BaseAPI } from '@trustcerts/gateway/dist/base';
+import { Configuration, BaseAPI } from '@trustcerts/gateway';
 import { CryptoService } from './crypto-service';
 
 /**
@@ -18,5 +17,12 @@ export abstract class IssuerService {
     this.apiConfiguration = new Configuration({
       basePath: gateways[0],
     });
+  }
+
+  /**
+   * Returns the identifier of the user.
+   */
+  public getId(): string {
+    return this.cryptoService.fingerPrint.split('#')[0];
   }
 }

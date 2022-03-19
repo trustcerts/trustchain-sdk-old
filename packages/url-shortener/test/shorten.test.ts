@@ -1,14 +1,21 @@
 import { EncoderService } from '../src/encoder-service';
 import { ShortenerService } from '../src/shortener-service';
+import { readFileSync } from 'fs';
+
 describe('shorten', () => {
-  const url = 'http://localhost:3222'
+  const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
+  const url = testValues.creator;
 
   beforeAll(async () => {});
 
   it('encode and decode', async () => {
     const input = 'hello world';
-    const encoded = await EncoderService.encode(input);
-    const decoded = await EncoderService.decode(encoded);
+    const encoded = await EncoderService.encode(
+      new TextEncoder().encode(input)
+    );
+    const decoded = new TextDecoder().decode(
+      await EncoderService.decode(encoded)
+    );
     expect(decoded).toEqual(input);
   });
   it('upload and download', async () => {

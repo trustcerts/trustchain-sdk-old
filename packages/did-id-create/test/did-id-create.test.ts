@@ -12,24 +12,27 @@ import { LocalConfigService } from '@trustcerts/config-local';
 import { DidIdIssuerService, DidIdRegister } from '../src';
 import { WalletService } from '@trustcerts/wallet';
 import { readFileSync } from 'fs';
-import { RoleManageAddEnum } from '@trustcerts/observer';
+import { RoleManageType } from '@trustcerts/observer';
 
 describe('test local config service', () => {
   let config: ConfigService;
 
   let cryptoService: CryptoService;
 
+  let didIdResolver: DidIdResolver;
+
   const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
 
   beforeAll(async () => {
-    DidNetworks.add('tc:dev', testValues.network);
-    Identifier.setNetwork('tc:dev');
+    DidNetworks.add(testValues.network.namespace, testValues.network);
+    Identifier.setNetwork(testValues.network.namespace);
     config = new LocalConfigService(testValues.filePath);
     await config.init(testValues.configValues);
 
     const wallet = new WalletService(config);
     await wallet.init();
     cryptoService = new CryptoService();
+    didIdResolver = new DidIdResolver();
     let key = (
       await wallet.findOrCreate(
         VerificationRelationshipType.assertionMethod,
@@ -49,7 +52,7 @@ describe('test local config service', () => {
     await did.addKey(keyPair.identifier, keyPair.publicKey);
 
     did.addService('service1', 'https://example.com', 'webpage');
-    did.addRole(RoleManageAddEnum.Client);
+    did.addRole(RoleManageType.Client);
     did.addVerificationRelationship(
       keyPair.identifier,
       VerificationRelationshipType.authentication
@@ -58,10 +61,13 @@ describe('test local config service', () => {
       testValues.network.gateways,
       cryptoService
     );
-
     await DidIdRegister.save(did, client);
-    await new Promise((resolve)=> setTimeout(()=>{resolve(true)} , 2000));
-    const did1 = await DidIdResolver.load(did.id);
+    await new Promise(resolve =>
+      setTimeout(() => {
+        resolve(true);
+      }, 2000)
+    );
+    const did1 = await didIdResolver.load(did.id);
     expect(did1).toEqual(did);
   }, 7000);
 
@@ -75,13 +81,13 @@ describe('test local config service', () => {
       controllers: [config.config.invite!.id],
     });
     did.addService('service1', 'https://example.com', 'webpage');
-    did.addRole(RoleManageAddEnum.Client);
+    did.addRole(RoleManageType.Client);
 
     await DidIdRegister.save(did, client);
     expect(
       did.getDocument().service.find(service => service.id.includes('service1'))
     ).toBeDefined();
-
+    await new Promise(resolve => setTimeout(resolve, 500));
     did.removeService('service1');
     await DidIdRegister.save(did, client);
     expect(
@@ -100,7 +106,7 @@ describe('test local config service', () => {
     });
     const keyPair = await generateKeyPair(did.id);
     await did.addKey(keyPair.identifier, keyPair.publicKey);
-    did.addRole(RoleManageAddEnum.Client);
+    did.addRole(RoleManageType.Client);
     did.addVerificationRelationship(
       keyPair.identifier,
       VerificationRelationshipType.authentication

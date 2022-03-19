@@ -3,6 +3,159 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.26](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.25...v0.4.26) (2022-03-08)
+
+
+### Bug Fixes
+
+* add credentials to delete request ([010a479](https://github.com/trustcerts/trustchain-sdk/commit/010a479070ec7660d633436e5e8c1580e764fc5c))
+
+
+
+
+
+## [0.4.25](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.24...v0.4.25) (2022-03-08)
+
+
+### Bug Fixes
+
+* remove account from cloud ([bc7ecaf](https://github.com/trustcerts/trustchain-sdk/commit/bc7ecaf5a27910668263a841f473a8fb638ace8c))
+
+
+
+
+
+## [0.4.24](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.23...v0.4.24) (2022-03-08)
+
+
+### Bug Fixes
+
+* add delete endpoint ([386c3cd](https://github.com/trustcerts/trustchain-sdk/commit/386c3cd931cc02fd4106537d566b45920168314e))
+
+
+
+
+
+## [0.4.23](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.22...v0.4.23) (2022-03-06)
+
+**Note:** Version bump only for package @trustcerts/config-cloud
+
+
+
+
+
+## [0.4.22](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.21...v0.4.22) (2022-03-06)
+
+**Note:** Version bump only for package @trustcerts/config-cloud
+
+
+
+
+
+## [0.4.21](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.20...v0.4.21) (2022-03-01)
+
+**Note:** Version bump only for package @trustcerts/config-cloud
+
+
+
+
+
+## [0.4.20](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.19...v0.4.20) (2022-02-27)
+
+
+### Bug Fixes
+
+* tmp ([f917452](https://github.com/trustcerts/trustchain-sdk/commit/f917452ffee333c1afcdd7ac57aa625072906bea))
+
+
+
+
+
+## [0.4.19](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.18...v0.4.19) (2022-02-22)
+
+**Note:** Version bump only for package @trustcerts/config-cloud
+
+
+
+
+
+## [0.4.18](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.17...v0.4.18) (2022-02-22)
+
+**Note:** Version bump only for package @trustcerts/config-cloud
+
+
+
+
+
+## [0.4.17](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.16...v0.4.17) (2022-02-21)
+
+**Note:** Version bump only for package @trustcerts/config-cloud
+
+
+
+
+
+## [0.4.16](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.15...v0.4.16) (2022-02-21)
+
+**Note:** Version bump only for package @trustcerts/config-cloud
+
+
+
+
+
+## [0.4.15](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.14...v0.4.15) (2022-02-21)
+
+**Note:** Version bump only for package @trustcerts/config-cloud
+
+
+
+
+
+## [0.4.14](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.13...v0.4.14) (2022-02-21)
+
+**Note:** Version bump only for package @trustcerts/config-cloud
+
+
+
+
+
+## [0.4.13](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.12...v0.4.13) (2022-02-21)
+
+**Note:** Version bump only for package @trustcerts/config-cloud
+
+
+
+
+
+## [0.4.12](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.11...v0.4.12) (2022-02-21)
+
+**Note:** Version bump only for package @trustcerts/config-cloud
+
+
+
+
+
+## [0.4.11](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.10...v0.4.11) (2022-02-15)
+
+**Note:** Version bump only for package @trustcerts/config-cloud
+
+
+
+
+
+## [0.4.10](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.7...v0.4.10) (2022-02-15)
+
+
+### Bug Fixes
+
+* refactor to dids ([e151507](https://github.com/trustcerts/trustchain-sdk/commit/e15150757f0f090cf76f33f2ef3fecdc4b43baac))
+* refactoring for did update ([029f98f](https://github.com/trustcerts/trustchain-sdk/commit/029f98f8da2577bc1dce6224b8068a3d7ae624f5))
+* update deps ([0ad6156](https://github.com/trustcerts/trustchain-sdk/commit/0ad615683ea95f66015e6fb18a27222bdf86d4a3))
+
+
+
+
+
 ## [0.4.7](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.6...v0.4.7) (2022-01-20)
 
 **Note:** Version bump only for package @trustcerts/config-cloud

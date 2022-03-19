@@ -1,6 +1,6 @@
 #!/bin/bash
 
-build_order=("platform" "gateway" "observer" "core" "did-id-create" "wallet" "signature-verify" "template-verify" "claim-verify" "signature-create" "claim-create" "vc-revocation" "vc-create")
+build_order=("platform" "gateway" "observer" "core" "did-id-create" "wallet" "signature-verify" "schema-verify" "schema-create" "template-verify" "claim-verify" "signature-create" "claim-create" "vc-revocation" "vc-create")
 
 cd packages
 

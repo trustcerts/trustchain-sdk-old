@@ -6,12 +6,15 @@ import {
 } from '@trustcerts/core';
 
 export interface Encryption {
-  value: string;
+  value: Uint8Array;
   key: string;
   iv: string;
 }
 
 export class EncoderService {
+  /**
+   * Algorithm that is used for encryption.
+   */
   private static algo: AesKeyAlgorithm = {
     name: 'AES-CBC',
     length: 128, //can be  128, 192, or 256
@@ -26,12 +29,26 @@ export class EncoderService {
     this.algo.length = length;
   }
 
-  static async encode(value: string): Promise<Encryption> {
-    const key: CryptoKey = (await subtle.generateKey(
+  /**
+   * Generates a key for encryption
+   */
+  static async generateKey(): Promise<CryptoKey> {
+    return subtle.generateKey(
       this.algo,
       true, //whether the key is extractable (i.e. can be used in exportKey)
       ['encrypt', 'decrypt'] //can be "encrypt", "decrypt", "wrapKey", or "unwrapKey"
-    )) as CryptoKey;
+    ) as Promise<CryptoKey>;
+  }
+
+  /**
+   * Encodes a value with a generated password.
+   * @param value
+   * @returns encrypted value, password
+   */
+  static async encode(value: Uint8Array, key?: CryptoKey): Promise<Encryption> {
+    if (!key) {
+      key = await this.generateKey();
+    }
 
     // TODO check if the array size has impact on the security
     const iv = getRandomValues(new Uint8Array(16));
@@ -41,16 +58,21 @@ export class EncoderService {
         iv,
       },
       key,
-      new TextEncoder().encode(value)
+      value
     );
     return {
-      value: base58Encode(new Uint8Array(encrypted)),
+      value: new Uint8Array(encrypted),
       iv: base58Encode(iv),
       key: base58Encode(new Uint8Array(await subtle.exportKey('raw', key))),
     };
   }
 
-  static async decode(values: Encryption): Promise<string> {
+  /**
+   * Returns a value
+   * @param values
+   * @returns
+   */
+  static async decode(values: Encryption): Promise<Uint8Array> {
     const newKey = await subtle
       .importKey('raw', base58Decode(values.key), this.algo, true, [
         'encrypt',
@@ -63,21 +85,20 @@ export class EncoderService {
         }
       );
 
-    const decrypted = await subtle
+    return subtle
       .decrypt(
         {
           name: 'AES-CBC',
           iv: base58Decode(values.iv),
         },
         newKey,
-        base58Decode(values.value)
+        values.value
       )
       .then(
-        value => value,
+        value => new Uint8Array(value),
         () => {
           throw new Error('failed to decrypt');
         }
       );
-    return new TextDecoder().decode(decrypted);
   }
 }

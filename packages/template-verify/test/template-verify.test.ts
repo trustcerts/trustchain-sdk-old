@@ -7,12 +7,20 @@ import {
   SignatureType,
 } from '@trustcerts/core';
 import { LocalConfigService } from '@trustcerts/config-local';
-import { TemplateIssuerService } from '@trustcerts/template-create';
-import { TemplateVerifierService } from '../src';
+import {
+  DidTemplateRegister,
+  TemplateIssuerService,
+} from '@trustcerts/template-create';
+import { DidTemplateResolver } from '../src/did-template-resolver';
 import { JSONSchemaType } from 'ajv';
 import { WalletService } from '@trustcerts/wallet';
 import { readFileSync } from 'fs';
-import { TemplateStructure, CompressionTypeEnum } from '@trustcerts/gateway';
+import { CompressionType } from '@trustcerts/gateway';
+import {
+  DidSchemaRegister,
+  SchemaIssuerService,
+} from '@trustcerts/schema-create';
+
 describe('test template service', () => {
   let config: ConfigService;
   let cryptoService: CryptoService;
@@ -32,8 +40,8 @@ describe('test template service', () => {
   const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
 
   beforeAll(async () => {
-    DidNetworks.add('tc:dev', testValues.network);
-    Identifier.setNetwork('tc:dev');
+    DidNetworks.add(testValues.network.namespace, testValues.network);
+    Identifier.setNetwork(testValues.network.namespace);
     config = new LocalConfigService(testValues.filePath);
     await config.init(testValues.configValues);
 
@@ -51,26 +59,30 @@ describe('test template service', () => {
   }, 10000);
 
   it('verify', async () => {
+    const clientSchema = new SchemaIssuerService(
+      testValues.network.gateways,
+      cryptoService
+    );
+    const schemaDid = DidSchemaRegister.create({
+      controllers: [config.config.invite!.id],
+    });
+    schemaDid.schema = '{foo: bar}';
+    await DidSchemaRegister.save(schemaDid, clientSchema);
     const client = new TemplateIssuerService(
       testValues.network.gateways,
       cryptoService
     );
-    const value: TemplateStructure = {
-      compression: {
-        type: CompressionTypeEnum.Json,
-      },
-      template,
-      schema: JSON.stringify(schema),
-      id: Identifier.generate('tmp'),
+    const templateDid = DidTemplateRegister.create({
+      controllers: [config.config.invite!.id],
+    });
+    templateDid.schemaId = schemaDid.id;
+    templateDid.template = template;
+    templateDid.compression = {
+      type: CompressionType.JSON,
     };
-    const transaction = await client.create(value);
-    const verifier = new TemplateVerifierService(testValues.network.observers);
-    await new Promise((resolve)=> setTimeout(()=>{resolve(true)} , 2000));
-    const transaction2 = await verifier.get(
-      transaction.transaction.body.value.id
-    );
-    expect(transaction2.template).toEqual(value.template);
-    expect(transaction2.compression).toEqual(value.compression);
-    expect(transaction2.schema).toEqual(value.schema);
+    await DidTemplateRegister.save(templateDid, client);
+    const loadedTemplate = await new DidTemplateResolver().load(templateDid.id);
+
+    expect(loadedTemplate.template).toEqual(template);
   });
 });

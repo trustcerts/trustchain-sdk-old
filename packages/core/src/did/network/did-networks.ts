@@ -72,7 +72,7 @@ export class DidNetworks {
       id = id.replace(`did:${Identifier.method}:`, '');
     }
     if (!this.nameSpaceNetworks) {
-      throw Error(`no networks defined`);
+      throw Error(`no networks defined for ${id}`);
     }
     const elements = id.split(':');
     try {

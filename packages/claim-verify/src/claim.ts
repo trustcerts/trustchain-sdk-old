@@ -2,7 +2,9 @@ import { toDataURL } from 'qrcode';
 import mustache from 'mustache';
 import { ClaimValues } from './claim-values';
 import { Compress, JsonCompressor, Proto } from './compress';
-import { Hash, Template, CompressionTypeEnum } from '@trustcerts/observer';
+import { CompressionType } from '@trustcerts/observer';
+import { DidSignature } from '@trustcerts/signature-verify';
+import { DidTemplate } from '@trustcerts/template-verify';
 /**
  * Class object to handle a claim
  */
@@ -10,24 +12,24 @@ export class Claim {
   /**
    * Url of the claim.
    */
-  private url: string;
+  private url: any;
 
   /**
    * Information about the validation.
    */
-  private hash?: Hash;
+  private hash?: DidSignature;
 
   /**
    * Sets values based on compression algorithm.
    */
   constructor(
     public values: ClaimValues,
-    private template: Template,
+    private template: DidTemplate,
     host: string
   ) {
     let compressor: Compress;
     if (
-      template.compression.type === CompressionTypeEnum.Proto &&
+      template.compression.type === CompressionType.PROTO &&
       template.compression.value
     ) {
       compressor = new Proto(JSON.parse(template.compression.value));
@@ -126,7 +128,7 @@ export class Claim {
    * Sets the validation results of the claim
    * @param hash
    */
-  public setValidation(hash: Hash): void {
+  public setValidation(hash: DidSignature): void {
     this.hash = hash;
   }
 
@@ -134,7 +136,7 @@ export class Claim {
    * Returns the validation information about the claim.
    * @returns
    */
-  public getValidation(): Hash | undefined {
+  public getValidation(): DidSignature | undefined {
     return this.hash;
   }
 }

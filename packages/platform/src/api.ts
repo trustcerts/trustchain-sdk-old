@@ -99,6 +99,12 @@ export interface Contract {
      * @type {string}
      * @memberof Contract
      */
+    'image'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Contract
+     */
     'name': string;
     /**
      * 
@@ -136,6 +142,12 @@ export interface ContractInput {
      * @memberof ContractInput
      */
     'value': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ContractInput
+     */
+    'id'?: number;
 }
 /**
  * 
@@ -180,6 +192,12 @@ export interface ContractTemplate {
      * @memberof ContractTemplate
      */
     'file': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContractTemplate
+     */
+    'image'?: string;
     /**
      * 
      * @type {string}
@@ -401,6 +419,12 @@ export interface Credential {
      * @memberof Credential
      */
     'values': object;
+    /**
+     * 
+     * @type {string}
+     * @memberof Credential
+     */
+    'deleted': string;
 }
 /**
  * 
@@ -593,7 +617,9 @@ export enum FieldTypeEnum {
     Qr = 'qr',
     Name = 'name',
     Town = 'town',
-    Date = 'date'
+    Date = 'date',
+    LocationDate = 'locationDate',
+    Text = 'text'
 }
 
 /**
@@ -797,6 +823,31 @@ export interface LoginResponse {
      * @memberof LoginResponse
      */
     'key': string;
+}
+/**
+ * 
+ * @export
+ * @interface MailCredentialDto
+ */
+export interface MailCredentialDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof MailCredentialDto
+     */
+    'html': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MailCredentialDto
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MailCredentialDto
+     */
+    'email': string;
 }
 /**
  * 
@@ -2218,6 +2269,40 @@ export const AuthorizePlatformApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * 
+         * @summary returns own information
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerDeleteAccount: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/auth`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Logs a user into the system based on the auth guard
          * @param {LoginDto} loginDto 
          * @param {*} [options] Override http request option.
@@ -2417,6 +2502,16 @@ export const AuthorizePlatformApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary returns own information
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authControllerDeleteAccount(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authControllerDeleteAccount(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Logs a user into the system based on the auth guard
          * @param {LoginDto} loginDto 
          * @param {*} [options] Override http request option.
@@ -2492,6 +2587,15 @@ export const AuthorizePlatformApiFactory = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary returns own information
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerDeleteAccount(options?: any): AxiosPromise<void> {
+            return localVarFp.authControllerDeleteAccount(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Logs a user into the system based on the auth guard
          * @param {LoginDto} loginDto 
          * @param {*} [options] Override http request option.
@@ -2560,6 +2664,17 @@ export class AuthorizePlatformApi extends BaseAPI {
      */
     public authControllerChangePassword(updatePasswordDto: UpdatePasswordDto, options?: AxiosRequestConfig) {
         return AuthorizePlatformApiFp(this.configuration).authControllerChangePassword(updatePasswordDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary returns own information
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthorizePlatformApi
+     */
+    public authControllerDeleteAccount(options?: AxiosRequestConfig) {
+        return AuthorizePlatformApiFp(this.configuration).authControllerDeleteAccount(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4086,6 +4201,45 @@ export const CredentialsPlatformApiAxiosParamCreator = function (configuration?:
         },
         /**
          * 
+         * @param {MailCredentialDto} mailCredentialDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        credentialsControllerMail: async (mailCredentialDto: MailCredentialDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'mailCredentialDto' is not null or undefined
+            assertParamExists('credentialsControllerMail', 'mailCredentialDto', mailCredentialDto)
+            const localVarPath = `/credentials/mail`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(mailCredentialDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {PostCredential} postCredential 
          * @param {*} [options] Override http request option.
@@ -4121,43 +4275,6 @@ export const CredentialsPlatformApiAxiosParamCreator = function (configuration?:
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(postCredential, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        credentialsControllerRemove: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('credentialsControllerRemove', 'id', id)
-            const localVarPath = `/credentials/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4264,6 +4381,16 @@ export const CredentialsPlatformApiFp = function(configuration?: Configuration) 
         },
         /**
          * 
+         * @param {MailCredentialDto} mailCredentialDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async credentialsControllerMail(mailCredentialDto: MailCredentialDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.credentialsControllerMail(mailCredentialDto, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {PostCredential} postCredential 
          * @param {*} [options] Override http request option.
@@ -4271,16 +4398,6 @@ export const CredentialsPlatformApiFp = function(configuration?: Configuration) 
          */
         async credentialsControllerPutStore(id: string, postCredential: PostCredential, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.credentialsControllerPutStore(id, postCredential, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async credentialsControllerRemove(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.credentialsControllerRemove(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4349,6 +4466,15 @@ export const CredentialsPlatformApiFactory = function (configuration?: Configura
         },
         /**
          * 
+         * @param {MailCredentialDto} mailCredentialDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        credentialsControllerMail(mailCredentialDto: MailCredentialDto, options?: any): AxiosPromise<void> {
+            return localVarFp.credentialsControllerMail(mailCredentialDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {PostCredential} postCredential 
          * @param {*} [options] Override http request option.
@@ -4356,15 +4482,6 @@ export const CredentialsPlatformApiFactory = function (configuration?: Configura
          */
         credentialsControllerPutStore(id: string, postCredential: PostCredential, options?: any): AxiosPromise<void> {
             return localVarFp.credentialsControllerPutStore(id, postCredential, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        credentialsControllerRemove(id: string, options?: any): AxiosPromise<void> {
-            return localVarFp.credentialsControllerRemove(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4441,6 +4558,17 @@ export class CredentialsPlatformApi extends BaseAPI {
 
     /**
      * 
+     * @param {MailCredentialDto} mailCredentialDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CredentialsPlatformApi
+     */
+    public credentialsControllerMail(mailCredentialDto: MailCredentialDto, options?: AxiosRequestConfig) {
+        return CredentialsPlatformApiFp(this.configuration).credentialsControllerMail(mailCredentialDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {string} id 
      * @param {PostCredential} postCredential 
      * @param {*} [options] Override http request option.
@@ -4449,17 +4577,6 @@ export class CredentialsPlatformApi extends BaseAPI {
      */
     public credentialsControllerPutStore(id: string, postCredential: PostCredential, options?: AxiosRequestConfig) {
         return CredentialsPlatformApiFp(this.configuration).credentialsControllerPutStore(id, postCredential, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CredentialsPlatformApi
-     */
-    public credentialsControllerRemove(id: string, options?: AxiosRequestConfig) {
-        return CredentialsPlatformApiFp(this.configuration).credentialsControllerRemove(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

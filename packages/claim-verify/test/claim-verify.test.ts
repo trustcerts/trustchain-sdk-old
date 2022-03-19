@@ -9,14 +9,21 @@ import {
 import { randomBytes } from 'crypto';
 import { LocalConfigService } from '@trustcerts/config-local';
 import { SignatureIssuerService } from '@trustcerts/signature-create';
-import { TemplateIssuerService } from '@trustcerts/template-create';
+import {
+  DidTemplateRegister,
+  TemplateIssuerService,
+} from '@trustcerts/template-create';
 import { ClaimIssuerService } from '@trustcerts/claim-create';
-import { ClaimVerifierService, ClaimValues, Claim } from '../src';
-import { SignatureVerifierService } from '@trustcerts/signature-verify';
-import { TemplateVerifierService } from '@trustcerts/template-verify';
+import { ClaimVerifierService, ClaimValues } from '../src';
+import { Claim } from '../dist';
 import { WalletService } from '@trustcerts/wallet';
 import { readFileSync } from 'fs';
-import { TemplateStructure, CompressionTypeEnum } from '@trustcerts/gateway';
+import { CompressionType } from '@trustcerts/gateway';
+import {
+  DidSchemaRegister,
+  SchemaIssuerService,
+} from '@trustcerts/schema-create';
+import { promisify } from 'util';
 
 /**
  * Test claim class.
@@ -41,8 +48,8 @@ describe('claim', () => {
   const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
 
   beforeAll(async () => {
-    DidNetworks.add('tc:dev', testValues.network);
-    Identifier.setNetwork('tc:dev');
+    DidNetworks.add(testValues.network.namespace, testValues.network);
+    Identifier.setNetwork(testValues.network.namespace);
     config = new LocalConfigService(testValues.filePath);
     await config.init(testValues.configValues);
 
@@ -63,50 +70,51 @@ describe('claim', () => {
   }, 10000);
 
   async function createClaim(val: ClaimValues): Promise<Claim> {
+    const template = '<h1>hello</h1>';
     const host = 'localhost';
 
-    const templateIssuer = new TemplateIssuerService(
+    const clientSchema = new SchemaIssuerService(
       testValues.network.gateways,
       cryptoService
     );
-    const template: TemplateStructure = {
-      compression: {
-        type: CompressionTypeEnum.Json,
-      },
-      template: '<h1>Hello {{ name }}</h1>',
-      schema: JSON.stringify(schema),
-      id: Identifier.generate('tmp'),
+    const schemaDid = DidSchemaRegister.create({
+      controllers: [config.config.invite!.id],
+    });
+    schemaDid.schema = JSON.stringify(schema);
+    await DidSchemaRegister.save(schemaDid, clientSchema);
+    const client = new TemplateIssuerService(
+      testValues.network.gateways,
+      cryptoService
+    );
+    const templateDid = DidTemplateRegister.create({
+      controllers: [config.config.invite!.id],
+    });
+    templateDid.schemaId = schemaDid.id;
+    templateDid.template = template;
+    templateDid.compression = {
+      type: CompressionType.JSON,
     };
-    await templateIssuer.create(template);
-    const verifier = new TemplateVerifierService(testValues.network.observers);
-    const loadedTemplate = await verifier.get(template.id);
-
+    await DidTemplateRegister.save(templateDid, client);
+    await promisify(setTimeout)(1000);
     const claimIssuer = new ClaimIssuerService();
     const signatureIssuer = new SignatureIssuerService(
       testValues.network.gateways,
       cryptoService
     );
-    return (claimIssuer.create(
-      loadedTemplate,
-      val,
-      host,
-      signatureIssuer
-    ) as unknown) as Promise<Claim>;
+    return claimIssuer.create(templateDid, val, host, signatureIssuer, [
+      config.config.invite!.id,
+    ]);
   }
 
   it('read a claim', async () => {
-    const value = {
+    const val = {
       random: randomBytes(16).toString('hex'),
       name: 'Max Mustermann',
     };
-    const claim = await createClaim(value);
-    const verifier = new SignatureVerifierService(testValues.network.observers);
-    const service = new ClaimVerifierService(
-      new TemplateVerifierService(testValues.network.observers),
-      verifier,
-      'localhost'
-    );
-    await new Promise((resolve)=> setTimeout(()=>{resolve(true)} , 2000));
+    const claim = await createClaim(val);
+    expect(claim.values).toEqual(val);
+    await promisify(setTimeout)(2000);
+    const service = new ClaimVerifierService('localhost');
     const claimLoaded = await service.get(
       claim
         .getUrl()
@@ -114,6 +122,8 @@ describe('claim', () => {
         .slice(1)
         .join('/')
     );
+    const validation = claimLoaded.getValidation();
+    expect(validation!.revoked).toBeUndefined();
     expect(claim.getUrl()).toEqual(claimLoaded.getUrl());
     expect(await claim.getHtml()).toEqual(await claimLoaded.getHtml());
     expect(claim.values).toEqual(claimLoaded.values);

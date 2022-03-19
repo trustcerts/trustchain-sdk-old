@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$ref": "#/definitions/Config",
+  "definitions": {
+    "Config": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "configValues": {
+          "$ref": "#/definitions/ConfigValues"
+        },
+        "filePath": {
+          "type": "string"
+        },
+        "cloud": {
+          "type": "string",
+          "format": "uri",
+          "qt-uri-protocols": ["https"]
+        },
+        "creator": {
+          "type": "string",
+          "format": "uri",
+          "qt-uri-protocols": ["https"]
+        },
+        "network": {
+          "$ref": "#/definitions/Network"
+        }
+      },
+      "required": ["cloud", "configValues", "creator", "filePath", "network"],
+      "title": "Config"
+    },
+    "ConfigValues": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "invite": {
+          "$ref": "#/definitions/Invite"
+        },
+        "name": {
+          "type": "string"
+        },
+        "keyPairs": {
+          "type": "array",
+          "items": {}
+        }
+      },
+      "required": ["invite", "keyPairs", "name"],
+      "title": "ConfigValues"
+    },
+    "Invite": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "secret": {
+          "type": "string"
+        },
+        "endpoint": {
+          "type": "string",
+          "format": "uri",
+          "qt-uri-protocols": ["https"]
+        }
+      },
+      "required": ["endpoint", "id", "secret"],
+      "title": "Invite"
+    },
+    "Network": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "gateways": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uri",
+            "qt-uri-protocols": ["https"]
+          }
+        },
+        "observers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uri",
+            "qt-uri-protocols": ["https"]
+          }
+        },
+        "namespace": {
+          "type": "string"
+        }
+      },
+      "required": ["gateways", "namespace", "observers"],
+      "title": "Network"
+    }
+  }
+}

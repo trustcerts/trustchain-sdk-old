@@ -12,10 +12,10 @@ import {
 
 export class RevocationService {
   // TODO: better persistence than just a local file
-  private revocationListConfigPath = './revocationListConfig.json';
+  private revocationListConfigPath = './tmp/revocationListConfig.json';
 
   // temporarily store Credential locally instead of blockchain (until blockchain support is implemented)
-  private revocationListCredentialPath = './revocationListCredential.json';
+  private revocationListCredentialPath = './tmp/revocationListCredential.json';
 
   private revocationListConfig!: IRevocationListConfig;
 
@@ -35,8 +35,8 @@ export class RevocationService {
 
   constructor() {
     // Ausgeklammert weil noch kein Blockchain-Support
-    // DidNetworks.add('tc:dev', network);
-    // Identifier.setNetwork('tc:dev');
+    // DidNetworks.add(testValues.network.namespace, network);
+    // Identifier.setNetwork(testValues.network.namespace);
     // this.config = new LocalConfigService(filePath);
   }
 

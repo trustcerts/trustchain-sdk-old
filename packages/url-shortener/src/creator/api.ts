@@ -29,10 +29,10 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 export interface CreateCredentialsDto {
     /**
      * values of the credential
-     * @type {object}
+     * @type {CredentialValues}
      * @memberof CreateCredentialsDto
      */
-    'values': object;
+    'values': CredentialValues;
     /**
      * identity of the template. If none is passed the one from the config is used.
      * @type {string}
@@ -46,7 +46,7 @@ export interface CreateCredentialsDto {
      */
     'email'?: string;
     /**
-     * identifier of the signer
+     * identifier of the signer, if none is passed the one from the config is used
      * @type {string}
      * @memberof CreateCredentialsDto
      */
@@ -76,6 +76,12 @@ export interface CreateTemplateDto {
      * @memberof CreateTemplateDto
      */
     'encoded'?: boolean;
+    /**
+     * identifier of the signer, if none is passed the one from the config is used
+     * @type {string}
+     * @memberof CreateTemplateDto
+     */
+    'user'?: string;
 }
 /**
  * 
@@ -93,21 +99,70 @@ export interface CreateTemplateResponseDto {
 /**
  * 
  * @export
- * @interface CredentialCreateResponse
+ * @interface CreateUserDto
  */
-export interface CredentialCreateResponse {
+export interface CreateUserDto {
     /**
-     * url of the claim that is included in the QR-Code
+     * Name of the user
      * @type {string}
-     * @memberof CredentialCreateResponse
+     * @memberof CreateUserDto
      */
-    'url': string;
+    'username': string;
     /**
-     * link to add credential to linkedin.
-     * @type {string}
-     * @memberof CredentialCreateResponse
+     * JSON-Encoded information to desribe the user object.
+     * @type {object}
+     * @memberof CreateUserDto
      */
-    'linkedIn'?: string;
+    'description': object;
+}
+/**
+ * 
+ * @export
+ * @interface CredentialValues
+ */
+export interface CredentialValues {
+    /**
+     * prename of the person
+     * @type {string}
+     * @memberof CredentialValues
+     */
+    'prename': string;
+    /**
+     * surname of the person.
+     * @type {string}
+     * @memberof CredentialValues
+     */
+    'surname': string;
+    /**
+     * date of birth of the person.
+     * @type {string}
+     * @memberof CredentialValues
+     */
+    'dateOfBirth': string;
+    /**
+     * date of training
+     * @type {string}
+     * @memberof CredentialValues
+     */
+    'dateOfTraining': string;
+    /**
+     * identifier of the chapter
+     * @type {string}
+     * @memberof CredentialValues
+     */
+    'chapter': string;
+    /**
+     * identifier if a possible seconds chapter
+     * @type {string}
+     * @memberof CredentialValues
+     */
+    'chapter2'?: string;
+    /**
+     * identifier of the training course
+     * @type {string}
+     * @memberof CredentialValues
+     */
+    'trainingId': string;
 }
 /**
  * 
@@ -165,6 +220,25 @@ export interface ShortenResponse {
      * @memberof ShortenResponse
      */
     'url': string;
+}
+/**
+ * 
+ * @export
+ * @interface User
+ */
+export interface User {
+    /**
+     * unique identifier of the user
+     * @type {string}
+     * @memberof User
+     */
+    'id': string;
+    /**
+     * 
+     * @type {object}
+     * @memberof User
+     */
+    'description': object;
 }
 
 /**
@@ -267,7 +341,7 @@ export const CredentialsCreatorApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async credentialsControllerCreate(createCredentialsDto: CreateCredentialsDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CredentialCreateResponse>> {
+        async credentialsControllerCreate(createCredentialsDto: CreateCredentialsDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.credentialsControllerCreate(createCredentialsDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -297,7 +371,7 @@ export const CredentialsCreatorApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        credentialsControllerCreate(createCredentialsDto: CreateCredentialsDto, options?: any): AxiosPromise<CredentialCreateResponse> {
+        credentialsControllerCreate(createCredentialsDto: CreateCredentialsDto, options?: any): AxiosPromise<void> {
             return localVarFp.credentialsControllerCreate(createCredentialsDto, options).then((request) => request(axios, basePath));
         },
         /**
@@ -339,6 +413,303 @@ export class CredentialsCreatorApi extends BaseAPI {
      */
     public credentialsControllerCreateTemplate(createTemplateDto: CreateTemplateDto, options?: AxiosRequestConfig) {
         return CredentialsCreatorApiFp(this.configuration).credentialsControllerCreateTemplate(createTemplateDto, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * FilesCreatorApi - axios parameter creator
+ * @export
+ */
+export const FilesCreatorApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary sign a file and store it
+         * @param {any} file file that should be signed
+         * @param {boolean} scale if set to true the document will be scaled down to place the footer
+         * @param {string} [user] identifier of the signer, if none is passed the one from the config is used
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        filesControllerCreate: async (file: any, scale: boolean, user?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'file' is not null or undefined
+            assertParamExists('filesControllerCreate', 'file', file)
+            // verify required parameter 'scale' is not null or undefined
+            assertParamExists('filesControllerCreate', 'scale', scale)
+            const localVarPath = `/files/create`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+            if (file !== undefined) { 
+                localVarFormParams.append('file', file as any);
+            }
+    
+            if (scale !== undefined) { 
+                localVarFormParams.append('scale', scale as any);
+            }
+    
+            if (user !== undefined) { 
+                localVarFormParams.append('user', user as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary download a signed file
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        filesControllerDownload: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('filesControllerDownload', 'id', id)
+            const localVarPath = `/files/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary revoke a file
+         * @param {any} file file that should be signed
+         * @param {boolean} scale if set to true the document will be scaled down to place the footer
+         * @param {string} [user] identifier of the signer, if none is passed the one from the config is used
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        filesControllerRevoke: async (file: any, scale: boolean, user?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'file' is not null or undefined
+            assertParamExists('filesControllerRevoke', 'file', file)
+            // verify required parameter 'scale' is not null or undefined
+            assertParamExists('filesControllerRevoke', 'scale', scale)
+            const localVarPath = `/files/revoke`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+            if (file !== undefined) { 
+                localVarFormParams.append('file', file as any);
+            }
+    
+            if (scale !== undefined) { 
+                localVarFormParams.append('scale', scale as any);
+            }
+    
+            if (user !== undefined) { 
+                localVarFormParams.append('user', user as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * FilesCreatorApi - functional programming interface
+ * @export
+ */
+export const FilesCreatorApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = FilesCreatorApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary sign a file and store it
+         * @param {any} file file that should be signed
+         * @param {boolean} scale if set to true the document will be scaled down to place the footer
+         * @param {string} [user] identifier of the signer, if none is passed the one from the config is used
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async filesControllerCreate(file: any, scale: boolean, user?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.filesControllerCreate(file, scale, user, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary download a signed file
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async filesControllerDownload(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.filesControllerDownload(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary revoke a file
+         * @param {any} file file that should be signed
+         * @param {boolean} scale if set to true the document will be scaled down to place the footer
+         * @param {string} [user] identifier of the signer, if none is passed the one from the config is used
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async filesControllerRevoke(file: any, scale: boolean, user?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.filesControllerRevoke(file, scale, user, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * FilesCreatorApi - factory interface
+ * @export
+ */
+export const FilesCreatorApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = FilesCreatorApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary sign a file and store it
+         * @param {any} file file that should be signed
+         * @param {boolean} scale if set to true the document will be scaled down to place the footer
+         * @param {string} [user] identifier of the signer, if none is passed the one from the config is used
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        filesControllerCreate(file: any, scale: boolean, user?: string, options?: any): AxiosPromise<any> {
+            return localVarFp.filesControllerCreate(file, scale, user, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary download a signed file
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        filesControllerDownload(id: string, options?: any): AxiosPromise<any> {
+            return localVarFp.filesControllerDownload(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary revoke a file
+         * @param {any} file file that should be signed
+         * @param {boolean} scale if set to true the document will be scaled down to place the footer
+         * @param {string} [user] identifier of the signer, if none is passed the one from the config is used
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        filesControllerRevoke(file: any, scale: boolean, user?: string, options?: any): AxiosPromise<object> {
+            return localVarFp.filesControllerRevoke(file, scale, user, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * FilesCreatorApi - object-oriented interface
+ * @export
+ * @class FilesCreatorApi
+ * @extends {BaseAPI}
+ */
+export class FilesCreatorApi extends BaseAPI {
+    /**
+     * 
+     * @summary sign a file and store it
+     * @param {any} file file that should be signed
+     * @param {boolean} scale if set to true the document will be scaled down to place the footer
+     * @param {string} [user] identifier of the signer, if none is passed the one from the config is used
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FilesCreatorApi
+     */
+    public filesControllerCreate(file: any, scale: boolean, user?: string, options?: AxiosRequestConfig) {
+        return FilesCreatorApiFp(this.configuration).filesControllerCreate(file, scale, user, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary download a signed file
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FilesCreatorApi
+     */
+    public filesControllerDownload(id: string, options?: AxiosRequestConfig) {
+        return FilesCreatorApiFp(this.configuration).filesControllerDownload(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary revoke a file
+     * @param {any} file file that should be signed
+     * @param {boolean} scale if set to true the document will be scaled down to place the footer
+     * @param {string} [user] identifier of the signer, if none is passed the one from the config is used
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FilesCreatorApi
+     */
+    public filesControllerRevoke(file: any, scale: boolean, user?: string, options?: AxiosRequestConfig) {
+        return FilesCreatorApiFp(this.configuration).filesControllerRevoke(file, scale, user, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -402,6 +773,10 @@ export const ShortenCreatorApiAxiosParamCreator = function (configuration?: Conf
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -505,6 +880,615 @@ export class ShortenCreatorApi extends BaseAPI {
      */
     public shortenControllerShorten(shortenDto: ShortenDto, options?: AxiosRequestConfig) {
         return ShortenCreatorApiFp(this.configuration).shortenControllerShorten(shortenDto, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * SignaturesCreatorApi - axios parameter creator
+ * @export
+ */
+export const SignaturesCreatorApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary revoke a given file
+         * @param {any} file file that should be signed
+         * @param {string} [user] identifier of the signer, if none is passed the one from the config is used
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        signaturesControllerRevoke: async (file: any, user?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'file' is not null or undefined
+            assertParamExists('signaturesControllerRevoke', 'file', file)
+            const localVarPath = `/signatures/revoke`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+            if (file !== undefined) { 
+                localVarFormParams.append('file', file as any);
+            }
+    
+            if (user !== undefined) { 
+                localVarFormParams.append('user', user as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary sign a given file
+         * @param {any} file file that should be signed
+         * @param {string} [user] identifier of the signer, if none is passed the one from the config is used
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        signaturesControllerSign: async (file: any, user?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'file' is not null or undefined
+            assertParamExists('signaturesControllerSign', 'file', file)
+            const localVarPath = `/signatures/create`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+            if (file !== undefined) { 
+                localVarFormParams.append('file', file as any);
+            }
+    
+            if (user !== undefined) { 
+                localVarFormParams.append('user', user as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary request signature of a given file
+         * @param {any} file file that should be signed
+         * @param {string} [user] identifier of the signer, if none is passed the one from the config is used
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        signaturesControllerVerify: async (file: any, user?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'file' is not null or undefined
+            assertParamExists('signaturesControllerVerify', 'file', file)
+            const localVarPath = `/signatures/verify`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+
+            if (file !== undefined) { 
+                localVarFormParams.append('file', file as any);
+            }
+    
+            if (user !== undefined) { 
+                localVarFormParams.append('user', user as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * SignaturesCreatorApi - functional programming interface
+ * @export
+ */
+export const SignaturesCreatorApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = SignaturesCreatorApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary revoke a given file
+         * @param {any} file file that should be signed
+         * @param {string} [user] identifier of the signer, if none is passed the one from the config is used
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async signaturesControllerRevoke(file: any, user?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.signaturesControllerRevoke(file, user, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary sign a given file
+         * @param {any} file file that should be signed
+         * @param {string} [user] identifier of the signer, if none is passed the one from the config is used
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async signaturesControllerSign(file: any, user?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.signaturesControllerSign(file, user, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary request signature of a given file
+         * @param {any} file file that should be signed
+         * @param {string} [user] identifier of the signer, if none is passed the one from the config is used
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async signaturesControllerVerify(file: any, user?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.signaturesControllerVerify(file, user, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * SignaturesCreatorApi - factory interface
+ * @export
+ */
+export const SignaturesCreatorApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = SignaturesCreatorApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary revoke a given file
+         * @param {any} file file that should be signed
+         * @param {string} [user] identifier of the signer, if none is passed the one from the config is used
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        signaturesControllerRevoke(file: any, user?: string, options?: any): AxiosPromise<object> {
+            return localVarFp.signaturesControllerRevoke(file, user, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary sign a given file
+         * @param {any} file file that should be signed
+         * @param {string} [user] identifier of the signer, if none is passed the one from the config is used
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        signaturesControllerSign(file: any, user?: string, options?: any): AxiosPromise<object> {
+            return localVarFp.signaturesControllerSign(file, user, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary request signature of a given file
+         * @param {any} file file that should be signed
+         * @param {string} [user] identifier of the signer, if none is passed the one from the config is used
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        signaturesControllerVerify(file: any, user?: string, options?: any): AxiosPromise<object> {
+            return localVarFp.signaturesControllerVerify(file, user, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * SignaturesCreatorApi - object-oriented interface
+ * @export
+ * @class SignaturesCreatorApi
+ * @extends {BaseAPI}
+ */
+export class SignaturesCreatorApi extends BaseAPI {
+    /**
+     * 
+     * @summary revoke a given file
+     * @param {any} file file that should be signed
+     * @param {string} [user] identifier of the signer, if none is passed the one from the config is used
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SignaturesCreatorApi
+     */
+    public signaturesControllerRevoke(file: any, user?: string, options?: AxiosRequestConfig) {
+        return SignaturesCreatorApiFp(this.configuration).signaturesControllerRevoke(file, user, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary sign a given file
+     * @param {any} file file that should be signed
+     * @param {string} [user] identifier of the signer, if none is passed the one from the config is used
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SignaturesCreatorApi
+     */
+    public signaturesControllerSign(file: any, user?: string, options?: AxiosRequestConfig) {
+        return SignaturesCreatorApiFp(this.configuration).signaturesControllerSign(file, user, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary request signature of a given file
+     * @param {any} file file that should be signed
+     * @param {string} [user] identifier of the signer, if none is passed the one from the config is used
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SignaturesCreatorApi
+     */
+    public signaturesControllerVerify(file: any, user?: string, options?: AxiosRequestConfig) {
+        return SignaturesCreatorApiFp(this.configuration).signaturesControllerVerify(file, user, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * UsersCreatorApi - axios parameter creator
+ * @export
+ */
+export const UsersCreatorApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Creates a new user entry.
+         * @summary create a new user
+         * @param {CreateUserDto} createUserDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerCreate: async (createUserDto: CreateUserDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createUserDto' is not null or undefined
+            assertParamExists('usersControllerCreate', 'createUserDto', createUserDto)
+            const localVarPath = `/users`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createUserDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary get all users
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerFindAll: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/users`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary get a specific user
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerFindOne: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('usersControllerFindOne', 'id', id)
+            const localVarPath = `/users/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary delete a user
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerRemove: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('usersControllerRemove', 'id', id)
+            const localVarPath = `/users/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * UsersCreatorApi - functional programming interface
+ * @export
+ */
+export const UsersCreatorApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = UsersCreatorApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Creates a new user entry.
+         * @summary create a new user
+         * @param {CreateUserDto} createUserDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async usersControllerCreate(createUserDto: CreateUserDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.usersControllerCreate(createUserDto, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary get all users
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async usersControllerFindAll(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<User>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.usersControllerFindAll(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary get a specific user
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async usersControllerFindOne(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.usersControllerFindOne(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary delete a user
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async usersControllerRemove(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.usersControllerRemove(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * UsersCreatorApi - factory interface
+ * @export
+ */
+export const UsersCreatorApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = UsersCreatorApiFp(configuration)
+    return {
+        /**
+         * Creates a new user entry.
+         * @summary create a new user
+         * @param {CreateUserDto} createUserDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerCreate(createUserDto: CreateUserDto, options?: any): AxiosPromise<void> {
+            return localVarFp.usersControllerCreate(createUserDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary get all users
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerFindAll(options?: any): AxiosPromise<Array<User>> {
+            return localVarFp.usersControllerFindAll(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary get a specific user
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerFindOne(id: string, options?: any): AxiosPromise<User> {
+            return localVarFp.usersControllerFindOne(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary delete a user
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerRemove(id: string, options?: any): AxiosPromise<void> {
+            return localVarFp.usersControllerRemove(id, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * UsersCreatorApi - object-oriented interface
+ * @export
+ * @class UsersCreatorApi
+ * @extends {BaseAPI}
+ */
+export class UsersCreatorApi extends BaseAPI {
+    /**
+     * Creates a new user entry.
+     * @summary create a new user
+     * @param {CreateUserDto} createUserDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersCreatorApi
+     */
+    public usersControllerCreate(createUserDto: CreateUserDto, options?: AxiosRequestConfig) {
+        return UsersCreatorApiFp(this.configuration).usersControllerCreate(createUserDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary get all users
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersCreatorApi
+     */
+    public usersControllerFindAll(options?: AxiosRequestConfig) {
+        return UsersCreatorApiFp(this.configuration).usersControllerFindAll(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary get a specific user
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersCreatorApi
+     */
+    public usersControllerFindOne(id: string, options?: AxiosRequestConfig) {
+        return UsersCreatorApiFp(this.configuration).usersControllerFindOne(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary delete a user
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersCreatorApi
+     */
+    public usersControllerRemove(id: string, options?: AxiosRequestConfig) {
+        return UsersCreatorApiFp(this.configuration).usersControllerRemove(id, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

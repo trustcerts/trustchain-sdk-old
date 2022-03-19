@@ -7,11 +7,15 @@ import {
   SignatureType,
 } from '@trustcerts/core';
 import { LocalConfigService } from '@trustcerts/config-local';
-import { TemplateIssuerService } from '../src';
+import { TemplateIssuerService, DidTemplateRegister } from '../src';
 import { JSONSchemaType } from 'ajv';
 import { WalletService } from '@trustcerts/wallet';
 import { readFileSync } from 'fs';
-import { TemplateStructure, CompressionTypeEnum } from '@trustcerts/gateway';
+import {
+  DidSchemaRegister,
+  SchemaIssuerService,
+} from '@trustcerts/schema-create';
+import { CompressionType } from '@trustcerts/gateway';
 
 interface Name {
   name: string;
@@ -36,8 +40,8 @@ describe('test template service', () => {
   const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
 
   beforeAll(async () => {
-    DidNetworks.add('tc:dev', testValues.network);
-    Identifier.setNetwork('tc:dev');
+    DidNetworks.add(testValues.network.namespace, testValues.network);
+    Identifier.setNetwork(testValues.network.namespace);
     config = new LocalConfigService(testValues.filePath);
     await config.init(testValues.configValues);
 
@@ -55,19 +59,28 @@ describe('test template service', () => {
   }, 10000);
 
   it('create', async () => {
+    const clientSchema = new SchemaIssuerService(
+      testValues.network.gateways,
+      cryptoService
+    );
+    const schemaDid = DidSchemaRegister.create({
+      controllers: [config.config.invite!.id],
+    });
+    schemaDid.schema = '{foo: bar}';
+    await DidSchemaRegister.save(schemaDid, clientSchema);
     const client = new TemplateIssuerService(
       testValues.network.gateways,
       cryptoService
     );
-    const value: TemplateStructure = {
-      compression: {
-        type: CompressionTypeEnum.Json,
-      },
-      template,
-      schema: JSON.stringify(schema),
-      id: Identifier.generate('tmp'),
+    const templateDid = DidTemplateRegister.create({
+      controllers: [config.config.invite!.id],
+    });
+    templateDid.schemaId = schemaDid.id;
+    templateDid.template = template;
+    templateDid.compression = {
+      type: CompressionType.JSON,
     };
-    const transaction = await client.create(value);
-    expect(transaction.transaction.body.value.template).toEqual(value.template);
+    const res = await DidTemplateRegister.save(templateDid, client);
+    expect(res).toBeDefined();
   });
 });
