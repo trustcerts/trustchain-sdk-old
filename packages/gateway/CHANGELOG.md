@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.30](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.29...v0.4.30) (2022-03-19)
+
+**Note:** Version bump only for package @trustcerts/gateway
+
+
+
+
+
 ## [0.4.22](https://github.com/trustcerts/trustchain-sdk/compare/v0.4.21...v0.4.22) (2022-03-06)
 
 

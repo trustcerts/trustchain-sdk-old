@@ -1,5 +1,5 @@
 {
-  "version": "0.4.23",
+  "version": "0.4.30",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -73,9 +73,9 @@
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^7.0.8",
-    "@trustcerts/config-local": "^0.4.23",
-    "@trustcerts/did-id-create": "^0.4.23",
-    "@trustcerts/wallet": "^0.4.23",
+    "@trustcerts/config-local": "^0.4.30",
+    "@trustcerts/did-id-create": "^0.4.30",
+    "@trustcerts/wallet": "^0.4.30",
     "@types/bs58": "^4.0.1",
     "husky": "^7.0.4",
     "size-limit": "^7.0.8",
@@ -86,8 +86,8 @@
   "dependencies": {
     "@mattrglobal/bls12381-key-pair": "^0.8.0",
     "@mattrglobal/jsonld-signatures-bbs": "^0.12.0",
-    "@trustcerts/gateway": "^0.4.22",
-    "@trustcerts/observer": "^0.4.22",
+    "@trustcerts/gateway": "^0.4.30",
+    "@trustcerts/observer": "^0.4.30",
     "axios": "^0.26.0",
     "bs58": "^4.0.1",
     "jsonld-signatures": "^9.3.1"
