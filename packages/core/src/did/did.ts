@@ -2,8 +2,10 @@ import { Management } from './management';
 import {
   ControllerManage,
   DidDocument,
+  DidDocumentMetaData,
   DidStructure,
   DocResponse,
+  SignatureInfo,
 } from '@trustcerts/observer';
 
 export abstract class Did {
@@ -12,6 +14,10 @@ export abstract class Did {
   protected controller = new Management<string>();
 
   protected context = ['https://www.w3.org/ns/did/v1'];
+
+  protected metadata?: DidDocumentMetaData;
+
+  protected signatures?: SignatureInfo;
 
   constructor(public id: string) {
     const result = new RegExp(this.getExp()).test(id);
@@ -30,8 +36,30 @@ export abstract class Did {
     return this.version;
   }
 
+  public getMetaData() {
+    if (!this.metadata) {
+      throw Error(
+        'no metadata found, perhaps document was loaded via transactions'
+      );
+    }
+    return this.metadata;
+  }
+
+  public getSigntures() {
+    if (!this.signatures) {
+      throw Error(
+        'no signatures found, perhaps document was loaded via transactions'
+      );
+    }
+    return this.signatures;
+  }
+
   protected getFullId(id: string): string {
     return id.includes('#') ? id : `${this.id}#${id}`;
+  }
+
+  getControllers(): string[] {
+    return Array.from(this.controller.current.values());
   }
 
   hasController(value: string): boolean {
@@ -67,6 +95,8 @@ export abstract class Did {
     docResponse.document.controller.forEach(controller =>
       this.addController(controller)
     );
+    this.metadata = docResponse.metaData;
+    this.signatures = docResponse.signatures;
   }
 
   protected getBasicChanges<T>(): T {
