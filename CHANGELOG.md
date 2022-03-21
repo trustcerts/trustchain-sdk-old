@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.31](https://github.com/trustcerts/sdk/compare/v0.4.30...v0.4.31) (2022-03-21)
+
+
+### Bug Fixes
+
+* expose metadata ([b9788ae](https://github.com/trustcerts/sdk/commit/b9788ae10e821a8a801d41b657049e9df94db643))
+
+
+
+
+
 ## [0.4.30](https://github.com/trustcerts/sdk/compare/v0.4.29...v0.4.30) (2022-03-19)
 
 **Note:** Version bump only for package root
