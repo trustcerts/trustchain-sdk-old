@@ -43,7 +43,7 @@ jobs:
           ./build.sh
 
       - name: TrustCerts Custom Blockchain
-        uses: trustcerts/blockchain-custom-action@v1.0.1
+        uses: trustcerts/blockchain-custom-action@main
 
 
       - name: Start trustcreator and platform services
