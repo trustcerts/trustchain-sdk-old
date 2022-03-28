@@ -6,9 +6,8 @@ import {
   Identifier,
   SignatureType,
 } from '@trustcerts/core';
-import { WalletService } from '../src';
 import { LocalConfigService } from '@trustcerts/config-local';
-
+import { WalletService } from '../src';
 import { readFileSync } from 'fs';
 
 /**
