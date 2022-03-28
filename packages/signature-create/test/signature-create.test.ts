@@ -22,7 +22,7 @@ describe('test signature service', () => {
 
   let testFile = 'tmp/test';
 
-  const testValues = JSON.parse(readFileSync('../../values-dev.json', 'utf-8'));
+  const testValues = JSON.parse(readFileSync('../../values.json', 'utf-8'));
 
   beforeAll(async () => {
     DidNetworks.add(testValues.network.namespace, testValues.network);

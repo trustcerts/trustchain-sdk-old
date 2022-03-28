@@ -38,6 +38,34 @@ describe('test schema issuer service', () => {
     await cryptoService.init(key);
   }, 10000);
 
+  it('set wrong schema', () => {
+    const did = DidSchemaRegister.create();
+    did.setSchema({
+      // TODO check what happens when schema is added
+      // $schema: 'http://json-schema.org/draft-06/schema#',
+      $ref: '#/definitions/Welhellocome',
+      definitions: {
+        Welcome: {
+          type: 'object',
+          additionalProperties: false,
+          properties: {
+            greeting: {
+              type: 'string',
+            },
+            instructions: {
+              type: 'array',
+              items: {
+                type: 'string',
+              },
+            },
+          },
+          required: ['greeting', 'instructions'],
+          title: 'Welcome',
+        },
+      },
+    });
+  });
+
   it('create schema', async () => {
     const client = new SchemaIssuerService(
       testValues.network.gateways,
@@ -46,7 +74,7 @@ describe('test schema issuer service', () => {
     const did = DidSchemaRegister.create({
       controllers: [config.config.invite!.id],
     });
-    did.schema = '{foo: bar}';
+    did.setSchema({ foo: 'bar' });
     const res = await DidSchemaRegister.save(did, client);
     expect(res).toBeDefined();
   }, 7000);

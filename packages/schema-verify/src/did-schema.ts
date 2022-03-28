@@ -4,15 +4,18 @@ import {
   DidSchemaStructure,
   SchemaDocResponse,
 } from '@trustcerts/observer';
+import Ajv from 'ajv';
 
 export class DidSchema extends Did {
-  public schema!: string;
+  private schema!: string;
+  private ajv: Ajv.Ajv;
 
   constructor(public id: string) {
     super(id);
     // if the passed id value already has a prefix remove it.
     // TODO set correct regexp, normal did should have no type
     // TODO use method from Identifier.method
+    this.ajv = new Ajv({ allErrors: true });
   }
 
   parseTransactions(transactions: DidSchemaStructure[]): void {
@@ -39,6 +42,17 @@ export class DidSchema extends Did {
       controller: Array.from(this.controller.current.values()),
       value: this.schema,
     };
+  }
+
+  setSchema(schema: any) {
+    if (this.ajv.validateSchema(schema)) {
+      throw Error('schema not valid');
+    }
+    this.schema = JSON.stringify(schema);
+  }
+
+  getSchema() {
+    return this.schema;
   }
 
   getChanges(): DidSchemaStructure {

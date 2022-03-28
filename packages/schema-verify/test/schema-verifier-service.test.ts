@@ -50,12 +50,12 @@ describe('test schema verifier service', () => {
     const did = DidSchemaRegister.create({
       controllers: [config.config.invite!.id],
     });
-    did.schema = '{foo: bar}';
+    did.setSchema({ foo: 'bar' });
     const res = await DidSchemaRegister.save(did, client);
     expect(res).toBeDefined();
 
     const resolver = new DidSchemaResolver();
     const resolvedId = await resolver.load(did.id);
-    expect(resolvedId.schema).toEqual(did.schema);
+    expect(resolvedId.getSchema()).toEqual(did.getSchema());
   }, 7000);
 });
