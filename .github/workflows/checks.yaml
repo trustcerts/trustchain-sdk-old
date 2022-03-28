@@ -45,7 +45,7 @@ jobs:
       - name: TrustCerts Custom Blockchain
         uses: trustcerts/blockchain-custom-action@main
         with:
-          did: did:trust:tc:dev:id:XLzBJd69tqEgq7oqqdEsHW
+          did_id: did:trust:tc:dev:id:XLzBJd69tqEgq7oqqdEsHW
 
       - name: Start trustcreator and platform services
         run: |
