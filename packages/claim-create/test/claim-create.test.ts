@@ -83,7 +83,7 @@ describe('claim', () => {
     const schemaDid = DidSchemaRegister.create({
       controllers: [config.config.invite!.id],
     });
-    schemaDid.schema = JSON.stringify(schema);
+    schemaDid.setSchema(schema);
     await DidSchemaRegister.save(schemaDid, clientSchema);
     const client = new TemplateIssuerService(
       testValues.network.gateways,

@@ -33,7 +33,7 @@ export class ClaimIssuerService {
   ): Promise<Claim> {
     const ajv = new Ajv();
     const schema = await this.didSchemaResolver.load(template.schemaId);
-    if (!ajv.validate(JSON.parse(schema.schema), values)) {
+    if (!ajv.validate(JSON.parse(schema.getSchema()), values)) {
       throw Error('input does not match with schema');
     }
     const hash = await ClaimVerifierService.getHash(values, template.id);

@@ -47,7 +47,7 @@ export class ClaimVerifierService {
     const schema = await this.didSchemaResolver.load(template.schemaId);
     // validate schema
     const avj = new Ajv();
-    if (!avj.validate(JSON.parse(schema.schema), values)) {
+    if (!avj.validate(JSON.parse(schema.getSchema()), values)) {
       throw new Error('values do not match with schema');
     }
 
